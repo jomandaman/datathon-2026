@@ -1,4 +1,4 @@
-# 🏥 Who Falls Through the Cracks?
+# Who Falls Through the Cracks?
 
 **Healthcare Access Barriers Analysis · DubsTech Datathon 2026**
 
@@ -7,7 +7,7 @@
 
 ---
 
-## 👥 Team: Accessible Infinity Tunnel
+## Team: Accessible Infinity Tunnel
 
 | Member | Role | GitHub |
 |--------|------|--------|
@@ -17,7 +17,7 @@
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 An analysis of healthcare access barriers across race, income, and education — examining how the pandemic temporarily narrowed gaps that are now at risk of widening again.
 
@@ -33,20 +33,20 @@ An analysis of healthcare access barriers across race, income, and education —
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
-**[View the Interactive Site →](https://your-username.github.io/datathon-2026/)**
+**[View the Interactive Site →](https://jomandaman.github.io/datathon-2026/)**
 
 Features:
-- 📊 Scroll-based narrative with interactive Plotly visualizations
-- 🤖 Dual ML forecasting (2025 short-term + 2026 long-term predictions)
-- 🔍 Explore disparities across 5 demographic lenses
-- 📈 COVID impact analysis with gap-closing metrics
-- 💾 Download Tableau-ready CSV exports
+- Scroll-based narrative with interactive Plotly visualizations
+- Dual ML forecasting (2025 short-term + 2026 long-term predictions)
+- Explore disparities across 5 demographic lenses
+- COVID impact analysis with gap-closing metrics
+- Download Tableau-ready CSV exports
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 datathon-2026/
@@ -71,7 +71,7 @@ datathon-2026/
 
 ---
 
-## 🔬 Methodology
+## Methodology
 
 ### Data Source
 **CDC National Health Interview Survey (NHIS)** — Adult Summary Health Statistics, 2019-2024
@@ -99,7 +99,7 @@ datathon-2026/
 
 ---
 
-## 📊 Key Visualizations
+## Key Visualizations
 
 ### 1. Disparities Snapshot
 - **Bubble plot** showing all 5 demographic categories simultaneously
@@ -120,7 +120,7 @@ datathon-2026/
 
 ---
 
-## 💻 Running Locally
+## Running Locally
 
 ### Prerequisites
 - Python 3.8+
@@ -130,7 +130,7 @@ datathon-2026/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/datathon-2026.git
+   git clone https://github.com/jomandaman/datathon-2026.git
    cd datathon-2026
    ```
 
@@ -155,7 +155,7 @@ This creates 6 CSV files in `data/tableau_exports/` ready for Tableau Public, Po
 
 ---
 
-## 📥 Data Downloads
+## Data Downloads
 
 All datasets are available in the **"Extend This Analysis"** section of the live site.
 
@@ -171,7 +171,7 @@ All datasets are available in the **"Extend This Analysis"** section of the live
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -184,7 +184,7 @@ All datasets are available in the **"Extend This Analysis"** section of the live
 
 ---
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 Our visualization approach prioritizes:
 - **Narrative clarity** — Scroll-based storytelling guides users through insights
@@ -195,7 +195,7 @@ Our visualization approach prioritizes:
 
 ---
 
-## 📈 Extending This Analysis
+## Extending This Analysis
 
 ### Use Our Data in Tableau/Power BI
 1. Download CSV exports from the site or `data/tableau_exports/`
@@ -215,7 +215,7 @@ git clone https://github.com/YOUR_USERNAME/datathon-2026.git
 
 ---
 
-## 🏆 Acknowledgments
+## Acknowledgments
 
 **Data Source:** CDC National Health Interview Survey (NHIS), 2019-2024
 
@@ -225,7 +225,7 @@ git clone https://github.com/YOUR_USERNAME/datathon-2026.git
 
 ---
 
-## 📜 License
+## License
 
 This project is open source and available under the MIT License.
 
@@ -238,7 +238,7 @@ DubsTech Datathon 2026, University of Washington.
 
 ---
 
-## 🤝 Contact
+## Contact
 
 Questions or want to collaborate?
 

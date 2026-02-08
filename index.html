@@ -297,6 +297,15 @@
             overflow: hidden;
         }
 
+        /* Bubble plot specific - no background, visible overflow, max space usage */
+        #chart-bubble-container {
+            background: transparent;
+            border: none;
+            overflow: visible;
+            padding: 0;
+            margin: 0;
+        }
+
         .chart-container .chart-caption {
             font-size: 0.8rem;
             color: var(--text-muted);
@@ -313,9 +322,9 @@
 
         .chart-grid {
             display: grid;
-            grid-template-columns: 0.45fr auto 1.55fr;
-            gap: 1.5rem;
-            max-width: min(1100px, 90vw);
+            grid-template-columns: 1fr 1.3fr;
+            gap: 2rem;
+            max-width: min(1200px, 95vw);
             margin: 0 auto;
         }
 
@@ -364,35 +373,11 @@
             border-color: var(--accent);
         }
 
-        #chart-legend {
-            padding: 1.5rem 0.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        #chart-legend .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        #chart-legend .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        /* Legend is now displayed inside the chart */
 
         @media (max-width: 1100px) {
             .chart-grid {
                 grid-template-columns: 1fr;
-            }
-            #chart-legend {
-                order: -1;
             }
         }
 
@@ -585,17 +570,12 @@
     <div class="content-wide">
         <div class="chart-grid-wrapper">
             <div class="chart-grid">
-                <!-- Left column: Bubble plot + Legend (sticky) -->
+                <!-- Left column: Bubble plot (sticky) -->
                 <div class="chart-left-column">
-                    <div class="chart-container">
+                    <div class="chart-container" id="chart-bubble-container">
                         <div id="chart-bubble"></div>
-                        <div class="chart-caption">Most vulnerable populations by demographic group. Updates as you scroll.</div>
+                        <div class="chart-caption">Most vulnerable populations by demographic group. Circle size = barrier rate.</div>
                     </div>
-                </div>
-
-                <!-- Center column: Legend (sticky) -->
-                <div class="chart-left-column" style="position: sticky; top: 15vh;">
-                    <div id="chart-legend" style="display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; min-width: 100px;"></div>
                 </div>
 
                 <!-- Right column: Scrollable scenes -->
@@ -855,7 +835,13 @@
 
 <!-- ===== CHART SCRIPTS ===== -->
 <script>
-const plotlyConfig = { responsive: true, displayModeBar: false, scrollZoom: false };
+const plotlyConfig = {
+    responsive: true,
+    displayModeBar: false,
+    scrollZoom: false,
+    doubleClick: false,
+    editable: false
+};
 const plotlyLayout = {
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
@@ -972,26 +958,7 @@ function updateDemographicChart(demographic) {
 // Initialize time series
 updateDemographicChart(currentDemographic);
 
-// ===== UPDATE LEGEND =====
-function updateLegend(demographic) {
-    const legendEl = document.getElementById('chart-legend');
-    const data = demographicData[demographic];
-
-    legendEl.innerHTML = '<div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; font-family: var(--font-mono);">Subgroups</div>';
-
-    Object.entries(data.subgroups).forEach(([name, { color }]) => {
-        const item = document.createElement('div');
-        item.className = 'legend-item';
-        item.innerHTML = `
-            <div class="legend-color" style="background: ${color};"></div>
-            <span>${name}</span>
-        `;
-        legendEl.appendChild(item);
-    });
-}
-
-// Initialize legend
-updateLegend(currentDemographic);
+// Legend is now displayed inside the time series chart via Plotly's built-in legend
 
 // ===== UPDATE BUBBLE PLOT =====
 // Define demographic categories and their colors
@@ -1007,101 +974,165 @@ function updateBubblePlot(year, activeDemographic) {
     const displayYear = Math.round(Math.max(2019, Math.min(2024, year)));
     const yearIndex = displayYear - 2019;
 
-    // Calculate average rate and disparity for each demographic category
-    const categoryData = Object.entries(demographicCategories).map(([catName, { color, key }]) => {
-        const data = demographicData[key];
-        const rates = Object.values(data.subgroups).map(sg => sg.data[yearIndex]);
-        const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
-        const maxRate = Math.max(...rates);
-        const minRate = Math.min(...rates);
-        const disparity = maxRate - minRate;
+    // Collect all subgroups with their data
+    const allBubbles = [];
 
-        return {
-            name: catName,
-            avgRate: avgRate,
-            disparity: disparity,
-            color: color,
-            isActive: key === activeDemographic
-        };
+    Object.entries(demographicCategories).forEach(([catName, { color, key }]) => {
+        const data = demographicData[key];
+        const isActive = key === activeDemographic;
+
+        Object.entries(data.subgroups).forEach(([subgroupName, subgroupData]) => {
+            const rate = subgroupData.data[yearIndex];
+
+            // Only show meaningful subgroups (rate > 5% or active category)
+            if (rate > 5 || isActive) {
+                allBubbles.push({
+                    name: subgroupName,
+                    rate: rate,
+                    category: catName,
+                    categoryKey: key,
+                    color: color,
+                    isActive: isActive
+                });
+            }
+        });
     });
 
-    // Sort by average rate
-    categoryData.sort((a, b) => b.avgRate - a.avgRate);
+    // Sort by rate (highest first) and take top subgroups per category
+    const categoryBubbles = {};
+    Object.keys(demographicCategories).forEach(cat => {
+        categoryBubbles[cat] = [];
+    });
 
-    // Position bubbles in a cluster
+    allBubbles.forEach(bubble => {
+        categoryBubbles[bubble.category].push(bubble);
+    });
+
+    // Take top 3-4 from each category to reduce overcrowding
+    const selectedBubbles = [];
+    Object.entries(categoryBubbles).forEach(([cat, bubbles]) => {
+        bubbles.sort((a, b) => b.rate - a.rate);
+        const limit = bubbles[0]?.isActive ? 5 : 3;
+        selectedBubbles.push(...bubbles.slice(0, limit));
+    });
+
+    // Position bubbles in clusters by category - MAXIMUM SPACING
+    const categoryPositions = {
+        'Insurance': { cx: -0.75, cy: -0.7 },
+        'Race': { cx: 0.75, cy: -0.7 },
+        'Income': { cx: -0.75, cy: 0.7 },
+        'Disability': { cx: 0.75, cy: 0.7 },
+        'Sexual Orientation': { cx: 0, cy: 0 }
+    };
+
     const xPos = [];
     const yPos = [];
     const sizes = [];
     const colors = [];
     const texts = [];
     const opacities = [];
+    const lineColors = [];
+    const lineWidths = [];
 
-    // Arrange in a circular pattern
-    categoryData.forEach((cat, i) => {
-        if (i === 0) {
-            xPos.push(0);
-            yPos.push(0);
-        } else {
-            const angle = (i - 1) * (2 * Math.PI / (categoryData.length - 1));
-            const radius = 0.65;
-            xPos.push(radius * Math.cos(angle));
-            yPos.push(radius * Math.sin(angle));
-        }
+    selectedBubbles.forEach((bubble, i) => {
+        const catPos = categoryPositions[bubble.category];
 
-        // Size based on average rate
-        sizes.push(Math.sqrt(cat.avgRate) * 20);
-        colors.push(cat.color);
-        opacities.push(cat.isActive ? 0.95 : 0.6); // Highlight active demographic
-        texts.push(`<b>${cat.name}</b><br>Avg: ${cat.avgRate.toFixed(1)}%<br>Gap: ${cat.disparity.toFixed(1)}%`);
+        // Add some jitter within each category cluster
+        const bubblesInCategory = selectedBubbles.filter(b => b.category === bubble.category);
+        const indexInCategory = bubblesInCategory.findIndex(b => b.name === bubble.name);
+        const totalInCategory = bubblesInCategory.length;
+
+        // MAXIMUM SPACING - no overlaps allowed
+        const angle = (indexInCategory / totalInCategory) * 2 * Math.PI;
+        const spread = 0.55; // Increased: 0.25 → 0.35 → 0.45 → 0.55
+        const jitterX = spread * Math.cos(angle);
+        const jitterY = spread * Math.sin(angle);
+
+        xPos.push(catPos.cx + jitterX);
+        yPos.push(catPos.cy + jitterY);
+
+        // Size based on barrier rate (larger rate = larger bubble)
+        sizes.push(Math.sqrt(bubble.rate) * 10);
+        colors.push(bubble.color);
+        opacities.push(1); // ALL FULL OPACITY - no transparency
+
+        // Truncate long names
+        const shortName = bubble.name.length > 20 ? bubble.name.substring(0, 17) + '...' : bubble.name;
+        texts.push(`<b>${shortName}</b><br>${bubble.rate.toFixed(1)}% barrier rate<br><i>${bubble.category}</i>`);
+
+        // NO BORDERS - just solid bubbles
+        lineColors.push(bubble.color);
+        lineWidths.push(0);
     });
 
     const trace = {
         x: xPos,
         y: yPos,
-        mode: 'markers+text',
+        mode: 'markers',
         type: 'scatter',
         marker: {
             size: sizes,
             color: colors,
             opacity: opacities,
             line: {
-                color: categoryData.map(cat => cat.isActive ? '#fff' : '#1a2235'),
-                width: categoryData.map(cat => cat.isActive ? 3 : 2)
+                color: lineColors,
+                width: lineWidths
             }
-        },
-        text: categoryData.map(cat => cat.name.split(' ')[0]),
-        textposition: 'middle center',
-        textfont: {
-            size: categoryData.map(cat => cat.isActive ? 10 : 8),
-            color: '#fff',
-            family: 'Source Sans 3, sans-serif',
-            weight: 'bold'
         },
         hovertemplate: '%{customdata}<extra></extra>',
         customdata: texts,
         showlegend: false
     };
 
+    // Add category labels as annotations
+    const annotations = Object.entries(categoryPositions).map(([catName, pos]) => {
+        const catInfo = demographicCategories[catName];
+        const isActive = catInfo && catInfo.key === activeDemographic;
+
+        return {
+            x: pos.cx,
+            y: pos.cy - 0.38,
+            text: `<b>${catName}</b>`,
+            showarrow: false,
+            font: {
+                size: isActive ? 11 : 9,
+                color: isActive ? '#e8e6e1' : '#6b7280',
+                family: 'Source Sans 3, sans-serif'
+            },
+            xanchor: 'center',
+            yanchor: 'top'
+        };
+    });
+
     Plotly.react('chart-bubble', [trace], {
-        ...plotlyLayout,
-        title: { text: `All Demographics (${displayYear})<br><span style="font-size:13px;color:#9ca3af">Circle size = avg barrier rate · Border = selected</span>`, font: { size: 18 } },
-        height: 480,
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
+        font: { family: 'Source Sans 3, sans-serif', color: '#e8e6e1' },
+        title: {
+            text: `Healthcare Access<br>Barriers (${displayYear})<br><span style="font-size:11px;color:#9ca3af;font-weight:normal">Size = barrier rate</span>`,
+            font: { size: 14, family: 'Source Sans 3, sans-serif' },
+            y: 0.98,
+            yanchor: 'top'
+        },
+        height: 900,
         xaxis: {
             showticklabels: false,
             showgrid: false,
             zeroline: false,
-            range: [-1.2, 1.2]
+            range: [-1.5, 1.5]
         },
         yaxis: {
             showgrid: false,
             zeroline: false,
             showticklabels: false,
-            range: [-1.2, 1.2],
+            range: [-1.5, 1.5],
             scaleanchor: 'x',
             scaleratio: 1
         },
+        annotations: annotations,
         showlegend: false,
-        margin: { t: 80, b: 40, l: 20, r: 20 }
+        margin: { t: 100, b: 20, l: 10, r: 10 },
+        hovermode: 'closest'
     }, plotlyConfig);
 }
 
@@ -1636,23 +1667,36 @@ function updateTimeSeriesChart(year) {
         ...plotlyLayout,
         title: { text: `${data.title}<br><span style="font-size:13px;color:#9ca3af">Delayed Medical Care Due to Cost · ${subtitle}</span>`, font: { size: 18 } },
         height: 480,
+        dragmode: false,
         xaxis: {
             ...plotlyLayout.xaxis,
             title: 'Year',
             dtick: 1,
             range: [2018.5, 2024.5],
             showgrid: false,
-            zeroline: false
+            zeroline: false,
+            fixedrange: true
         },
         yaxis: {
             ...plotlyLayout.yaxis,
             title: 'Population Experiencing Barrier (%)',
             showgrid: false,
-            zeroline: false
+            zeroline: false,
+            fixedrange: true
         },
         shapes: shapes,
         annotations: annotations,
-        showlegend: false,
+        showlegend: true,
+        legend: {
+            x: 1.02,
+            y: 1,
+            xanchor: 'left',
+            yanchor: 'top',
+            bgcolor: 'rgba(10, 14, 23, 0.8)',
+            bordercolor: '#2a3448',
+            borderwidth: 1,
+            font: { size: 11 }
+        },
         margin: { t: 80, b: 60, l: 70, r: 20 }
     }, plotlyConfig);
 }
@@ -1694,19 +1738,34 @@ function handleSceneScroll() {
 
     // For time series scene, handle timeline animation
     if (activeScene.querySelector('#chart-timeseries')) {
-        // When chart is centered or past center, show full timeline
-        if (sceneTop <= centerPoint) {
+        // Calculate how close the scene CENTER is to the viewport center
+        const sceneCenter = sceneTop + (rect.height / 2);
+        const distanceFromCenter = sceneCenter - centerPoint;
+
+        // When scene center is very close to viewport center, enable interaction
+        if (Math.abs(distanceFromCenter) < 100) {
+            timelineReachedCenter = true;
             if (!isDraggingTimeline) {
                 currentYear = 2024;
-                timelineReachedCenter = true;
             }
+        } else if (sceneTop < windowHeight && rect.bottom > 0) {
+            // Scene is visible, animate based on scroll progress
+            timelineReachedCenter = false;
+            isDraggingTimeline = false;
+
+            // Calculate progress: 0 when scene top enters viewport, 1 when centered
+            const sceneHeight = rect.height;
+            const scrollStart = windowHeight; // When top of scene enters bottom of viewport
+            const scrollEnd = centerPoint; // When top of scene reaches center
+            const scrollDistance = scrollStart - scrollEnd;
+            const currentProgress = (scrollStart - sceneTop) / scrollDistance;
+
+            // Clamp progress between 0 and 1
+            const progress = Math.max(0, Math.min(1, currentProgress));
+            currentYear = 2019 + (progress * 5);
         } else {
             timelineReachedCenter = false;
             isDraggingTimeline = false;
-            // Still scrolling to center, animate from 2019 to 2024
-            const distanceToCenter = sceneTop - centerPoint;
-            const progressToCenter = Math.max(0, Math.min(1, 1 - (distanceToCenter / windowHeight)));
-            currentYear = 2019 + (progressToCenter * 5);
         }
     } else {
         // For other scenes, use normal scroll progress
@@ -1728,7 +1787,6 @@ function handleSceneScroll() {
 document.getElementById('demographic-select').addEventListener('change', (e) => {
     currentDemographic = e.target.value;
     updateDemographicChart(currentDemographic);
-    updateLegend(currentDemographic);
     updateBubblePlot(currentYear, currentDemographic);
 });
 
@@ -1745,27 +1803,66 @@ window.addEventListener('resize', handleSceneScroll);
 let timelineChart = document.getElementById('chart-timeseries');
 let isMouseDownOnTimeline = false;
 
-// Mouse down - start drag mode
-timelineChart.on('plotly_click', function(data) {
+// Function to convert mouse position to year value
+function getYearFromMouseEvent(e) {
+    const chartDiv = document.getElementById('chart-timeseries');
+    const rect = chartDiv.getBoundingClientRect();
+    const plotArea = chartDiv._fullLayout;
+
+    // Get mouse position relative to chart
+    const mouseX = e.clientX - rect.left;
+
+    // Calculate the plot area dimensions
+    const plotLeft = plotArea.margin.l;
+    const plotRight = rect.width - plotArea.margin.r;
+    const plotWidth = plotRight - plotLeft;
+
+    // Convert mouse position to data coordinates
+    const relativeX = (mouseX - plotLeft) / plotWidth;
+    const year = 2018.5 + (relativeX * 6); // Range is 2018.5 to 2024.5
+
+    return Math.max(2019, Math.min(2024, year));
+}
+
+// Enable mousedown on chart - start dragging
+timelineChart.addEventListener('mousedown', function(e) {
     if (timelineReachedCenter) {
         isMouseDownOnTimeline = true;
-        const clickX = data.points && data.points.length > 0 ? data.points[0].x : null;
-        if (clickX && clickX >= 2019 && clickX <= 2024) {
-            isDraggingTimeline = true;
-            currentYear = clickX; // Use exact value, not rounded
+        isDraggingTimeline = true;
+
+        // Immediately update to mouse position
+        try {
+            const year = getYearFromMouseEvent(e);
+            currentYear = year;
             updateTimeSeriesChart(currentYear);
             updateBubblePlot(currentYear, currentDemographic);
+        } catch(err) {
+            // Fallback to click behavior
         }
     }
 });
 
-// Mouse move while dragging - update year
-timelineChart.on('plotly_hover', function(data) {
+// Mouse move while dragging - continuously update year
+timelineChart.addEventListener('mousemove', function(e) {
     if (timelineReachedCenter && isMouseDownOnTimeline) {
-        const hoverX = data.points && data.points.length > 0 ? data.points[0].x : null;
-        if (hoverX && hoverX >= 2019 && hoverX <= 2024) {
+        try {
+            const year = getYearFromMouseEvent(e);
+            currentYear = year;
+            updateTimeSeriesChart(currentYear);
+            updateBubblePlot(currentYear, currentDemographic);
+        } catch(err) {
+            // Ignore errors during drag
+        }
+    }
+});
+
+// Click to jump to specific year (fallback)
+timelineChart.on('plotly_click', function(data) {
+    if (timelineReachedCenter) {
+        const clickX = data.points && data.points.length > 0 ? data.points[0].x : null;
+        if (clickX && clickX >= 2019 && clickX <= 2024) {
             isDraggingTimeline = true;
-            currentYear = hoverX;
+            currentYear = clickX;
             updateTimeSeriesChart(currentYear);
             updateBubblePlot(currentYear, currentDemographic);
         }
@@ -1774,18 +1871,25 @@ timelineChart.on('plotly_hover', function(data) {
 
 // Mouse up - end drag mode
 document.addEventListener('mouseup', function() {
-    isMouseDownOnTimeline = false;
+    if (isMouseDownOnTimeline) {
+        isMouseDownOnTimeline = false;
+        // Wait a bit before re-enabling scroll
+        setTimeout(() => {
+            if (timelineReachedCenter) {
+                isDraggingTimeline = false;
+            }
+        }, 1000);
+    }
 });
 
-// Disable default zoom/pan when timeline is active
+// Disable ALL zoom/pan on timeline always
 timelineChart.on('plotly_relayout', function(eventdata) {
-    if (timelineReachedCenter) {
-        // Reset zoom if user tries to zoom
-        if (eventdata['xaxis.range[0]'] !== undefined) {
-            Plotly.relayout('chart-timeseries', {
-                'xaxis.range': [2018.5, 2024.5]
-            });
-        }
+    // Prevent ANY zoom or pan attempts
+    if (eventdata['xaxis.range[0]'] !== undefined || eventdata['xaxis.autorange'] !== undefined) {
+        Plotly.relayout('chart-timeseries', {
+            'xaxis.range': [2018.5, 2024.5],
+            'xaxis.autorange': false
+        });
     }
 });
 
