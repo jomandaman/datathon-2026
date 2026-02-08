@@ -267,31 +267,40 @@
         }
 
         /* ===== SIDE-BY-SIDE CHART GRID ===== */
+        .chart-grid-wrapper {
+            position: relative;
+            margin: 3rem 0;
+        }
+
         .chart-grid {
             display: grid;
-            grid-template-columns: 0.5fr auto 1.5fr;
+            grid-template-columns: 0.45fr auto 1.55fr;
             gap: 1.5rem;
-            margin: 3rem 0;
-            position: relative;
+            max-width: min(1100px, 90vw);
+            margin: 0 auto;
         }
 
-        .chart-grid.sticky-active {
-            position: fixed;
+        .chart-left-column {
+            position: sticky;
             top: 10vh;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(1100px, 90vw);
-            z-index: 10;
+            height: fit-content;
         }
 
-        .chart-grid .chart-container {
-            margin: 0;
-        }
-
-        .chart-stack {
+        .chart-right-column {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
+        }
+
+        .chart-scene {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .chart-scene .chart-container {
+            width: 100%;
+            margin: 0;
         }
 
         #chart-legend {
@@ -494,25 +503,46 @@
     </div>
 
     <div class="content-wide">
-        <div id="sticky-spacer" style="height: 0; transition: height 0.3s ease;"></div>
-        <div class="chart-grid">
-            <div class="chart-container">
-                <div id="chart-bubble"></div>
-                <div class="chart-caption">Most vulnerable populations by demographic group. Updates as you scroll.</div>
-            </div>
-            <div id="chart-legend" style="display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; min-width: 100px;"></div>
-            <div class="chart-stack">
-                <div class="chart-container">
-                    <div id="chart-timeseries"></div>
-                    <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2019-2024. U.S. Adult Population (18+).</div>
+        <div class="chart-grid-wrapper">
+            <div class="chart-grid">
+                <!-- Left column: Bubble plot + Legend (sticky) -->
+                <div class="chart-left-column">
+                    <div class="chart-container">
+                        <div id="chart-bubble"></div>
+                        <div class="chart-caption">Most vulnerable populations by demographic group. Updates as you scroll.</div>
+                    </div>
                 </div>
-                <div class="chart-container">
-                    <div id="chart-heatmap"></div>
-                    <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2024. Estimates represent crude percentages of the adult population.</div>
+
+                <!-- Center column: Legend (sticky) -->
+                <div class="chart-left-column" style="position: sticky; top: 15vh;">
+                    <div id="chart-legend" style="display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; min-width: 100px;"></div>
                 </div>
-                <div class="chart-container">
-                    <div id="chart-area"></div>
-                    <div class="chart-caption">Shaded area shows the gap between most and least vulnerable populations for delayed medical care.</div>
+
+                <!-- Right column: Scrollable scenes -->
+                <div class="chart-right-column">
+                    <!-- Scene 1: Time Series -->
+                    <div class="chart-scene" data-year-start="2019" data-year-end="2024">
+                        <div class="chart-container">
+                            <div id="chart-timeseries"></div>
+                            <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2019-2024. U.S. Adult Population (18+).</div>
+                        </div>
+                    </div>
+
+                    <!-- Scene 2: Heatmap -->
+                    <div class="chart-scene" data-year-start="2024" data-year-end="2024">
+                        <div class="chart-container">
+                            <div id="chart-heatmap"></div>
+                            <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2024. Estimates represent crude percentages of the adult population.</div>
+                        </div>
+                    </div>
+
+                    <!-- Scene 3: Area Plot -->
+                    <div class="chart-scene" data-year-start="2019" data-year-end="2024">
+                        <div class="chart-container">
+                            <div id="chart-area"></div>
+                            <div class="chart-caption">Shaded area shows the gap between most and least vulnerable populations for delayed medical care.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1230,9 +1260,8 @@ document.querySelectorAll('.section, .chart-container, .stat-card, .export-card'
     observer.observe(el);
 });
 
-// ===== SCROLL-BASED TIME SERIES ANIMATION =====
+// ===== SCROLL-BASED SCENE ANIMATION =====
 let currentYear = 2019;
-let isTimeseriesVisible = false;
 
 function updateTimeSeriesChart(year) {
     // Clamp year to valid range
@@ -1334,90 +1363,69 @@ function updateTimeSeriesChart(year) {
         },
         shapes: shapes,
         annotations: annotations,
-        showlegend: false, // Hide legend, will show in center column
+        showlegend: false,
         margin: { t: 80, b: 60, l: 70, r: 20 }
     }, plotlyConfig);
 }
 
-// Scroll handler for time series with sticky behavior
-function handleTimeSeriesScroll() {
-    const chartGrid = document.querySelector('.chart-grid');
-    const spacer = document.getElementById('sticky-spacer');
-    if (!chartGrid || !spacer) return;
+// Scroll handler for scene-based navigation
+function handleSceneScroll() {
+    const scenes = document.querySelectorAll('.chart-scene');
+    if (scenes.length === 0) return;
 
-    const rect = chartGrid.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    const activationPoint = windowHeight * 0.25; // Activate when chart is 25% down screen
-    const scrubDistance = windowHeight * 3; // 3 viewport heights of scrubbing for more content
+    const viewportCenter = windowHeight / 2;
 
-    // Calculate scroll progress
-    let targetYear;
-    let shouldBeSticky = false;
+    // Find which scene is currently centered
+    let activeScene = null;
+    let maxVisibility = 0;
 
-    // Get original chart height for spacer (need to measure when not sticky)
-    const chartHeight = chartGrid.classList.contains('sticky-active') ?
-        parseInt(spacer.style.height) : chartGrid.offsetHeight;
+    scenes.forEach(scene => {
+        const rect = scene.getBoundingClientRect();
 
-    // Zone 1: Chart approaching activation point
-    if (rect.top > activationPoint) {
-        targetYear = 2019;
-        shouldBeSticky = false;
-        spacer.style.height = '0px';
-    }
-    // Zone 2: Chart in sticky zone (scrubbing)
-    else if (rect.top <= activationPoint) {
-        // Calculate how much we've scrolled since activation
-        const scrolledSinceActivation = activationPoint - rect.top;
+        // Calculate how much of the scene is visible in the viewport
+        const visibleTop = Math.max(0, Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0));
+        const visibility = visibleTop / windowHeight;
 
-        if (scrolledSinceActivation < scrubDistance) {
-            shouldBeSticky = true;
-            spacer.style.height = `${chartHeight}px`; // Maintain space
-
-            // Progress through years
-            const stickyProgress = scrolledSinceActivation / scrubDistance;
-            targetYear = 2019 + (stickyProgress * 5);
+        if (visibility > maxVisibility) {
+            maxVisibility = visibility;
+            activeScene = scene;
         }
-        // Zone 3: Scrubbing complete
-        else {
-            targetYear = 2024;
-            shouldBeSticky = false;
-            spacer.style.height = '0px';
-        }
-    }
+    });
 
-    // Apply/remove sticky class
-    const wasSticky = chartGrid.classList.contains('sticky-active');
-    if (shouldBeSticky && !wasSticky) {
-        chartGrid.classList.add('sticky-active');
-    } else if (!shouldBeSticky && wasSticky) {
-        chartGrid.classList.remove('sticky-active');
-    }
+    if (!activeScene) return;
 
-    // Update charts if year changed
+    // Get year range for this scene
+    const yearStart = parseFloat(activeScene.dataset.yearStart);
+    const yearEnd = parseFloat(activeScene.dataset.yearEnd);
+
+    // Calculate progress through the scene
+    const rect = activeScene.getBoundingClientRect();
+    const sceneHeight = rect.height;
+    const sceneTop = rect.top;
+
+    // Progress from 0 (top of scene at bottom of viewport) to 1 (bottom of scene at top of viewport)
+    const scrollProgress = Math.max(0, Math.min(1, (windowHeight - sceneTop) / (sceneHeight + windowHeight)));
+
+    // Calculate target year based on progress
+    const targetYear = yearStart + (scrollProgress * (yearEnd - yearStart));
+
+    // Update charts if year changed significantly
     if (Math.abs(targetYear - currentYear) > 0.05) {
         currentYear = targetYear;
         updateTimeSeriesChart(currentYear);
         updateBubblePlot(currentYear);
     }
-
-    // Track visibility
-    const nowVisible = rect.top < windowHeight && rect.bottom > 0;
-    if (nowVisible && !isTimeseriesVisible) {
-        isTimeseriesVisible = true;
-        updateTimeSeriesChart(currentYear);
-    } else if (!nowVisible && isTimeseriesVisible) {
-        isTimeseriesVisible = false;
-    }
 }
 
 // Add scroll listener
-window.addEventListener('scroll', handleTimeSeriesScroll);
-window.addEventListener('resize', handleTimeSeriesScroll);
+window.addEventListener('scroll', handleSceneScroll);
+window.addEventListener('resize', handleSceneScroll);
 
 // Initial render
 setTimeout(() => {
     updateTimeSeriesChart(2019);
-    handleTimeSeriesScroll();
+    handleSceneScroll();
 }, 100);
 </script>
 
