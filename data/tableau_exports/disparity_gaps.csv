@@ -1,0 +1,481 @@
+Year,Barrier_Type,Demographic_Group,Highest_Subgroup,Highest_Rate,Lowest_Subgroup,Lowest_Rate,Disparity_Gap
+2019,Delayed getting medical care due to cost,Age groups with 65 years and older,35-49 years,10.9,65 years and older,3.4,7.5
+2019,Delayed getting medical care due to cost,Age groups with 75 years and older,18-44 years,10.6,75 years and older,2.5,8.1
+2019,Delayed getting medical care due to cost,Disability status,With disability,15.1,Without disability,8.4,6.699999999999999
+2019,Delayed getting medical care due to cost,Functioning difficulties status,With functioning difficulties,12.2,Without functioning difficulties,6.8,5.3999999999999995
+2019,Delayed getting medical care due to cost,Marital status,Living with a partner,16.0,Widowed,5.0,11.0
+2019,Delayed getting medical care due to cost,Nativity,Foreign-born,10.2,U.S.-born,8.7,1.5
+2019,Delayed getting medical care due to cost,Race,American Indian and Alaska Native and White,14.6,Asian only,3.5,11.1
+2019,Delayed getting medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",13.5,"Other races, non-Hispanic",6.0,7.5
+2019,Delayed getting medical care due to cost,Sex,Female,10.3,Male,7.8,2.500000000000001
+2019,Delayed getting medical care due to cost,Sexual orientation,Bisexual,21.6,Gay or Lesbian,6.7,14.900000000000002
+2019,Delayed getting medical care due to cost,Veteran status,Non-veteran,9.3,Veteran,5.5,3.8000000000000007
+2019,Delayed getting medical care due to cost,Metropolitan statistical area,Non-MSA,9.8,Large MSA,8.5,1.3000000000000007
+2019,Delayed getting medical care due to cost,Region,South,11.1,Northeast,6.3,4.8
+2019,Delayed getting medical care due to cost,Social vulnerability,Medium social vulnerability,10.0,Little to no social vulnerability,6.7,3.3
+2019,Delayed getting medical care due to cost,Urbanicity,Nonmetropolitan,9.8,Large fringe metro,7.9,1.9000000000000004
+2019,Delayed getting medical care due to cost,Education,No high school diploma or GED,13.9,College degree or higher,5.2,8.7
+2019,Delayed getting medical care due to cost,Employment status,Employed - Part-time,9.8,Not employed - Has never worked,6.4,3.4000000000000004
+2019,Delayed getting medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,5.3,Private,2.2,3.0999999999999996
+2019,Delayed getting medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,32.1,Private,6.3,25.8
+2019,Delayed getting medical care due to cost,Poverty level,<100% FPL,16.0,≥200% FPL,6.4,9.6
+2019,No medical care due to cost,Age groups with 65 years and older,35-49 years,10.0,65 years and older,3.4,6.6
+2019,No medical care due to cost,Age groups with 75 years and older,45-64 years,9.9,75 years and older,2.6,7.300000000000001
+2019,No medical care due to cost,Disability status,With disability,14.8,Without disability,7.6,7.200000000000001
+2019,No medical care due to cost,Functioning difficulties status,With functioning difficulties,11.5,Without functioning difficulties,6.1,5.4
+2019,No medical care due to cost,Marital status,Living with a partner,14.6,Widowed,5.4,9.2
+2019,No medical care due to cost,Nativity,Foreign-born,10.0,U.S.-born,7.8,2.2
+2019,No medical care due to cost,Race,Black and White,14.1,Asian only,3.6,10.5
+2019,No medical care due to cost,Race and Hispanic origin,"All races, Hispanic",12.2,"Other races, non-Hispanic",5.5,6.699999999999999
+2019,No medical care due to cost,Sex,Female,9.5,Male,6.9,2.5999999999999996
+2019,No medical care due to cost,Sexual orientation,Bisexual,19.9,Gay or Lesbian,6.0,13.899999999999999
+2019,No medical care due to cost,Veteran status,Non-veteran,8.5,Veteran,5.1,3.4000000000000004
+2019,No medical care due to cost,Metropolitan statistical area,Non-MSA,9.4,Large MSA,7.8,1.6000000000000005
+2019,No medical care due to cost,Region,South,10.7,Northeast,5.2,5.499999999999999
+2019,No medical care due to cost,Social vulnerability,High social vulnerability,9.7,Little to no social vulnerability,5.5,4.199999999999999
+2019,No medical care due to cost,Urbanicity,Nonmetropolitan,9.4,Large fringe metro,7.2,2.2
+2019,No medical care due to cost,Education,No high school diploma or GED,13.6,College degree or higher,4.3,9.3
+2019,No medical care due to cost,Employment status,Employed - Part-time,8.9,Not employed - Has never worked,7.0,1.9000000000000004
+2019,No medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,6.2,Private,1.7,4.5
+2019,No medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,30.2,Private,5.4,24.799999999999997
+2019,No medical care due to cost,Poverty level,<100% FPL,15.8,≥200% FPL,5.5,10.3
+2019,No mental health care due to cost,Age groups with 65 years and older,18-34 years,6.6,65 years and older,1.3,5.3
+2019,No mental health care due to cost,Age groups with 75 years and older,18-44 years,6.2,75 years and older,0.7,5.5
+2019,No mental health care due to cost,Disability status,With disability,7.1,Without disability,4.1,3.0
+2019,No mental health care due to cost,Functioning difficulties status,With functioning difficulties,6.3,Without functioning difficulties,3.0,3.3
+2019,No mental health care due to cost,Marital status,Living with a partner,7.0,Widowed,2.5,4.5
+2019,No mental health care due to cost,Nativity,U.S.-born,4.6,Foreign-born,3.1,1.4999999999999996
+2019,No mental health care due to cost,Race,American Indian and Alaska Native and White,8.6,Native Hawaiian or Other Pacific Islander only,0.0,8.6
+2019,No mental health care due to cost,Race and Hispanic origin,"All races, Hispanic",4.7,"Other races, non-Hispanic",3.5,1.2000000000000002
+2019,No mental health care due to cost,Sex,Female,6.0,Male,2.6,3.4
+2019,No mental health care due to cost,Sexual orientation,Bisexual,22.1,Straight,3.9,18.200000000000003
+2019,No mental health care due to cost,Veteran status,Non-veteran,4.6,Veteran,2.0,2.5999999999999996
+2019,No mental health care due to cost,Metropolitan statistical area,Small MSA,4.6,Non-MSA,3.6,0.9999999999999996
+2019,No mental health care due to cost,Region,Midwest,4.7,Northeast,3.5,1.2000000000000002
+2019,No mental health care due to cost,Social vulnerability,Low social vulnerability,4.7,Little to no social vulnerability,3.8,0.9000000000000004
+2019,No mental health care due to cost,Urbanicity,Large central metro,5.2,Large fringe metro,3.6,1.6
+2019,No mental health care due to cost,Education,Some college,5.2,No high school diploma or GED,3.1,2.1
+2019,No mental health care due to cost,Employment status,Employed - Part-time,5.7,Not employed - Has never worked,1.9,3.8000000000000003
+2019,No mental health care due to cost,Health insurance coverage: 65 years and older,Medicare and Medicaid,2.0,Other government coverage,0.2,1.8
+2019,No mental health care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,10.0,Private,3.9,6.1
+2019,No mental health care due to cost,Poverty level,100% to <200% FPL,6.5,≥200% FPL,3.5,3.0
+2019,Skipped medication as prescribed to save money,Age groups with 65 years and older,35-49 years,13.3,65 years and older,5.3,8.0
+2019,Skipped medication as prescribed to save money,Age groups with 75 years and older,18-44 years,11.7,75 years and older,3.7,7.999999999999999
+2019,Skipped medication as prescribed to save money,Disability status,With disability,16.3,Without disability,8.7,7.600000000000001
+2019,Skipped medication as prescribed to save money,Functioning difficulties status,With functioning difficulties,12.6,Without functioning difficulties,6.7,5.8999999999999995
+2019,Skipped medication as prescribed to save money,Marital status,Divorced or separated,15.1,Widowed,6.0,9.1
+2019,Skipped medication as prescribed to save money,Nativity,U.S.-born,9.7,Foreign-born,8.9,0.7999999999999989
+2019,Skipped medication as prescribed to save money,Race,American Indian and Alaska Native and White,19.3,Asian only,5.1,14.200000000000001
+2019,Skipped medication as prescribed to save money,Race and Hispanic origin,"Black only, non-Hispanic",13.2,"Other races, non-Hispanic",7.5,5.699999999999999
+2019,Skipped medication as prescribed to save money,Sex,Female,10.9,Male,7.9,3.0
+2019,Skipped medication as prescribed to save money,Sexual orientation,Bisexual,21.2,Gay or Lesbian,6.9,14.299999999999999
+2019,Skipped medication as prescribed to save money,Veteran status,Non-veteran,10.0,Veteran,5.7,4.3
+2019,Skipped medication as prescribed to save money,Metropolitan statistical area,Non-MSA,11.0,Large MSA,8.8,2.1999999999999993
+2019,Skipped medication as prescribed to save money,Region,South,11.6,Northeast,6.5,5.1
+2019,Skipped medication as prescribed to save money,Social vulnerability,High social vulnerability,10.5,Little to no social vulnerability,7.2,3.3
+2019,Skipped medication as prescribed to save money,Urbanicity,Nonmetropolitan,11.0,Large fringe metro,8.6,2.4000000000000004
+2019,Skipped medication as prescribed to save money,Education,No high school diploma or GED,11.8,College degree or higher,6.7,5.1000000000000005
+2019,Skipped medication as prescribed to save money,Employment status,Employed - Part-time,10.7,Not employed - Has never worked,2.9,7.799999999999999
+2019,Skipped medication as prescribed to save money,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,7.5,Other government coverage,2.1,5.4
+2019,Skipped medication as prescribed to save money,Health insurance coverage: Younger than 65 years,Uninsured,29.0,Private,8.5,20.5
+2019,Skipped medication as prescribed to save money,Poverty level,100% to <200% FPL,16.1,≥200% FPL,7.1,9.000000000000002
+2020,Delayed getting medical care due to cost,Age groups with 65 years and older,18-34 years,9.1,65 years and older,2.7,6.3999999999999995
+2020,Delayed getting medical care due to cost,Age groups with 75 years and older,18-44 years,9.1,75 years and older,1.9,7.199999999999999
+2020,Delayed getting medical care due to cost,Disability status,With disability,13.1,Without disability,7.0,6.1
+2020,Delayed getting medical care due to cost,Functioning difficulties status,With functioning difficulties,10.7,Without functioning difficulties,5.3,5.3999999999999995
+2020,Delayed getting medical care due to cost,Marital status,Living with a partner,13.6,Widowed,4.6,9.0
+2020,Delayed getting medical care due to cost,Nativity,Foreign-born,8.3,U.S.-born,7.3,1.0000000000000009
+2020,Delayed getting medical care due to cost,Race,Black only,8.3,Asian only,3.5,4.800000000000001
+2020,Delayed getting medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",10.9,"Other races, non-Hispanic",4.4,6.5
+2020,Delayed getting medical care due to cost,Sex,Female,8.7,Male,6.3,2.3999999999999995
+2020,Delayed getting medical care due to cost,Sexual orientation,Bisexual,19.0,Straight,7.1,11.9
+2020,Delayed getting medical care due to cost,Veteran status,Non-veteran,7.8,Veteran,4.5,3.3
+2020,Delayed getting medical care due to cost,Metropolitan statistical area,Small MSA,8.2,Large MSA,7.0,1.1999999999999993
+2020,Delayed getting medical care due to cost,Region,South,9.0,Northeast,5.4,3.5999999999999996
+2020,Delayed getting medical care due to cost,Social vulnerability,Medium social vulnerability,8.2,Little to no social vulnerability,6.6,1.5999999999999996
+2020,Delayed getting medical care due to cost,Urbanicity,Medium and small metro,8.2,Large fringe metro,6.7,1.4999999999999991
+2020,Delayed getting medical care due to cost,Education,No high school diploma or GED,11.8,College degree or higher,4.8,7.000000000000001
+2020,Delayed getting medical care due to cost,Employment status,Employed - Part-time,9.3,Not employed - Has worked previously,7.0,2.3000000000000007
+2020,Delayed getting medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,6.3,Private,1.5,4.8
+2020,Delayed getting medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,26.2,Private,5.6,20.6
+2020,Delayed getting medical care due to cost,Poverty level,<100% FPL,13.2,≥200% FPL,5.6,7.6
+2020,No medical care due to cost,Age groups with 65 years and older,50-64 years,8.0,65 years and older,2.3,5.7
+2020,No medical care due to cost,Age groups with 75 years and older,45-64 years,7.9,75 years and older,1.5,6.4
+2020,No medical care due to cost,Disability status,With disability,13.1,Without disability,6.0,7.1
+2020,No medical care due to cost,Functioning difficulties status,With functioning difficulties,9.5,Without functioning difficulties,4.6,4.9
+2020,No medical care due to cost,Marital status,Living with a partner,10.9,Widowed,4.1,6.800000000000001
+2020,No medical care due to cost,Nativity,Foreign-born,7.5,U.S.-born,6.4,1.0999999999999996
+2020,No medical care due to cost,Race,American Indian and Alaska Native only,8.3,Asian only,3.5,4.800000000000001
+2020,No medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",9.7,"Other races, non-Hispanic",5.0,4.699999999999999
+2020,No medical care due to cost,Sex,Female,7.6,Male,5.6,2.0
+2020,No medical care due to cost,Sexual orientation,Bisexual,17.1,Straight,6.3,10.8
+2020,No medical care due to cost,Veteran status,Non-veteran,6.9,Veteran,3.5,3.4000000000000004
+2020,No medical care due to cost,Metropolitan statistical area,Small MSA,7.4,Large MSA,6.1,1.3000000000000007
+2020,No medical care due to cost,Region,South,8.1,Northeast,4.6,3.5
+2020,No medical care due to cost,Social vulnerability,High social vulnerability,7.4,Little to no social vulnerability,5.4,2.0
+2020,No medical care due to cost,Urbanicity,Medium and small metro,7.4,Large fringe metro,6.0,1.4000000000000004
+2020,No medical care due to cost,Education,No high school diploma or GED,10.1,College degree or higher,3.9,6.199999999999999
+2020,No medical care due to cost,Employment status,Employed - Part-time,7.7,Not employed - Has never worked,5.3,2.4000000000000004
+2020,No medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,5.3,Private,1.2,4.1
+2020,No medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,23.5,Private,4.6,18.9
+2020,No medical care due to cost,Poverty level,<100% FPL,12.3,≥200% FPL,4.7,7.6000000000000005
+2020,No mental health care due to cost,Age groups with 65 years and older,18-34 years,7.0,65 years and older,1.1,5.9
+2020,No mental health care due to cost,Age groups with 75 years and older,18-44 years,6.4,75 years and older,0.4,6.0
+2020,No mental health care due to cost,Disability status,With disability,7.5,Without disability,4.0,3.5
+2020,No mental health care due to cost,Functioning difficulties status,With functioning difficulties,6.0,Without functioning difficulties,3.0,3.0
+2020,No mental health care due to cost,Marital status,Living with a partner,8.4,Widowed,1.8,6.6000000000000005
+2020,No mental health care due to cost,Nativity,U.S.-born,4.5,Foreign-born,3.3,1.2000000000000002
+2020,No mental health care due to cost,Race,Black only,4.4,Native Hawaiian or Other Pacific Islander only,0.0,4.4
+2020,No mental health care due to cost,Race and Hispanic origin,"All races, Hispanic",5.1,"Other races, non-Hispanic",3.0,2.0999999999999996
+2020,No mental health care due to cost,Sex,Female,5.8,Male,2.7,3.0999999999999996
+2020,No mental health care due to cost,Sexual orientation,Bisexual,24.2,Straight,3.7,20.5
+2020,No mental health care due to cost,Veteran status,Non-veteran,4.5,Veteran,1.9,2.6
+2020,No mental health care due to cost,Metropolitan statistical area,Small MSA,4.7,Non-MSA,3.4,1.3000000000000003
+2020,No mental health care due to cost,Region,West,4.7,Northeast,3.3,1.4000000000000004
+2020,No mental health care due to cost,Social vulnerability,Medium social vulnerability,4.8,Little to no social vulnerability,3.5,1.2999999999999998
+2020,No mental health care due to cost,Urbanicity,Medium and small metro,4.7,Nonmetropolitan,3.4,1.3000000000000003
+2020,No mental health care due to cost,Education,Some college,4.5,No high school diploma or GED,3.3,1.2000000000000002
+2020,No mental health care due to cost,Employment status,Employed - Part-time,6.6,Not employed,3.7,2.8999999999999995
+2020,No mental health care due to cost,Health insurance coverage: 65 years and older,Medicare and Medicaid,2.7,Uninsured,0.0,2.7
+2020,No mental health care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,9.5,Private,4.2,5.3
+2020,No mental health care due to cost,Poverty level,<100% FPL,5.8,≥200% FPL,3.7,2.0999999999999996
+2020,Skipped medication as prescribed to save money,Age groups with 65 years and older,35-49 years,10.8,65 years and older,4.3,6.500000000000001
+2020,Skipped medication as prescribed to save money,Age groups with 75 years and older,18-44 years,10.2,75 years and older,2.7,7.499999999999999
+2020,Skipped medication as prescribed to save money,Disability status,With disability,14.7,Without disability,7.4,7.299999999999999
+2020,Skipped medication as prescribed to save money,Functioning difficulties status,With functioning difficulties,11.3,Without functioning difficulties,5.3,6.000000000000001
+2020,Skipped medication as prescribed to save money,Marital status,Living with a partner,14.0,Widowed,5.8,8.2
+2020,Skipped medication as prescribed to save money,Nativity,Foreign-born,8.7,U.S.-born,8.2,0.5
+2020,Skipped medication as prescribed to save money,Race,American Indian and Alaska Native and White,14.9,Asian only,5.0,9.9
+2020,Skipped medication as prescribed to save money,Race and Hispanic origin,"All races, Hispanic, Mexican",12.9,"White only, non-Hispanic",7.2,5.7
+2020,Skipped medication as prescribed to save money,Sex,Female,9.3,Male,7.0,2.3000000000000007
+2020,Skipped medication as prescribed to save money,Sexual orientation,Bisexual,22.4,Straight,7.9,14.499999999999998
+2020,Skipped medication as prescribed to save money,Veteran status,Non-veteran,8.6,Veteran,5.1,3.5
+2020,Skipped medication as prescribed to save money,Metropolitan statistical area,Non-MSA,8.6,Large MSA,8.2,0.40000000000000036
+2020,Skipped medication as prescribed to save money,Region,South,9.9,Northeast,6.0,3.9000000000000004
+2020,Skipped medication as prescribed to save money,Social vulnerability,Medium social vulnerability,9.6,Little to no social vulnerability,6.5,3.0999999999999996
+2020,Skipped medication as prescribed to save money,Urbanicity,Large central metro,8.7,Large fringe metro,7.6,1.0999999999999996
+2020,Skipped medication as prescribed to save money,Education,No high school diploma or GED,10.9,College degree or higher,6.0,4.9
+2020,Skipped medication as prescribed to save money,Employment status,Employed - Part-time,10.4,Not employed - Has never worked,7.6,2.8000000000000007
+2020,Skipped medication as prescribed to save money,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,6.9,Other government coverage,2.0,4.9
+2020,Skipped medication as prescribed to save money,Health insurance coverage: Younger than 65 years,Uninsured,30.6,Private,6.8,23.8
+2020,Skipped medication as prescribed to save money,Poverty level,100% to <200% FPL,13.9,≥200% FPL,6.3,7.6000000000000005
+2021,Delayed getting medical care due to cost,Age groups with 65 years and older,18-34 years,8.7,65 years and older,2.5,6.199999999999999
+2021,Delayed getting medical care due to cost,Age groups with 75 years and older,18-44 years,8.5,75 years and older,1.7,6.8
+2021,Delayed getting medical care due to cost,Disability status,With disability,12.3,Without disability,6.6,5.700000000000001
+2021,Delayed getting medical care due to cost,Functioning difficulties status,With functioning difficulties,10.0,Without functioning difficulties,4.9,5.1
+2021,Delayed getting medical care due to cost,Marital status,Living with a partner,12.1,Widowed,4.1,8.0
+2021,Delayed getting medical care due to cost,Nativity,U.S.-born,7.2,Foreign-born,6.7,0.5
+2021,Delayed getting medical care due to cost,Race,Black and White,16.0,Asian only,3.1,12.9
+2021,Delayed getting medical care due to cost,Race and Hispanic origin,"All races, Hispanic",8.7,"Other races, non-Hispanic",5.6,3.0999999999999996
+2021,Delayed getting medical care due to cost,Sex,Female,7.9,Male,6.3,1.6000000000000005
+2021,Delayed getting medical care due to cost,Sexual orientation,Bisexual,20.2,Straight,6.7,13.5
+2021,Delayed getting medical care due to cost,Veteran status,Non-veteran,7.4,Veteran,4.2,3.2
+2021,Delayed getting medical care due to cost,Metropolitan statistical area,Non-MSA,9.2,Large MSA,6.4,2.799999999999999
+2021,Delayed getting medical care due to cost,Region,South,7.9,Northeast,4.7,3.2
+2021,Delayed getting medical care due to cost,Social vulnerability,Medium social vulnerability,7.4,Little to no social vulnerability,6.7,0.7000000000000002
+2021,Delayed getting medical care due to cost,Urbanicity,Nonmetropolitan,9.2,Large central metro,6.3,2.8999999999999995
+2021,Delayed getting medical care due to cost,Education,No high school diploma or GED,9.0,College degree or higher,5.9,3.0999999999999996
+2021,Delayed getting medical care due to cost,Employment status,Employed - Part-time,8.1,Not employed - Has never worked,4.0,4.1
+2021,Delayed getting medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,4.7,Private,1.5,3.2
+2021,Delayed getting medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,22.2,Medicaid or other state programs,5.4,16.799999999999997
+2021,Delayed getting medical care due to cost,Poverty level,<100% FPL,11.0,≥200% FPL,6.0,5.0
+2021,No medical care due to cost,Age groups with 65 years and older,35-49 years,7.4,65 years and older,2.2,5.2
+2021,No medical care due to cost,Age groups with 75 years and older,45-64 years,7.4,75 years and older,1.4,6.0
+2021,No medical care due to cost,Disability status,With disability,11.8,Without disability,5.5,6.300000000000001
+2021,No medical care due to cost,Functioning difficulties status,With functioning difficulties,8.8,Without functioning difficulties,4.0,4.800000000000001
+2021,No medical care due to cost,Marital status,Living with a partner,10.4,Widowed,4.1,6.300000000000001
+2021,No medical care due to cost,Nativity,Foreign-born,6.6,U.S.-born,5.9,0.6999999999999993
+2021,No medical care due to cost,Race,Native Hawaiian or Other Pacific Islander only,14.1,Asian only,2.6,11.5
+2021,No medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",8.6,"Other races, non-Hispanic",4.5,4.1
+2021,No medical care due to cost,Sex,Female,6.7,Male,5.4,1.2999999999999998
+2021,No medical care due to cost,Sexual orientation,Bisexual,17.5,Straight,5.7,11.8
+2021,No medical care due to cost,Veteran status,Non-veteran,6.3,Veteran,3.6,2.6999999999999997
+2021,No medical care due to cost,Metropolitan statistical area,Non-MSA,7.4,Large MSA,5.7,1.7000000000000002
+2021,No medical care due to cost,Region,South,7.2,Northeast,4.1,3.1000000000000005
+2021,No medical care due to cost,Social vulnerability,Medium social vulnerability,6.7,Little to no social vulnerability,4.9,1.7999999999999998
+2021,No medical care due to cost,Urbanicity,Nonmetropolitan,7.4,Large fringe metro,5.4,2.0
+2021,No medical care due to cost,Education,No high school diploma or GED,9.2,College degree or higher,4.4,4.799999999999999
+2021,No medical care due to cost,Employment status,Employed - Part-time,6.9,Not employed - Has never worked,2.8,4.1000000000000005
+2021,No medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,3.5,Private,1.2,2.3
+2021,No medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,20.7,Private,5.2,15.5
+2021,No medical care due to cost,Poverty level,<100% FPL,11.2,≥200% FPL,4.8,6.3999999999999995
+2021,No mental health care due to cost,Age groups with 65 years and older,18-34 years,8.0,65 years and older,1.0,7.0
+2021,No mental health care due to cost,Age groups with 75 years and older,18-44 years,6.8,75 years and older,0.9,5.8999999999999995
+2021,No mental health care due to cost,Disability status,With disability,7.3,Without disability,3.9,3.4
+2021,No mental health care due to cost,Functioning difficulties status,With functioning difficulties,6.2,Without functioning difficulties,2.7,3.5
+2021,No mental health care due to cost,Marital status,Living with a partner,8.5,Widowed,1.4,7.1
+2021,No mental health care due to cost,Nativity,U.S.-born,4.6,Foreign-born,2.4,2.1999999999999997
+2021,No mental health care due to cost,Race,Black and White,9.9,Asian only,1.7,8.200000000000001
+2021,No mental health care due to cost,Race and Hispanic origin,"White only, non-Hispanic",4.4,"All races, Hispanic, Mexican",3.2,1.2000000000000002
+2021,No mental health care due to cost,Sex,Female,5.6,Male,2.7,2.8999999999999995
+2021,No mental health care due to cost,Sexual orientation,Bisexual,24.6,Straight,3.5,21.1
+2021,No mental health care due to cost,Veteran status,Non-veteran,4.4,Veteran,1.6,2.8000000000000003
+2021,No mental health care due to cost,Metropolitan statistical area,Large MSA,4.3,Non-MSA,3.4,0.8999999999999999
+2021,No mental health care due to cost,Region,Midwest,4.5,Northeast,3.0,1.5
+2021,No mental health care due to cost,Social vulnerability,Low social vulnerability,4.9,High social vulnerability,3.2,1.7000000000000002
+2021,No mental health care due to cost,Urbanicity,Large central metro,4.7,Nonmetropolitan,3.4,1.3000000000000003
+2021,No mental health care due to cost,Education,Some college,4.8,No high school diploma or GED,2.5,2.3
+2021,No mental health care due to cost,Employment status,Employed - Part-time,6.3,Not employed - Has never worked,1.1,5.199999999999999
+2021,No mental health care due to cost,Health insurance coverage: 65 years and older,Medicare Advantage,1.2,Uninsured,0.0,1.2
+2021,No mental health care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,9.2,Other government coverage,4.3,4.8999999999999995
+2021,No mental health care due to cost,Poverty level,<100% FPL,6.4,≥200% FPL,3.7,2.7
+2021,Skipped medication as prescribed to save money,Age groups with 65 years and older,35-49 years,8.7,65 years and older,3.7,4.999999999999999
+2021,Skipped medication as prescribed to save money,Age groups with 75 years and older,18-44 years,8.5,75 years and older,2.3,6.2
+2021,Skipped medication as prescribed to save money,Disability status,With disability,13.0,Without disability,5.9,7.1
+2021,Skipped medication as prescribed to save money,Functioning difficulties status,With functioning difficulties,9.5,Without functioning difficulties,3.8,5.7
+2021,Skipped medication as prescribed to save money,Marital status,Divorced or separated,9.6,Widowed,4.2,5.3999999999999995
+2021,Skipped medication as prescribed to save money,Nativity,Foreign-born,6.9,U.S.-born,6.7,0.20000000000000018
+2021,Skipped medication as prescribed to save money,Race,Native Hawaiian or Other Pacific Islander only,21.5,Asian only,5.1,16.4
+2021,Skipped medication as prescribed to save money,Race and Hispanic origin,"Black only, non-Hispanic",9.3,"White only, non-Hispanic",6.1,3.200000000000001
+2021,Skipped medication as prescribed to save money,Sex,Female,7.5,Male,5.8,1.7000000000000002
+2021,Skipped medication as prescribed to save money,Sexual orientation,Bisexual,17.8,Straight,6.3,11.5
+2021,Skipped medication as prescribed to save money,Veteran status,Non-veteran,7.0,Veteran,3.7,3.3
+2021,Skipped medication as prescribed to save money,Metropolitan statistical area,Non-MSA,8.3,Large MSA,6.4,1.9000000000000004
+2021,Skipped medication as prescribed to save money,Region,South,8.2,Northeast,4.8,3.3999999999999995
+2021,Skipped medication as prescribed to save money,Social vulnerability,Medium social vulnerability,7.7,Little to no social vulnerability,5.2,2.5
+2021,Skipped medication as prescribed to save money,Urbanicity,Nonmetropolitan,8.3,Large fringe metro,5.9,2.4000000000000004
+2021,Skipped medication as prescribed to save money,Education,No high school diploma or GED,9.0,College degree or higher,4.4,4.6
+2021,Skipped medication as prescribed to save money,Employment status,Employed - Part-time,8.1,Not employed - Has never worked,2.6,5.5
+2021,Skipped medication as prescribed to save money,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,5.7,Other government coverage,1.6,4.1
+2021,Skipped medication as prescribed to save money,Health insurance coverage: Younger than 65 years,Uninsured,22.9,Private,6.5,16.4
+2021,Skipped medication as prescribed to save money,Poverty level,<100% FPL,12.0,≥200% FPL,5.3,6.7
+2022,Delayed getting medical care due to cost,Age groups with 65 years and older,35-49 years,9.4,65 years and older,2.7,6.7
+2022,Delayed getting medical care due to cost,Age groups with 75 years and older,18-44 years,8.6,75 years and older,1.5,7.1
+2022,Delayed getting medical care due to cost,Disability status,With disability,12.2,Without disability,6.5,5.699999999999999
+2022,Delayed getting medical care due to cost,Functioning difficulties status,With functioning difficulties,9.9,Without functioning difficulties,4.7,5.2
+2022,Delayed getting medical care due to cost,Marital status,Living with a partner,11.8,Married,5.3,6.500000000000001
+2022,Delayed getting medical care due to cost,Nativity,Foreign-born,8.6,U.S.-born,6.6,2.0
+2022,Delayed getting medical care due to cost,Race,American Indian and Alaska Native and White,11.2,Asian only,4.3,6.8999999999999995
+2022,Delayed getting medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",11.3,"Other races, non-Hispanic",5.2,6.1000000000000005
+2022,Delayed getting medical care due to cost,Sex,Female,7.8,Male,6.2,1.5999999999999996
+2022,Delayed getting medical care due to cost,Sexual orientation,Bisexual,16.2,Straight,6.5,9.7
+2022,Delayed getting medical care due to cost,Veteran status,Non-veteran,7.2,Veteran,4.0,3.2
+2022,Delayed getting medical care due to cost,Metropolitan statistical area,Non-MSA,7.8,Small MSA,6.8,1.0
+2022,Delayed getting medical care due to cost,Region,South,8.5,Northeast,5.5,3.0
+2022,Delayed getting medical care due to cost,Social vulnerability,High social vulnerability,8.1,Little to no social vulnerability,5.9,2.1999999999999993
+2022,Delayed getting medical care due to cost,Urbanicity,Nonmetropolitan,7.8,Large fringe metro,6.7,1.0999999999999996
+2022,Delayed getting medical care due to cost,Education,No high school diploma or GED,11.5,College degree or higher,4.5,7.0
+2022,Delayed getting medical care due to cost,Employment status,Employed - Part-time,8.0,Not employed - Has never worked,4.0,4.0
+2022,Delayed getting medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,5.5,Private,2.0,3.5
+2022,Delayed getting medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,24.8,Private,5.7,19.1
+2022,Delayed getting medical care due to cost,Poverty level,100% to <200% FPL,11.3,≥200% FPL,5.5,5.800000000000001
+2022,No medical care due to cost,Age groups with 65 years and older,35-49 years,8.4,65 years and older,2.6,5.800000000000001
+2022,No medical care due to cost,Age groups with 75 years and older,18-44 years,7.4,75 years and older,1.4,6.0
+2022,No medical care due to cost,Disability status,With disability,12.4,Without disability,5.7,6.7
+2022,No medical care due to cost,Functioning difficulties status,With functioning difficulties,9.0,Without functioning difficulties,4.1,4.9
+2022,No medical care due to cost,Marital status,Living with a partner,11.1,Married,4.6,6.5
+2022,No medical care due to cost,Nativity,Foreign-born,8.3,U.S.-born,5.7,2.6000000000000005
+2022,No medical care due to cost,Race,American Indian and Alaska Native and White,8.3,Asian only,3.8,4.500000000000001
+2022,No medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",10.6,"Other races, non-Hispanic",4.6,6.0
+2022,No medical care due to cost,Sex,Female,7.1,Male,5.4,1.6999999999999993
+2022,No medical care due to cost,Sexual orientation,Bisexual,11.8,Straight,5.9,5.9
+2022,No medical care due to cost,Veteran status,Non-veteran,6.4,Veteran,3.6,2.8000000000000003
+2022,No medical care due to cost,Metropolitan statistical area,Non-MSA,6.9,Small MSA,6.1,0.8000000000000007
+2022,No medical care due to cost,Region,South,7.8,Northeast,4.3,3.5
+2022,No medical care due to cost,Social vulnerability,High social vulnerability,7.4,Little to no social vulnerability,4.7,2.7
+2022,No medical care due to cost,Urbanicity,Nonmetropolitan,6.9,Large fringe metro,5.6,1.3000000000000007
+2022,No medical care due to cost,Education,No high school diploma or GED,11.2,College degree or higher,4.0,7.199999999999999
+2022,No medical care due to cost,Employment status,Employed - Part-time,7.6,Not employed - Has never worked,3.7,3.8999999999999995
+2022,No medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,5.3,Private,1.6,3.6999999999999997
+2022,No medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,22.0,Private,4.8,17.2
+2022,No medical care due to cost,Poverty level,<100% FPL,10.7,≥200% FPL,4.7,5.999999999999999
+2022,No mental health care due to cost,Age groups with 65 years and older,18-34 years,9.0,65 years and older,1.2,7.8
+2022,No mental health care due to cost,Age groups with 75 years and older,18-44 years,8.0,75 years and older,0.7,7.3
+2022,No mental health care due to cost,Disability status,With disability,8.5,Without disability,4.7,3.8
+2022,No mental health care due to cost,Functioning difficulties status,With functioning difficulties,6.9,Without functioning difficulties,3.5,3.4000000000000004
+2022,No mental health care due to cost,Marital status,Living with a partner,8.4,Widowed,2.2,6.2
+2022,No mental health care due to cost,Nativity,U.S.-born,5.5,Foreign-born,3.0,2.5
+2022,No mental health care due to cost,Race,Black only,5.3,Asian only,3.2,2.0999999999999996
+2022,No mental health care due to cost,Race and Hispanic origin,"All races, Hispanic",5.2,"Other races, non-Hispanic",4.0,1.2000000000000002
+2022,No mental health care due to cost,Sex,Female,6.5,Male,3.4,3.1
+2022,No mental health care due to cost,Sexual orientation,Bisexual,20.7,Straight,4.3,16.4
+2022,No mental health care due to cost,Veteran status,Non-veteran,5.2,Veteran,2.7,2.5
+2022,No mental health care due to cost,Metropolitan statistical area,Large MSA,5.3,Non-MSA,3.6,1.6999999999999997
+2022,No mental health care due to cost,Region,West,5.9,Northeast,4.1,1.8000000000000007
+2022,No mental health care due to cost,Social vulnerability,Medium social vulnerability,5.8,Little to no social vulnerability,4.2,1.5999999999999996
+2022,No mental health care due to cost,Urbanicity,Large central metro,5.6,Nonmetropolitan,3.6,1.9999999999999996
+2022,No mental health care due to cost,Education,Some college,6.0,No high school diploma or GED,3.0,3.0
+2022,No mental health care due to cost,Employment status,Employed - Part-time,7.4,Not employed - Has never worked,1.8,5.6000000000000005
+2022,No mental health care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,2.2,Private,0.8,1.4000000000000001
+2022,No mental health care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,9.8,Private,5.3,4.500000000000001
+2022,No mental health care due to cost,Poverty level,100% to <200% FPL,6.5,≥200% FPL,4.5,2.0
+2022,Skipped medication as prescribed to save money,Age groups with 65 years and older,35-49 years,8.8,65 years and older,4.0,4.800000000000001
+2022,Skipped medication as prescribed to save money,Age groups with 75 years and older,18-44 years,8.2,75 years and older,3.0,5.199999999999999
+2022,Skipped medication as prescribed to save money,Disability status,With disability,12.7,Without disability,6.0,6.699999999999999
+2022,Skipped medication as prescribed to save money,Functioning difficulties status,With functioning difficulties,9.2,Without functioning difficulties,4.1,5.1
+2022,Skipped medication as prescribed to save money,Marital status,Living with a partner,10.9,Married,5.2,5.7
+2022,Skipped medication as prescribed to save money,Nativity,Foreign-born,7.3,U.S.-born,6.6,0.7000000000000002
+2022,Skipped medication as prescribed to save money,Race,American Indian and Alaska Native and White,16.1,Asian only,4.3,11.8
+2022,Skipped medication as prescribed to save money,Race and Hispanic origin,"All races, Hispanic, Mexican",10.2,"Other races, non-Hispanic",5.8,4.3999999999999995
+2022,Skipped medication as prescribed to save money,Sex,Female,7.5,Male,5.9,1.5999999999999996
+2022,Skipped medication as prescribed to save money,Sexual orientation,Bisexual,16.1,Straight,6.2,9.900000000000002
+2022,Skipped medication as prescribed to save money,Veteran status,Non-veteran,6.9,Veteran,4.8,2.1000000000000005
+2022,Skipped medication as prescribed to save money,Metropolitan statistical area,Non-MSA,7.1,Large MSA,6.7,0.39999999999999947
+2022,Skipped medication as prescribed to save money,Region,South,8.0,Northeast,5.5,2.5
+2022,Skipped medication as prescribed to save money,Social vulnerability,High social vulnerability,7.5,Little to no social vulnerability,5.4,2.0999999999999996
+2022,Skipped medication as prescribed to save money,Urbanicity,Large central metro,7.2,Large fringe metro,6.1,1.1000000000000005
+2022,Skipped medication as prescribed to save money,Education,No high school diploma or GED,9.5,College degree or higher,4.6,4.9
+2022,Skipped medication as prescribed to save money,Employment status,Employed - Part-time,7.5,Not employed,6.2,1.2999999999999998
+2022,Skipped medication as prescribed to save money,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,6.3,Other government coverage,2.1,4.199999999999999
+2022,Skipped medication as prescribed to save money,Health insurance coverage: Younger than 65 years,Uninsured,20.3,Private,6.3,14.0
+2022,Skipped medication as prescribed to save money,Poverty level,100% to <200% FPL,11.7,≥200% FPL,5.0,6.699999999999999
+2023,Delayed getting medical care due to cost,Age groups with 65 years and older,35-49 years,9.0,65 years and older,2.5,6.5
+2023,Delayed getting medical care due to cost,Age groups with 75 years and older,18-44 years,8.8,75 years and older,1.3,7.500000000000001
+2023,Delayed getting medical care due to cost,Disability status,With disability,13.0,Without disability,6.6,6.4
+2023,Delayed getting medical care due to cost,Functioning difficulties status,With functioning difficulties,10.0,Without functioning difficulties,4.9,5.1
+2023,Delayed getting medical care due to cost,Marital status,Living with a partner,11.3,Widowed,4.0,7.300000000000001
+2023,Delayed getting medical care due to cost,Nativity,Foreign-born,8.3,U.S.-born,6.9,1.4000000000000004
+2023,Delayed getting medical care due to cost,Race,American Indian and Alaska Native and White,15.0,Asian only,3.3,11.7
+2023,Delayed getting medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",10.2,"Other races, non-Hispanic",5.4,4.799999999999999
+2023,Delayed getting medical care due to cost,Sex,Female,7.9,Male,6.4,1.5
+2023,Delayed getting medical care due to cost,Sexual orientation,Bisexual,17.2,Straight,6.7,10.5
+2023,Delayed getting medical care due to cost,Veteran status,Non-veteran,7.5,Veteran,3.9,3.6
+2023,Delayed getting medical care due to cost,Metropolitan statistical area,Small MSA,8.2,Large MSA,6.6,1.5999999999999996
+2023,Delayed getting medical care due to cost,Region,South,9.1,Northeast,4.5,4.6
+2023,Delayed getting medical care due to cost,Social vulnerability,High social vulnerability,7.9,Little to no social vulnerability,5.9,2.0
+2023,Delayed getting medical care due to cost,Urbanicity,Medium and small metro,8.2,Large fringe metro,6.5,1.6999999999999993
+2023,Delayed getting medical care due to cost,Education,No high school diploma or GED,10.6,College degree or higher,5.0,5.6
+2023,Delayed getting medical care due to cost,Employment status,Employed - Part-time,8.8,Not employed - Has never worked,2.8,6.000000000000001
+2023,Delayed getting medical care due to cost,Health insurance coverage: 65 years and older,Uninsured,20.3,Other government coverage,1.2,19.1
+2023,Delayed getting medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,24.7,Private,6.3,18.4
+2023,Delayed getting medical care due to cost,Poverty level,<100% FPL,11.9,≥200% FPL,5.5,6.4
+2023,No medical care due to cost,Age groups with 65 years and older,35-49 years,8.3,65 years and older,2.2,6.1000000000000005
+2023,No medical care due to cost,Age groups with 75 years and older,45-64 years,7.7,75 years and older,1.1,6.6
+2023,No medical care due to cost,Disability status,With disability,12.8,Without disability,5.7,7.1000000000000005
+2023,No medical care due to cost,Functioning difficulties status,With functioning difficulties,9.0,Without functioning difficulties,4.1,4.9
+2023,No medical care due to cost,Marital status,Living with a partner,10.5,Widowed,3.9,6.6
+2023,No medical care due to cost,Nativity,Foreign-born,8.4,U.S.-born,5.9,2.5
+2023,No medical care due to cost,Race,American Indian and Alaska Native and White,13.2,Asian only,3.6,9.6
+2023,No medical care due to cost,Race and Hispanic origin,"All races, Hispanic, Mexican",9.6,"Other races, non-Hispanic",5.1,4.5
+2023,No medical care due to cost,Sex,Female,7.1,Male,5.5,1.5999999999999996
+2023,No medical care due to cost,Sexual orientation,Bisexual,14.9,Straight,6.0,8.9
+2023,No medical care due to cost,Veteran status,Non-veteran,6.6,Veteran,3.5,3.0999999999999996
+2023,No medical care due to cost,Metropolitan statistical area,Small MSA,7.2,Large MSA,5.8,1.4000000000000004
+2023,No medical care due to cost,Region,South,8.2,Northeast,4.0,4.199999999999999
+2023,No medical care due to cost,Social vulnerability,High social vulnerability,7.4,Little to no social vulnerability,4.4,3.0
+2023,No medical care due to cost,Urbanicity,Medium and small metro,7.3,Large fringe metro,5.4,1.8999999999999995
+2023,No medical care due to cost,Education,No high school diploma or GED,10.3,College degree or higher,4.0,6.300000000000001
+2023,No medical care due to cost,Employment status,Employed - Part-time,7.1,Not employed - Has never worked,2.7,4.3999999999999995
+2023,No medical care due to cost,Health insurance coverage: 65 years and older,Medicare and Medicaid,3.5,Private,1.3,2.2
+2023,No medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,22.6,Private,5.2,17.400000000000002
+2023,No medical care due to cost,Poverty level,<100% FPL,12.0,≥200% FPL,4.5,7.5
+2023,No mental health care due to cost,Age groups with 65 years and older,18-34 years,9.4,65 years and older,1.4,8.0
+2023,No mental health care due to cost,Age groups with 75 years and older,18-44 years,8.5,75 years and older,0.7,7.8
+2023,No mental health care due to cost,Disability status,With disability,9.8,Without disability,5.0,4.800000000000001
+2023,No mental health care due to cost,Functioning difficulties status,With functioning difficulties,7.9,Without functioning difficulties,3.5,4.4
+2023,No mental health care due to cost,Marital status,Living with a partner,10.2,Widowed,2.1,8.1
+2023,No mental health care due to cost,Nativity,U.S.-born,6.0,Foreign-born,3.5,2.5
+2023,No mental health care due to cost,Race,Black and White,9.3,Asian only,3.6,5.700000000000001
+2023,No mental health care due to cost,Race and Hispanic origin,"White only, non-Hispanic",5.6,"All races, Hispanic",5.2,0.39999999999999947
+2023,No mental health care due to cost,Sex,Female,7.2,Male,3.6,3.6
+2023,No mental health care due to cost,Sexual orientation,Bisexual,26.3,Straight,4.6,21.700000000000003
+2023,No mental health care due to cost,Veteran status,Non-veteran,5.7,Veteran,2.9,2.8000000000000003
+2023,No mental health care due to cost,Metropolitan statistical area,Large MSA,5.7,Non-MSA,4.5,1.2000000000000002
+2023,No mental health care due to cost,Region,West,6.5,Northeast,4.1,2.4000000000000004
+2023,No mental health care due to cost,Social vulnerability,Medium social vulnerability,6.2,Little to no social vulnerability,4.8,1.4000000000000004
+2023,No mental health care due to cost,Urbanicity,Large central metro,6.1,Nonmetropolitan,4.5,1.5999999999999996
+2023,No mental health care due to cost,Education,Some college,6.4,No high school diploma or GED,3.1,3.3000000000000003
+2023,No mental health care due to cost,Employment status,Employed,6.1,Not employed - Has never worked,2.4,3.6999999999999997
+2023,No mental health care due to cost,Health insurance coverage: 65 years and older,Medicare and Medicaid,2.3,Other government coverage,0.3,1.9999999999999998
+2023,No mental health care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,9.6,Private,6.3,3.3
+2023,No mental health care due to cost,Poverty level,100% to <200% FPL,7.0,≥200% FPL,5.0,2.0
+2023,Skipped medication as prescribed to save money,Age groups with 65 years and older,35-49 years,9.9,65 years and older,4.5,5.4
+2023,Skipped medication as prescribed to save money,Age groups with 75 years and older,18-44 years,9.7,75 years and older,3.1,6.6
+2023,Skipped medication as prescribed to save money,Disability status,With disability,13.9,Without disability,6.9,7.0
+2023,Skipped medication as prescribed to save money,Functioning difficulties status,With functioning difficulties,10.6,Without functioning difficulties,4.7,5.8999999999999995
+2023,Skipped medication as prescribed to save money,Marital status,Living with a partner,12.5,Widowed,4.5,8.0
+2023,Skipped medication as prescribed to save money,Nativity,U.S.-born,7.8,Foreign-born,7.6,0.20000000000000018
+2023,Skipped medication as prescribed to save money,Race,American Indian and Alaska Native and White,14.4,Asian only,4.9,9.5
+2023,Skipped medication as prescribed to save money,Race and Hispanic origin,"Black only, non-Hispanic",11.0,"White only, non-Hispanic",6.9,4.1
+2023,Skipped medication as prescribed to save money,Sex,Female,8.7,Male,6.7,1.9999999999999991
+2023,Skipped medication as prescribed to save money,Sexual orientation,Bisexual,16.2,Straight,7.3,8.899999999999999
+2023,Skipped medication as prescribed to save money,Veteran status,Non-veteran,8.0,Veteran,5.0,3.0
+2023,Skipped medication as prescribed to save money,Metropolitan statistical area,Small MSA,8.7,Large MSA,7.2,1.4999999999999991
+2023,Skipped medication as prescribed to save money,Region,South,9.7,Northeast,5.1,4.6
+2023,Skipped medication as prescribed to save money,Social vulnerability,High social vulnerability,8.7,Low social vulnerability,6.5,2.1999999999999993
+2023,Skipped medication as prescribed to save money,Urbanicity,Medium and small metro,8.8,Large fringe metro,6.8,2.000000000000001
+2023,Skipped medication as prescribed to save money,Education,Some college,9.7,College degree or higher,5.6,4.1
+2023,Skipped medication as prescribed to save money,Employment status,Not employed - Has worked previously,8.1,Not employed - Has never worked,2.2,5.8999999999999995
+2023,Skipped medication as prescribed to save money,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,6.7,Other government coverage,3.0,3.7
+2023,Skipped medication as prescribed to save money,Health insurance coverage: Younger than 65 years,Uninsured,25.9,Private,7.5,18.4
+2023,Skipped medication as prescribed to save money,Poverty level,<100% FPL,13.1,≥200% FPL,6.2,6.8999999999999995
+2024,Delayed getting medical care due to cost,Age groups with 65 years and older,35-49 years,10.8,65 years and older,2.6,8.200000000000001
+2024,Delayed getting medical care due to cost,Age groups with 75 years and older,18-44 years,10.6,75 years and older,1.6,9.0
+2024,Delayed getting medical care due to cost,Disability status,With disability,14.2,Without disability,8.0,6.199999999999999
+2024,Delayed getting medical care due to cost,Functioning difficulties status,With functioning difficulties,11.6,Without functioning difficulties,6.0,5.6
+2024,Delayed getting medical care due to cost,Marital status,Living with a partner,13.1,Widowed,4.6,8.5
+2024,Delayed getting medical care due to cost,Nativity,U.S.-born,8.7,Foreign-born,8.4,0.29999999999999893
+2024,Delayed getting medical care due to cost,Race,Native Hawaiian or Other Pacific Islander only,14.6,Asian only,3.8,10.8
+2024,Delayed getting medical care due to cost,Race and Hispanic origin,"All races, Hispanic",10.0,"Other races, non-Hispanic",6.1,3.9000000000000004
+2024,Delayed getting medical care due to cost,Sex,Female,9.6,Male,7.5,2.0999999999999996
+2024,Delayed getting medical care due to cost,Sexual orientation,Bisexual,23.1,Straight,7.9,15.200000000000001
+2024,Delayed getting medical care due to cost,Veteran status,Non-veteran,8.9,Veteran,5.2,3.7
+2024,Delayed getting medical care due to cost,Metropolitan statistical area,Small MSA,10.0,Non-MSA,7.7,2.3
+2024,Delayed getting medical care due to cost,Region,South,10.1,Northeast,6.3,3.8
+2024,Delayed getting medical care due to cost,Social vulnerability,Medium social vulnerability,9.2,Low social vulnerability,8.0,1.1999999999999993
+2024,Delayed getting medical care due to cost,Urbanicity,Medium and small metro,9.9,Large fringe metro,7.9,2.0
+2024,Delayed getting medical care due to cost,Education,No high school diploma or GED,10.4,College degree or higher,7.0,3.4000000000000004
+2024,Delayed getting medical care due to cost,Employment status,Employed - Part-time,10.6,Not employed - Has never worked,4.0,6.6
+2024,Delayed getting medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,2.7,Other government coverage,2.2,0.5
+2024,Delayed getting medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,26.8,Medicaid or other state programs,6.5,20.3
+2024,Delayed getting medical care due to cost,Poverty level,100% to <200% FPL,11.7,≥200% FPL,7.4,4.299999999999999
+2024,No medical care due to cost,Age groups with 65 years and older,35-49 years,9.7,65 years and older,2.2,7.499999999999999
+2024,No medical care due to cost,Age groups with 75 years and older,18-44 years,9.1,75 years and older,1.4,7.699999999999999
+2024,No medical care due to cost,Disability status,With disability,12.8,Without disability,6.8,6.000000000000001
+2024,No medical care due to cost,Functioning difficulties status,With functioning difficulties,9.9,Without functioning difficulties,5.2,4.7
+2024,No medical care due to cost,Marital status,Living with a partner,10.7,Widowed,3.7,6.999999999999999
+2024,No medical care due to cost,Nativity,Foreign-born,8.2,U.S.-born,7.2,0.9999999999999991
+2024,No medical care due to cost,Race,Native Hawaiian or Other Pacific Islander only,15.0,Asian only,3.7,11.3
+2024,No medical care due to cost,Race and Hispanic origin,"All races, Hispanic",9.4,"Other races, non-Hispanic",5.9,3.5
+2024,No medical care due to cost,Sex,Female,8.2,Male,6.5,1.6999999999999993
+2024,No medical care due to cost,Sexual orientation,Bisexual,20.1,Straight,6.8,13.3
+2024,No medical care due to cost,Veteran status,Non-veteran,7.6,Veteran,4.1,3.5
+2024,No medical care due to cost,Metropolitan statistical area,Small MSA,8.4,Large MSA,6.9,1.5
+2024,No medical care due to cost,Region,South,8.9,Northeast,5.3,3.6000000000000005
+2024,No medical care due to cost,Social vulnerability,Medium social vulnerability,8.0,Little to no social vulnerability,6.2,1.7999999999999998
+2024,No medical care due to cost,Urbanicity,Medium and small metro,8.3,Large fringe metro,6.6,1.700000000000001
+2024,No medical care due to cost,Education,No high school diploma or GED,10.4,College degree or higher,5.3,5.1000000000000005
+2024,No medical care due to cost,Employment status,Employed - Part-time,9.0,Not employed - Has never worked,3.8,5.2
+2024,No medical care due to cost,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,2.6,Other government coverage,1.2,1.4000000000000001
+2024,No medical care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,25.0,Medicaid or other state programs,6.6,18.4
+2024,No medical care due to cost,Poverty level,<100% FPL,11.1,≥200% FPL,6.1,5.0
+2024,No mental health care due to cost,Age groups with 65 years and older,18-34 years,10.0,65 years and older,1.0,9.0
+2024,No mental health care due to cost,Age groups with 75 years and older,18-44 years,9.3,75 years and older,0.5,8.8
+2024,No mental health care due to cost,Disability status,With disability,11.2,Without disability,5.3,5.8999999999999995
+2024,No mental health care due to cost,Functioning difficulties status,With functioning difficulties,8.0,Without functioning difficulties,4.0,4.0
+2024,No mental health care due to cost,Marital status,Living with a partner,11.2,Widowed,2.1,9.1
+2024,No mental health care due to cost,Nativity,U.S.-born,6.4,Foreign-born,3.9,2.5000000000000004
+2024,No mental health care due to cost,Race,Black and White,10.5,Asian only,2.5,8.0
+2024,No mental health care due to cost,Race and Hispanic origin,"White only, non-Hispanic",6.1,"Other races, non-Hispanic",4.5,1.5999999999999996
+2024,No mental health care due to cost,Sex,Female,8.1,Male,3.5,4.6
+2024,No mental health care due to cost,Sexual orientation,Bisexual,28.5,Straight,4.9,23.6
+2024,No mental health care due to cost,Veteran status,Non-veteran,6.2,Veteran,2.4,3.8000000000000003
+2024,No mental health care due to cost,Metropolitan statistical area,Small MSA,6.4,Non-MSA,5.0,1.4000000000000004
+2024,No mental health care due to cost,Region,West,6.5,Northeast,5.0,1.5
+2024,No mental health care due to cost,Social vulnerability,High social vulnerability,6.2,Little to no social vulnerability,5.3,0.9000000000000004
+2024,No mental health care due to cost,Urbanicity,Large central metro,6.4,Large fringe metro,5.3,1.1000000000000005
+2024,No mental health care due to cost,Education,Some college,6.5,No high school diploma or GED,3.4,3.1
+2024,No mental health care due to cost,Employment status,Employed - Part-time,8.5,Not employed - Has never worked,1.8,6.7
+2024,No mental health care due to cost,Health insurance coverage: 65 years and older,Medicare and Medicaid,1.7,Other government coverage,0.6,1.1
+2024,No mental health care due to cost,Health insurance coverage: Younger than 65 years,Uninsured,13.6,Other government coverage,5.7,7.8999999999999995
+2024,No mental health care due to cost,Poverty level,<100% FPL,7.0,≥200% FPL,5.5,1.5
+2024,Skipped medication as prescribed to save money,Age groups with 65 years and older,18-34 years,10.7,65 years and older,3.9,6.799999999999999
+2024,Skipped medication as prescribed to save money,Age groups with 75 years and older,18-44 years,10.0,75 years and older,2.5,7.5
+2024,Skipped medication as prescribed to save money,Disability status,With disability,13.5,Without disability,7.0,6.5
+2024,Skipped medication as prescribed to save money,Functioning difficulties status,With functioning difficulties,10.6,Without functioning difficulties,4.6,6.0
+2024,Skipped medication as prescribed to save money,Marital status,Divorced or separated,10.6,Widowed,5.3,5.3
+2024,Skipped medication as prescribed to save money,Nativity,U.S.-born,8.0,Foreign-born,6.6,1.4000000000000004
+2024,Skipped medication as prescribed to save money,Race,Native Hawaiian or Other Pacific Islander only,19.1,Asian only,4.4,14.700000000000001
+2024,Skipped medication as prescribed to save money,Race and Hispanic origin,"Black only, non-Hispanic",10.0,"Other races, non-Hispanic",6.8,3.2
+2024,Skipped medication as prescribed to save money,Sex,Female,8.9,Male,6.3,2.6000000000000005
+2024,Skipped medication as prescribed to save money,Sexual orientation,Bisexual,19.7,Straight,7.1,12.6
+2024,Skipped medication as prescribed to save money,Veteran status,Non-veteran,8.1,Veteran,4.3,3.8
+2024,Skipped medication as prescribed to save money,Metropolitan statistical area,Small MSA,8.7,Large MSA,7.1,1.5999999999999996
+2024,Skipped medication as prescribed to save money,Region,South,9.3,Northeast,5.6,3.700000000000001
+2024,Skipped medication as prescribed to save money,Social vulnerability,High social vulnerability,9.1,Little to no social vulnerability,5.7,3.3999999999999995
+2024,Skipped medication as prescribed to save money,Urbanicity,Medium and small metro,8.5,Large fringe metro,6.8,1.7000000000000002
+2024,Skipped medication as prescribed to save money,Education,Some college,9.3,College degree or higher,6.1,3.200000000000001
+2024,Skipped medication as prescribed to save money,Employment status,Employed - Part-time,8.7,Not employed - Has never worked,1.9,6.799999999999999
+2024,Skipped medication as prescribed to save money,Health insurance coverage: 65 years and older,Medicare only excluding Medicare Advantage,4.4,Other government coverage,1.4,3.0000000000000004
+2024,Skipped medication as prescribed to save money,Health insurance coverage: Younger than 65 years,Uninsured,25.8,Private,8.0,17.8
+2024,Skipped medication as prescribed to save money,Poverty level,<100% FPL,11.7,≥200% FPL,6.5,5.199999999999999
