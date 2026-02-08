@@ -431,8 +431,23 @@
         <span class="section-label">02 — Disparities Snapshot</span>
         <h2>The landscape of inequality in 2024</h2>
         <p>
-            Who faces the steepest barriers to healthcare? The answer depends on which lens you use — 
+            Who faces the steepest barriers to healthcare? The answer depends on which lens you use —
             race, income, or education all reveal different dimensions of the same problem.
+        </p>
+    </div>
+
+    <div class="content-wide">
+        <div class="chart-container">
+            <div id="chart-timeseries"></div>
+            <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2019-2024. U.S. Adult Population (18+).</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <p>
+            Looking at trends over time reveals a striking pattern: <strong>all four barrier types dropped sharply
+            in 2020-2021</strong> as pandemic-era policies took effect, then began rising again as those protections expired.
+            By 2024, we're approaching pre-pandemic levels — and in some cases, exceeding them.
         </p>
     </div>
 
@@ -445,10 +460,11 @@
 
     <div class="content">
         <p>
-            The heatmap reveals a stark pattern: <strong>Hispanic populations face the highest barriers 
-            across nearly every access metric</strong>, with uninsured rates exceeding 25%. 
-            Meanwhile, non-Hispanic white adults consistently report the lowest barriers — 
-            but even among them, 7-9% skip care due to cost.
+            The heatmap reveals a stark pattern: <strong>uninsured adults face barriers 3-5× higher than
+            those with private insurance</strong> across all four access metrics. Bisexual adults report
+            the highest mental health care barriers at 28.5%, while those with disabilities consistently
+            face elevated barriers across all categories. Even among the best-off groups, 4-8% still skip
+            care due to cost — these barriers touch everyone, just unequally.
         </p>
 
         <div class="pull-quote">
@@ -612,49 +628,101 @@ const plotlyLayout = {
     margin: { t: 60, b: 60, l: 60, r: 30 }
 };
 
-// ===== HEATMAP =====
-// PLACEHOLDER: Replace this data with your actual values from the Colab notebook
-const heatmapTopics = [
+// ===== TIME SERIES =====
+const timeseriesYears = [2019, 2020, 2021, 2022, 2023, 2024];
+const timeseriesData = {
+    'Delayed getting medical care due to cost': [9.1, 7.5, 7.1, 7.0, 7.2, 8.6],
+    'Did not get needed medical care due to cost': [8.3, 6.6, 6.1, 6.3, 6.3, 7.4],
+    'Did not get needed mental health care due to cost': [4.4, 4.3, 4.2, 5.0, 5.5, 5.9],
+    'Did not take medication as prescribed to save money': [9.6, 8.3, 6.8, 6.8, 7.8, 7.8]
+};
+const timeseriesColors = ['#e63946', '#ff7f0e', '#2ecc71', '#3498db'];
+const timeseriesNames = [
     'Delayed getting medical care due to cost',
     'Did not get needed medical care due to cost',
-    'Did not get needed mental health care',
-    'Did not take medication to save money',
-    'Fair or poor health status',
-    'Has a usual place of care',
-    'Uninsured at time of interview',
-    'Uninsured part of past year'
+    'Did not get needed mental health care due to cost',
+    'Did not take medication as prescribed to save money'
 ];
+
+const timeseriesTraces = timeseriesNames.map((name, i) => ({
+    x: timeseriesYears,
+    y: timeseriesData[name],
+    mode: 'lines+markers',
+    name: name,
+    line: { width: 3, color: timeseriesColors[i] },
+    marker: { size: 8 },
+    hovertemplate: '%{y:.1f}%<extra></extra>'
+}));
+
+Plotly.newPlot('chart-timeseries', timeseriesTraces, {
+    ...plotlyLayout,
+    title: { text: 'Access Barriers Over Time<br><span style="font-size:13px;color:#9ca3af">U.S. Adult Population (18+)</span>', font: { size: 18 } },
+    height: 480,
+    xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
+    yaxis: { ...plotlyLayout.yaxis, title: 'Population Experiencing Barrier (%)' },
+    shapes: [{
+        type: 'line',
+        x0: 2020, x1: 2020,
+        y0: 0, y1: 1,
+        yref: 'paper',
+        line: { color: '#e63946', width: 2, dash: 'dash' }
+    }],
+    annotations: [{
+        x: 2020, y: 9.5,
+        text: '<b>COVID-19</b>',
+        showarrow: false,
+        font: { size: 12, color: '#e63946' },
+        xanchor: 'center'
+    }],
+    showlegend: true,
+    legend: { x: 0, y: 1.15, orientation: 'h', font: { size: 11 } },
+    margin: { t: 120, b: 60, l: 60, r: 30 }
+}, plotlyConfig);
+
+// ===== HEATMAP =====
 const heatmapSubgroups = [
-    'All races,\nHispanic', 'All races,\nHispanic Mexican', 'All races,\nnon-Hispanic',
-    'Black only,\nnon-Hispanic', 'Other races,\nnon-Hispanic', 'White only,\nnon-Hispanic'
+    'Uninsured', 'Private', 'Medicaid or other\nstate programs',
+    'Bisexual', 'Gay or Lesbian', 'Straight',
+    'Black and White', 'Native Hawaiian or\nOther Pacific Islander', 'American Indian and\nAlaska Native and White',
+    'With disability', 'Without disability',
+    '<100% FPL', '100% to <200% FPL', '≥200% FPL'
 ];
+const heatmapTopics = ['Delayed\nCare', 'Missed\nMedical', 'Missed\nMental Health', 'Missed\nMedication'];
 const heatmapZ = [
-    [10.0, 9.3, 8.3, 8.7, 6.1, 8.5],
-    [9.4, 9.1, 6.9, 8.2, 5.9, 6.9],
-    [6.0, 5.1, 5.8, 5.7, 4.5, 6.1],
-    [8.5, 9.1, 7.7, 10.0, 6.8, 7.4],
-    [16.5, 16.9, 14.5, 20.1, 14.2, 13.4],
-    [81.9, 81.5, 90.0, 87.0, 87.8, 90.9],
-    [25.3, 27.7, 8.1, 10.5, 7.4, 7.8],
-    [31.1, 33.4, 12.7, 16.7, 11.5, 12.0]
+    [26.8, 25.0, 13.6, 25.8],  // Uninsured
+    [5.4, 4.5, 3.65, 5.9],      // Private
+    [6.5, 6.6, 6.3, 8.8],       // Medicaid
+    [23.1, 20.1, 28.5, 19.7],   // Bisexual
+    [10.4, 7.8, 12.7, 8.9],     // Gay or Lesbian
+    [7.9, 6.8, 4.9, 7.1],       // Straight
+    [13.4, 13.6, 10.5, 18.6],   // Black and White
+    [14.6, 15.0, null, 19.1],   // Native Hawaiian
+    [10.3, 11.4, 8.7, 6.2],     // American Indian
+    [14.2, 12.8, 11.2, 13.5],   // With disability
+    [8.0, 6.8, 5.3, 7.0],       // Without disability
+    [11.5, 11.1, 7.0, 11.7],    // <100% FPL
+    [11.7, 10.7, 6.8, 11.2],    // 100-200% FPL
+    [7.4, 6.1, 5.5, 6.5]        // ≥200% FPL
 ];
 
 Plotly.newPlot('chart-heatmap', [{
     z: heatmapZ,
-    x: heatmapSubgroups,
-    y: heatmapTopics,
+    x: heatmapTopics,
+    y: heatmapSubgroups,
     type: 'heatmap',
     colorscale: 'YlOrRd',
-    text: heatmapZ.map(row => row.map(v => v.toFixed(1))),
+    text: heatmapZ.map(row => row.map(v => v !== null ? v.toFixed(1) : 'N/A')),
     texttemplate: '%{text}',
-    textfont: { size: 12 },
-    hovertemplate: '%{y}<br>%{x}: %{z:.1f}%<extra></extra>'
+    textfont: { size: 11 },
+    hovertemplate: '%{y}<br>%{x}: %{z:.1f}%<extra></extra>',
+    zmin: 0,
+    zmax: 30
 }], {
     ...plotlyLayout,
-    title: { text: 'Healthcare Access by Race & Ethnicity (2024)', font: { size: 18 } },
-    height: 480,
-    margin: { t: 60, b: 120, l: 280, r: 30 },
-    xaxis: { ...plotlyLayout.xaxis, tickangle: -45 },
+    title: { text: 'Access Barrier Rates by Subgroup (2024)', font: { size: 18 } },
+    height: 540,
+    margin: { t: 60, b: 80, l: 200, r: 100 },
+    xaxis: { ...plotlyLayout.xaxis, side: 'bottom' },
     yaxis: { ...plotlyLayout.yaxis, autorange: 'reversed' }
 }, plotlyConfig);
 
@@ -800,6 +868,8 @@ Plotly.newPlot('chart-gap-not-closing', [
 }, plotlyConfig);
 
 // ===== SCROLL ANIMATIONS =====
+let timeseriesAnimated = false;
+
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -809,12 +879,83 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
+// Separate observer for time series animation
+const chartObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.id === 'chart-timeseries' && !timeseriesAnimated) {
+            timeseriesAnimated = true;
+            setTimeout(() => animateTimeSeries(), 300); // Small delay for smooth effect
+        }
+    });
+}, { threshold: 0.3 });
+
 document.querySelectorAll('.section, .chart-container, .stat-card, .export-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
 });
+
+// Observe the time series chart for animation
+const timeseriesElement = document.getElementById('chart-timeseries');
+if (timeseriesElement) {
+    chartObserver.observe(timeseriesElement);
+}
+
+// Animate time series lines drawing
+function animateTimeSeries() {
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const stepDuration = duration / steps;
+    let step = 0;
+
+    const interval = setInterval(() => {
+        step++;
+        const progress = step / steps;
+
+        const animatedTraces = timeseriesNames.map((name, i) => {
+            const numPoints = Math.floor(timeseriesYears.length * progress);
+            return {
+                x: timeseriesYears.slice(0, Math.max(1, numPoints)),
+                y: timeseriesData[name].slice(0, Math.max(1, numPoints)),
+                mode: 'lines+markers',
+                name: name,
+                line: { width: 3, color: timeseriesColors[i] },
+                marker: { size: 8 },
+                hovertemplate: '%{y:.1f}%<extra></extra>'
+            };
+        });
+
+        Plotly.react('chart-timeseries', animatedTraces, {
+            ...plotlyLayout,
+            title: { text: 'Access Barriers Over Time<br><span style="font-size:13px;color:#9ca3af">U.S. Adult Population (18+)</span>', font: { size: 18 } },
+            height: 480,
+            xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
+            yaxis: { ...plotlyLayout.yaxis, title: 'Population Experiencing Barrier (%)' },
+            shapes: [{
+                type: 'line',
+                x0: 2020, x1: 2020,
+                y0: 0, y1: 1,
+                yref: 'paper',
+                line: { color: '#e63946', width: 2, dash: 'dash' }
+            }],
+            annotations: [{
+                x: 2020, y: 9.5,
+                text: '<b>COVID-19</b>',
+                showarrow: false,
+                font: { size: 12, color: '#e63946' },
+                xanchor: 'center'
+            }],
+            showlegend: true,
+            legend: { x: 0, y: 1.15, orientation: 'h', font: { size: 11 } },
+            margin: { t: 120, b: 60, l: 60, r: 30 }
+        }, plotlyConfig);
+
+        if (step >= steps) {
+            clearInterval(interval);
+        }
+    }, stepDuration);
+}
 </script>
 
 </body>
