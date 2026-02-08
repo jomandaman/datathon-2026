@@ -966,8 +966,6 @@ function updateDemographicChart(demographic) {
 // Initialize time series
 updateDemographicChart(currentDemographic);
 
-// Legend is now displayed inside the time series chart via Plotly's built-in legend
-
 // ===== UPDATE BUBBLE PLOT =====
 // Define demographic categories and their colors
 const demographicCategories = {
@@ -1024,7 +1022,7 @@ function updateBubblePlot(year, activeDemographic) {
         selectedBubbles.push(...bubbles.slice(0, limit));
     });
 
-    // Position bubbles in clusters by category - MAXIMUM SPACING
+    // Position bubbles in clusters by category
     const categoryPositions = {
         'Insurance': { cx: -0.75, cy: -0.7 },
         'Race': { cx: 0.75, cy: -0.7 },
@@ -1050,25 +1048,25 @@ function updateBubblePlot(year, activeDemographic) {
         const indexInCategory = bubblesInCategory.findIndex(b => b.name === bubble.name);
         const totalInCategory = bubblesInCategory.length;
 
-        // MAXIMUM SPACING - no overlaps allowed
+        // Calculate bubble spacing within cluster
         const angle = (indexInCategory / totalInCategory) * 2 * Math.PI;
-        const spread = 0.55; // Increased: 0.25 → 0.35 → 0.45 → 0.55
+        const spread = 0.55;
         const jitterX = spread * Math.cos(angle);
         const jitterY = spread * Math.sin(angle);
 
         xPos.push(catPos.cx + jitterX);
         yPos.push(catPos.cy + jitterY);
 
-        // Size based on barrier rate (larger rate = larger bubble)
+        // Size based on barrier rate
         sizes.push(Math.sqrt(bubble.rate) * 10);
         colors.push(bubble.color);
-        opacities.push(1); // ALL FULL OPACITY - no transparency
+        opacities.push(1);
 
-        // Truncate long names
+        // Truncate long names for display
         const shortName = bubble.name.length > 20 ? bubble.name.substring(0, 17) + '...' : bubble.name;
         texts.push(`<b>${shortName}</b><br>${bubble.rate.toFixed(1)}% barrier rate<br><i>${bubble.category}</i>`);
 
-        // NO BORDERS - just solid bubbles
+        // Bubble styling
         lineColors.push(bubble.color);
         lineWidths.push(0);
     });

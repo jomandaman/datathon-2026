@@ -2,7 +2,7 @@
 
 **Healthcare Access Barriers Analysis · DubsTech Datathon 2026**
 
-[![View Live Site](https://img.shields.io/badge/View-Live%20Site-2a9d8f?style=for-the-badge)](https://your-username.github.io/datathon-2026/)
+[![View Live Site](https://img.shields.io/badge/View-Live%20Site-2a9d8f?style=for-the-badge)](https://jomandaman.github.io/datathon-2026/)
 [![Download Data](https://img.shields.io/badge/Download-Tableau%20Data-e63946?style=for-the-badge)](data/tableau_exports/)
 
 ---
