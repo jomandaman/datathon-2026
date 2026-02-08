@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0a0e17" rx="64"/>
+  
+  <!-- Infinity symbol made of angular/geometric strokes like the datathon logo -->
+  <g transform="translate(256, 256)">
+    <!-- Left loop of infinity - angular/triangular like the datathon arrow -->
+    <path d="
+      M -8,0 
+      L -80,-55 
+      L -155,-55 
+      L -195,0 
+      L -155,55 
+      L -80,55 
+      Z
+    " fill="none" stroke="#e63946" stroke-width="28" stroke-linejoin="miter" stroke-linecap="square"/>
+    
+    <!-- Right loop of infinity - angular/rectangular like the datathon bracket -->
+    <path d="
+      M 8,0 
+      L 80,-55 
+      L 155,-55 
+      L 195,0 
+      L 155,55 
+      L 80,55 
+      Z
+    " fill="none" stroke="#e63946" stroke-width="28" stroke-linejoin="miter" stroke-linecap="square"/>
+    
+    <!-- Inner accent lines for depth - like the double-stroke of datathon logo -->
+    <path d="
+      M -8,0 
+      L -70,-40 
+      L -140,-40 
+      L -168,0 
+      L -140,40 
+      L -70,40 
+      Z
+    " fill="none" stroke="#e63946" stroke-width="10" stroke-linejoin="miter" stroke-linecap="square" opacity="0.5"/>
+    
+    <path d="
+      M 8,0 
+      L 70,-40 
+      L 140,-40 
+      L 168,0 
+      L 140,40 
+      L 70,40 
+      Z
+    " fill="none" stroke="#e63946" stroke-width="10" stroke-linejoin="miter" stroke-linecap="square" opacity="0.5"/>
+    
+    <!-- Small "tunnel" opening - center dot suggesting depth/accessibility -->
+    <circle cx="0" cy="0" r="6" fill="#e63946"/>
+  </g>
+  
+  <!-- Subtle corner accents like the datathon's bracket motif -->
+  <path d="M 40,40 L 40,70 L 70,70" fill="none" stroke="#e63946" stroke-width="4" opacity="0.3"/>
+  <path d="M 472,40 L 472,70 L 442,70" fill="none" stroke="#e63946" stroke-width="4" opacity="0.3"/>
+  <path d="M 40,472 L 40,442 L 70,442" fill="none" stroke="#e63946" stroke-width="4" opacity="0.3"/>
+  <path d="M 472,472 L 472,442 L 442,442" fill="none" stroke="#e63946" stroke-width="4" opacity="0.3"/>
+</svg>
