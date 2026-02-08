@@ -263,6 +263,25 @@
             color: var(--text-primary);
         }
 
+        .quote-citation {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-style: normal;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .quote-citation a {
+            color: var(--accent-teal);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .quote-citation a:hover {
+            opacity: 0.7;
+        }
+
         /* ===== STAT CALLOUTS ===== */
         .stat-row {
             display: grid;
@@ -871,6 +890,14 @@
             circumstance — gaps in <em>reported</em> access barriers can narrow even as actual healthcare
             utilization plummets.
         </p>
+
+        <div class="pull-quote">
+            "The rising trajectory in the inability to pay for healthcare is a disturbing trend that is likely to continue and even accelerate."
+            <div class="quote-citation">
+                — Tim Lash, President, West Health Policy Center
+                (<a href="https://westhealth.org/news/inability-to-pay-for-healthcare-reaches-record-high-in-u-s/" target="_blank">West Health, April 2025</a>)
+            </div>
+        </div>
     </div>
 
     <div class="content-wide">
@@ -1025,6 +1052,55 @@
         </p>
         <p>
             <strong>Tools:</strong> Python (Pandas, Plotly, NumPy), Google Colab, Streamlit, GitHub Pages.
+        </p>
+    </div>
+</section>
+
+<!-- ===== WORKS CITED ===== -->
+<section class="methodology">
+    <div class="content">
+        <span class="section-label">Works Cited</span>
+        <h2>References</h2>
+
+        <h3 style="font-size: 1.1rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--accent-teal);">Data Sources</h3>
+        <p style="margin-bottom: 1rem;">
+            <strong>Centers for Disease Control and Prevention (CDC).</strong> (2024). <em>National Health Interview Survey (NHIS): Adult Summary Health Statistics, 2019-2024.</em> National Center for Health Statistics.
+            <a href="https://www.cdc.gov/nchs/nhis/index.htm" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://www.cdc.gov/nchs/nhis/</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>DubsTech.</strong> (2026). <em>DubsTech Datathon 2026: Healthcare Track.</em> University of Washington.
+            <a href="https://datathon-2026.webflow.io/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://datathon-2026.webflow.io/</a>
+        </p>
+
+        <h3 style="font-size: 1.1rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--accent-teal);">Referenced Articles</h3>
+        <p style="margin-bottom: 1rem;">
+            <strong>West Health.</strong> (2025, April 2). <em>Inability to Pay for Healthcare Reaches Record High in U.S.</em> West Health Policy Center.
+            <a href="https://westhealth.org/news/inability-to-pay-for-healthcare-reaches-record-high-in-u-s/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://westhealth.org/news/inability-to-pay-for-healthcare-reaches-record-high-in-u-s/</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>Park, J., & Fung, V.</strong> (2024). <em>Health Care Affordability Problems by Income Level and Subsidy Eligibility in Medicare.</em> PubMed Central (PMC12455370).
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12455370/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://pmc.ncbi.nlm.nih.gov/articles/PMC12455370/</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>The Commonwealth Fund.</strong> (2024). <em>Hispanic/Latino Adults Lack Adequate, Affordable Health Insurance Coverage.</em> Commonwealth Fund Blog.
+            <a href="https://www.commonwealthfund.org/blog/2024/hispaniclatino-adults-lack-adequate-affordable-health-insurance-coverage" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://www.commonwealthfund.org/blog/2024/hispaniclatino-adults-lack-adequate-affordable-health-insurance-coverage</a>
+        </p>
+
+        <h3 style="font-size: 1.1rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--accent-teal);">Tools & Technologies</h3>
+        <p style="margin-bottom: 1rem;">
+            <strong>Python Software Foundation.</strong> <em>Python Programming Language (version 3.8+).</em> Libraries: Pandas, NumPy, scikit-learn, XGBoost.
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>Plotly Technologies Inc.</strong> <em>Plotly.js: Open-source JavaScript Graphing Library.</em>
+            <a href="https://plotly.com/javascript/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://plotly.com/javascript/</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>GitHub, Inc.</strong> <em>GitHub Pages: Static Site Hosting.</em>
+            <a href="https://pages.github.com/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://pages.github.com/</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>Google LLC.</strong> <em>Google Colaboratory: Cloud-based Jupyter Notebook Environment.</em>
+            <a href="https://colab.research.google.com/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://colab.research.google.com/</a>
         </p>
     </div>
 </section>
