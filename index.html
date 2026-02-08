@@ -586,6 +586,37 @@
             line-height: 1.4;
         }
 
+        /* Nestled paragraphs within article stack */
+        .article-nestled-text {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 700px;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: 10;
+        }
+
+        .article-nestled-text.visible {
+            opacity: 1;
+        }
+
+        .article-nestled-text[data-text="1"] {
+            top: 60vh;
+        }
+
+        .article-nestled-text[data-text="2"] {
+            top: 120vh;
+        }
+
+        .article-nestled-text p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
         /* ===== ANIMATIONS ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -721,6 +752,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Nestled text that appears between article reveals -->
+    <div class="article-nestled-text" data-text="1">
+        <p>
+            Looking at trends over time reveals a striking pattern: <strong>all four barrier types dropped sharply
+            in 2020-2021</strong> as pandemic-era policies took effect, then began rising again as those protections expired.
+            By 2024, we're approaching pre-pandemic levels — and in some cases, exceeding them.
+        </p>
+    </div>
+
+    <div class="article-nestled-text" data-text="2">
+        <p>
+            The heatmap reveals a stark pattern: <strong>uninsured adults face barriers 3-5× higher than
+            those with private insurance</strong> across all four access metrics. Bisexual adults report
+            the highest mental health care barriers at 28.5%, while those with disabilities consistently
+            face elevated barriers across all categories.
+        </p>
+    </div>
 </section>
 
 <!-- ===== SECTION 1: THE PROBLEM (CONCLUSION) ===== -->
@@ -801,19 +850,6 @@
         </div>
     </div>
 
-    <div class="content">
-        <p>
-            Looking at trends over time reveals a striking pattern: <strong>all four barrier types dropped sharply
-            in 2020-2021</strong> as pandemic-era policies took effect, then began rising again as those protections expired.
-            By 2024, we're approaching pre-pandemic levels — and in some cases, exceeding them.
-        </p>
-        <p>
-            The heatmap reveals a stark pattern: <strong>uninsured adults face barriers 3-5× higher than
-            those with private insurance</strong> across all four access metrics. Bisexual adults report
-            the highest mental health care barriers at 28.5%, while those with disabilities consistently
-            face elevated barriers across all categories.
-        </p>
-    </div>
 
     <div class="content">
         <p>
@@ -1370,6 +1406,86 @@ function showTopVulnerablePopulations() {
         dragmode: false,
         xaxis: {
             title: 'Average Barrier Rate (%)',
+            showgrid: true,
+            gridcolor: '#2a3448',
+            fixedrange: true,
+            range: [0, Math.max(...xValues) * 1.15]
+        },
+        yaxis: {
+            autorange: 'reversed',
+            fixedrange: true,
+            showgrid: false
+        },
+        margin: { t: 70, b: 60, l: 200, r: 40 },
+        hovermode: 'closest'
+    }, plotlyConfig);
+}
+
+// ===== DISPARITY GAPS (for area plot scene) =====
+function showDisparityGaps() {
+    // Show individual rates for all groups in the current demographic category
+    const demographic = currentAreaDemographic;
+
+    // Define demographic-specific data based on what's shown in area plots
+    let demographicData = [];
+
+    if (demographic === 'insurance') {
+        demographicData = [
+            { label: 'Uninsured', rate: 26.8 },
+            { label: 'Medicaid', rate: 10.7 },
+            { label: 'Medicare', rate: 8.5 },
+            { label: 'Other Government', rate: 7.2 },
+            { label: 'Private', rate: 5.4 }
+        ];
+    } else if (demographic === 'race') {
+        demographicData = [
+            { label: 'Native Hawaiian/PI', rate: 14.6 },
+            { label: 'AI/AN', rate: 10.3 },
+            { label: 'Hispanic', rate: 9.5 },
+            { label: 'Black', rate: 8.7 },
+            { label: 'White', rate: 7.8 },
+            { label: 'Asian', rate: 2.6 }
+        ];
+    } else { // income
+        demographicData = [
+            { label: '<100% FPL', rate: 11.1 },
+            { label: '100-200% FPL', rate: 10.8 },
+            { label: '≥200% FPL', rate: 6.1 }
+        ];
+    }
+
+    // Create horizontal bar chart showing individual rates
+    const yValues = demographicData.map(d => d.label);
+    const xValues = demographicData.map(d => d.rate);
+    const colors = xValues.map(rate => {
+        if (rate > 20) return '#e63946'; // Red for high
+        if (rate > 10) return '#f39c12'; // Orange for medium
+        return '#2a9d8f'; // Teal for lower
+    });
+
+    Plotly.react('chart-bubble', [{
+        y: yValues,
+        x: xValues,
+        type: 'bar',
+        orientation: 'h',
+        marker: { color: colors },
+        text: xValues.map(v => v.toFixed(1) + '%'),
+        textposition: 'outside',
+        hovertemplate: '%{y}<br>Barrier rate: %{x:.1f}%<extra></extra>'
+    }], {
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
+        font: { family: 'Source Sans 3, sans-serif', color: '#e8e6e1' },
+        title: {
+            text: `Barrier Rates by<br>${demographic === 'insurance' ? 'Insurance Status' : demographic === 'race' ? 'Race/Ethnicity' : 'Income Level'}<br><span style="font-size:11px;color:#9ca3af;font-weight:normal">Delayed care due to cost (2024)</span>`,
+            font: { size: 14, family: 'Source Sans 3, sans-serif' },
+            y: 0.96,
+            yanchor: 'top'
+        },
+        height: 750,
+        dragmode: false,
+        xaxis: {
+            title: 'Barrier Rate (%)',
             showgrid: true,
             gridcolor: '#2a3448',
             fixedrange: true,
@@ -1993,8 +2109,9 @@ function handleSceneScroll() {
     const rect = activeScene.getBoundingClientRect();
     const sceneTop = rect.top;
 
-    // Check if this is the heatmap scene
+    // Check if this is the heatmap scene or area plot scene
     const isHeatmapScene = activeScene.querySelector('#chart-heatmap') !== null;
+    const isAreaPlotScene = activeScene.querySelector('#chart-area') !== null;
 
     // For time series scene, handle timeline animation
     if (activeScene.querySelector('#chart-timeseries')) {
@@ -2028,8 +2145,12 @@ function handleSceneScroll() {
             isDraggingTimeline = false;
         }
     } else if (isHeatmapScene) {
-        // Show top vulnerable populations when heatmap is visible
+        // Show top vulnerable populations for heatmap scene
         showTopVulnerablePopulations();
+        return; // Early return to skip normal bubble plot update
+    } else if (isAreaPlotScene) {
+        // Show disparity gaps for area plot scene
+        showDisparityGaps();
         return; // Early return to skip normal bubble plot update
     } else {
         // For other scenes, use normal scroll progress
@@ -2057,6 +2178,8 @@ document.getElementById('demographic-select').addEventListener('change', (e) => 
 document.getElementById('area-demographic-select').addEventListener('change', (e) => {
     currentAreaDemographic = e.target.value;
     updateAreaPlot(currentAreaDemographic);
+    // Update the bar chart immediately (the dropdown only exists on the area plot scene)
+    showDisparityGaps();
 });
 
 // Add scroll listener
@@ -2177,6 +2300,7 @@ function handleArticleStackScroll() {
 
     const articles = document.querySelectorAll('.article-card');
     const stats = document.querySelectorAll('.stat-item');
+    const nestedTexts = document.querySelectorAll('.article-nestled-text');
     const sectionRect = section.getBoundingClientRect();
     const sectionHeight = section.offsetHeight;
     const windowHeight = window.innerHeight;
@@ -2211,6 +2335,18 @@ function handleArticleStackScroll() {
             stat.classList.add('active');
         } else {
             stat.classList.remove('active');
+        }
+    });
+
+    // Update nestled text paragraphs - they appear between article reveals
+    nestedTexts.forEach((text) => {
+        const textNum = parseInt(text.dataset.text);
+        // Text 1 appears after article 1 (index >= 1)
+        // Text 2 appears after article 2 (index >= 2)
+        if (articleIndex >= textNum) {
+            text.classList.add('visible');
+        } else {
+            text.classList.remove('visible');
         }
     });
 }
