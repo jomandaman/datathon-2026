@@ -53,9 +53,11 @@ datathon-2026/
 ├── index.html                              # Main GitHub Pages site
 ├── notebooks/
 │   ├── ait_datathon.ipynb                 # AJ's ML notebook (2026 forecasts)
-│   └── Accessible_Infinity_Tunnel_*.ipynb # Alanna's ML notebook (2025 forecasts)
+│   ├── Accessible_Infinity_Tunnel_*.ipynb # Alanna's ML notebook (2025 forecasts)
+│   └── datathon_analysis.ipynb            # Geographic data analysis (Census ACS)
 ├── data/
 │   ├── Access_to_Care_Dataset.csv         # Raw CDC NHIS data (2019-2024)
+│   ├── county_map_data.json               # Census ACS county-level uninsured rates
 │   └── tableau_exports/                   # Cleaned CSVs for Tableau/Power BI
 │       ├── healthcare_access_barriers_full.csv
 │       ├── time_series_trends.csv
@@ -73,8 +75,9 @@ datathon-2026/
 
 ## Methodology
 
-### Data Source
-**CDC National Health Interview Survey (NHIS)** — Adult Summary Health Statistics, 2019-2024
+### Data Sources
+
+**Primary: CDC National Health Interview Survey (NHIS)** — Adult Summary Health Statistics, 2019-2024
 - 26,208 total records → 23,609 after cleaning (removed unreliable estimates)
 - 54 health topics across demographic, socioeconomic, and geographic classifications
 - Focused on 4 access barrier types:
@@ -82,6 +85,11 @@ datathon-2026/
   - Did not get needed medical care due to cost
   - Did not get needed mental health care due to cost
   - Did not take medication as prescribed to save money
+
+**Supplemental: U.S. Census Bureau American Community Survey (ACS)** — 2022 1-Year Estimates
+- County-level uninsured rates (Table S2701_C05_001E)
+- 848 counties with population >65,000
+- Fetched dynamically via Census API for geographic visualizations
 
 ### Machine Learning Models
 
@@ -111,7 +119,13 @@ datathon-2026/
 - **Gap-not-closing analysis** — Racial insurance disparities remained entrenched
 - Shaded regions marking COVID-era policy interventions
 
-### 3. Predictive Modeling
+### 3. Geographic Distribution
+- **Interactive county-level choropleth map** — 848 counties with uninsured rates
+- **Zoom and pan** — Explore Texas border counties (28.6%), Appalachia, and coastal urban areas (1.3%)
+- **Dynamic data loading** — Real-time fetch from Census ACS API
+- Reveals WHERE vulnerable populations face barriers
+
+### 4. Predictive Modeling
 - **Dual forecast visualization** — Compare 2025 vs 2026 predictions
 - **Demographic lens filters** — View by race, income, disability, sexual orientation, or geography
 - **Change annotations** — Red for worsening, green for improving

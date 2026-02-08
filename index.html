@@ -335,6 +335,56 @@
             margin: 0;
         }
 
+        /* US Map container - full width, no padding */
+        #chart-us-map-container {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            width: 100%;
+        }
+
+        #chart-us-map {
+            width: 100%;
+            height: 600px;
+        }
+
+        /* Map scroll zoom overlay */
+        #map-zoom-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 34, 53, 0.95);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        #map-zoom-overlay.show {
+            opacity: 1;
+        }
+
+        #map-zoom-overlay kbd {
+            background: var(--accent);
+            color: var(--bg-dark);
+            padding: 0.2em 0.5em;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
         .chart-container .chart-caption {
             font-size: 0.8rem;
             color: var(--text-muted);
@@ -738,7 +788,7 @@
 <section class="hero">
     <div class="content">
         <div class="hero-eyebrow"><a href="https://datathon-2026.webflow.io/" target="_blank">DubsTech Datathon 2026</a> · <a href="https://www.notion.so/dubstech-datathon/Prompts-2fb46885930c803588f4d0ed92b73f0f?p=2fc46885930c804eb4a0d68b84c3d9ac&pm=c" target="_blank">Healthcare Track</a></div>
-        <h1>Who Falls Through <em>the Cracks?</em></h1>
+        <h1>Who's Falling <em>Through the Cracks?</em></h1>
         <p class="hero-subtitle">
             An analysis of healthcare access barriers across race, income, and education — 
             and how the pandemic temporarily narrowed gaps that are now at risk of widening again.
@@ -986,6 +1036,34 @@
     </div>
 </section>
 
+<!-- ===== SECTION 3.5: GEOGRAPHIC DISTRIBUTION ===== -->
+<section class="section" style="padding-top: 2rem;">
+    <div class="content">
+        <h2>Where barriers hit hardest</h2>
+        <p>
+            Healthcare access barriers aren't evenly distributed across the country. At the county level,
+            uninsured rates range from <strong>less than 2% to over 28%</strong> — a 14-fold difference.
+            Border counties in Texas, rural Appalachia, and Native American territories face the steepest
+            barriers, while coastal urban areas typically have the lowest rates. These disparities reflect
+            differences in Medicaid expansion, local economies, and insurance market dynamics.
+        </p>
+    </div>
+
+    <!-- Full-width map container -->
+    <div style="width: 100%; padding: 0; margin: 2rem 0;">
+        <div id="chart-us-map-container">
+            <div id="map-zoom-overlay">
+                <span class="desktop-hint">Hold <kbd>Cmd</kbd> + scroll to zoom</span>
+                <span class="mobile-hint" style="display:none;">Pinch to zoom</span>
+            </div>
+            <div id="chart-us-map"></div>
+        </div>
+        <div class="chart-caption" style="max-width: 860px; margin: 1rem auto 0; padding: 0 2rem;">
+            County-level uninsured rates across the United States (2022). Data from Census Bureau American Community Survey.
+        </div>
+    </div>
+</section>
+
 <!-- ===== SECTION 4: PREDICTIVE MODELING ===== -->
 <section class="section">
     <div class="content">
@@ -1099,8 +1177,9 @@
             difference between the highest and lowest estimate within each demographic group per year.
         </p>
         <p>
-            <strong>Supplemental data:</strong> CDC PLACES county-level estimates used for geographic visualizations. 
-            Linked via health measure categories.
+            <strong>Supplemental data:</strong> U.S. Census Bureau's American Community Survey (ACS) 2022 county-level
+            uninsured rates used for geographic visualizations. Fetched dynamically via Census API (848 counties with
+            population >65,000).
         </p>
         <p>
             <strong>Tools:</strong> Python (Pandas, Plotly, NumPy), Google Colab, Streamlit, GitHub Pages.
@@ -1118,6 +1197,10 @@
         <p style="margin-bottom: 1rem;">
             <strong>Centers for Disease Control and Prevention (CDC).</strong> (2024). <em>National Health Interview Survey (NHIS): Adult Summary Health Statistics, 2019-2024.</em> National Center for Health Statistics.
             <a href="https://www.cdc.gov/nchs/nhis/index.htm" target="_blank" style="color: var(--accent-teal); text-decoration: none;">https://www.cdc.gov/nchs/nhis/</a>
+        </p>
+        <p style="margin-bottom: 1rem;">
+            <strong>U.S. Census Bureau.</strong> (2022). <em>American Community Survey (ACS) 1-Year Estimates: Health Insurance Coverage (Table S2701).</em> U.S. Department of Commerce.
+            <a href="https://api.census.gov/data/2022/acs/acs1/subject" target="_blank" style="color: var(--accent-teal); text-decoration: none;">data.census.gov</a>
         </p>
         <p style="margin-bottom: 1rem;">
             <strong>DubsTech.</strong> (2026). <em>DubsTech Datathon 2026: Healthcare Track.</em> University of Washington.
@@ -1172,7 +1255,17 @@ const plotlyConfig = {
     responsive: true,
     displayModeBar: false,
     scrollZoom: false,
-    doubleClick: false,
+    doubleClick: 'reset',  // Enable double-click to reset zoom
+    editable: false
+};
+
+// Special config for the map with conditional scroll zoom
+const plotlyConfigMap = {
+    responsive: true,
+    displayModeBar: true,  // Show mode bar for map controls
+    modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d'],
+    scrollZoom: 'gl',  // Enable scroll zoom with gl mode (more control)
+    doubleClick: 'reset',
     editable: false
 };
 const plotlyLayout = {
@@ -1299,6 +1392,224 @@ function updateDemographicChart(demographic) {
 
 // Initialize time series
 updateDemographicChart(currentDemographic);
+
+// ===== US MAP: GEOGRAPHIC DISTRIBUTION =====
+// Fetch county-level data from Census ACS API
+async function createUSMap() {
+    console.log('Creating US county map...');
+
+    try {
+        // Fetch Census ACS county data - uninsured rates (S2701_C05_001E)
+        const response = await fetch('https://api.census.gov/data/2022/acs/acs1/subject?get=NAME,S2701_C05_001E&for=county:*');
+        const data = await response.json();
+
+        if (data && data.length > 1) {
+            // First row is headers: [NAME, S2701_C05_001E, state, county]
+            const rows = data.slice(1); // Skip header row
+            console.log(`✅ Fetched ${rows.length} county records`);
+
+            const fips = [];
+            const values = [];
+            const labels = [];
+
+            rows.forEach(row => {
+                const [countyName, uninsuredRate, stateFips, countyFips] = row;
+
+                if (countyFips && uninsuredRate && uninsuredRate !== 'null') {
+                    // Combine state + county FIPS to get 5-digit FIPS code
+                    const fullFips = stateFips + countyFips;
+                    const rate = parseFloat(uninsuredRate);
+
+                    if (!isNaN(rate) && rate >= 0 && rate <= 100) {
+                        fips.push(fullFips);
+                        values.push(rate);
+                        labels.push(`${countyName}: ${rate.toFixed(1)}%`);
+                    }
+                }
+            });
+
+            if (fips.length > 0) {
+                const trace = {
+                    type: 'choropleth',
+                    locationmode: 'geojson-id',
+                    geojson: 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json',
+                    locations: fips,
+                    z: values,
+                    text: labels,
+                    hovertemplate: '<b>%{text}</b><br>Uninsured rate<extra></extra>',
+                    colorscale: [[0, '#2a9d8f'], [0.33, '#457b9d'], [0.66, '#ff7f0e'], [1, '#e63946']],
+                    colorbar: {
+                        title: {
+                            text: 'Uninsured<br>Rate (%)',
+                            side: 'right',
+                            font: { color: '#e8e6e1' }
+                        },
+                        tickmode: 'linear',
+                        tick0: 0,
+                        dtick: 5,
+                        thickness: 15,
+                        len: 0.4,
+                        x: 0.98,
+                        y: 0.85,
+                        xanchor: 'right',
+                        yanchor: 'top',
+                        bgcolor: 'rgba(26, 34, 53, 0.85)',
+                        bordercolor: '#2a3448',
+                        borderwidth: 1,
+                        outlinecolor: '#2a3448',
+                        outlinewidth: 1,
+                        tickfont: { color: '#e8e6e1' }
+                    },
+                    marker: { line: { color: '#1a2235', width: 0.5 } }
+                };
+
+                const layout = {
+                    ...plotlyLayout,
+                    title: {
+                        text: 'Healthcare Access Barriers by County (2022)<br><span style="font-size:13px;color:#9ca3af">Uninsured rate — darker = higher barriers</span>',
+                        font: { size: 18 }
+                    },
+                    geo: {
+                        scope: 'usa',
+                        projection: {
+                            type: 'albers usa',
+                            scale: 1.5  // Start at 150% zoom
+                        },
+                        center: { lat: 39.8, lon: -98.6 },  // Center on USA
+                        showlakes: false,
+                        bgcolor: 'rgba(0,0,0,0)',
+                        lakecolor: 'rgba(0,0,0,0)',
+                        landcolor: 'rgba(26, 34, 53, 0.3)',
+                        coastlinecolor: '#2a3448',
+                        countrycolor: '#2a3448',
+                        showland: true,
+                        showcountries: true
+                    },
+                    dragmode: 'zoom',  // Enable drag to zoom
+                    height: 600,
+                    margin: { t: 60, b: 10, l: 0, r: 0 }  // Remove side margins for full width
+                };
+
+                Plotly.newPlot('chart-us-map', [trace], layout, plotlyConfigMap);
+                console.log(`✅ County map created with ${fips.length} counties`);
+                return;
+            }
+        }
+    } catch (error) {
+        console.warn('County data failed, using state-level:', error);
+    }
+
+    // Fallback to state-level if county data fails
+    const stateRegions = {
+        'CT': 7.1, 'ME': 7.1, 'MA': 7.1, 'NH': 7.1, 'RI': 7.1, 'VT': 7.1, 'NJ': 7.1, 'NY': 7.1, 'PA': 7.1,
+        'IL': 7.8, 'IN': 7.8, 'MI': 7.8, 'OH': 7.8, 'WI': 7.8, 'IA': 7.8, 'KS': 7.8, 'MN': 7.8, 'MO': 7.8, 'NE': 7.8, 'ND': 7.8, 'SD': 7.8,
+        'DE': 9.2, 'FL': 9.2, 'GA': 9.2, 'MD': 9.2, 'NC': 9.2, 'SC': 9.2, 'VA': 9.2, 'DC': 9.2, 'WV': 9.2, 'AL': 9.2, 'KY': 9.2, 'MS': 9.2, 'TN': 9.2, 'AR': 9.2, 'LA': 9.2, 'OK': 9.2, 'TX': 9.2,
+        'AZ': 8.5, 'CO': 8.5, 'ID': 8.5, 'MT': 8.5, 'NV': 8.5, 'NM': 8.5, 'UT': 8.5, 'WY': 8.5, 'AK': 8.5, 'CA': 8.5, 'HI': 8.5, 'OR': 8.5, 'WA': 8.5
+    };
+
+    Plotly.newPlot('chart-us-map', [{
+        type: 'choropleth',
+        locationmode: 'USA-states',
+        locations: Object.keys(stateRegions),
+        z: Object.values(stateRegions),
+        text: Object.keys(stateRegions).map(s => `${s}: ${stateRegions[s]}%`),
+        hovertemplate: '<b>%{text}</b><br>Delayed care<extra></extra>',
+        colorscale: [[0, '#2a9d8f'], [0.33, '#457b9d'], [0.66, '#ff7f0e'], [1, '#e63946']],
+        colorbar: {
+            title: { text: 'Rate (%)', side: 'right', font: { color: '#e8e6e1' } },
+            tickmode: 'linear',
+            tick0: 7,
+            dtick: 0.5,
+            thickness: 15,
+            len: 0.4,
+            x: 0.98,
+            y: 0.85,
+            xanchor: 'right',
+            yanchor: 'top',
+            bgcolor: 'rgba(26, 34, 53, 0.85)',
+            bordercolor: '#2a3448',
+            borderwidth: 1,
+            tickfont: { color: '#e8e6e1' }
+        },
+        marker: { line: { color: '#1a2235', width: 1 } }
+    }], {
+        ...plotlyLayout,
+        title: { text: 'Healthcare Access Barriers by Region (2024)<br><span style="font-size:13px;color:#9ca3af">Adults who delayed care due to cost</span>', font: { size: 18 } },
+        geo: { scope: 'usa', projection: { type: 'albers usa', scale: 1.5 }, center: { lat: 39.8, lon: -98.6 }, showlakes: false, bgcolor: 'rgba(0,0,0,0)', lakecolor: 'rgba(0,0,0,0)', landcolor: 'rgba(26, 34, 53, 0.3)', coastlinecolor: '#2a3448', countrycolor: '#2a3448', showland: true, showcountries: true },
+        dragmode: 'zoom',
+        height: 600,
+        margin: { t: 60, b: 10, l: 0, r: 0 }
+    }, plotlyConfigMap);
+}
+
+// Initialize US Map (async)
+createUSMap().catch(err => console.error('Map error:', err));
+
+// ===== MAP ZOOM OVERLAY CONTROLS =====
+(function() {
+    const mapContainer = document.getElementById('chart-us-map-container');
+    const overlay = document.getElementById('map-zoom-overlay');
+    const desktopHint = overlay.querySelector('.desktop-hint');
+    const mobileHint = overlay.querySelector('.mobile-hint');
+
+    // Detect mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+    // Show appropriate hint
+    if (isMobile) {
+        desktopHint.style.display = 'none';
+        mobileHint.style.display = 'inline';
+    } else {
+        desktopHint.style.display = 'inline';
+        mobileHint.style.display = 'none';
+        // Update text for Windows users
+        if (navigator.platform.indexOf('Win') !== -1) {
+            desktopHint.innerHTML = 'Hold <kbd>Ctrl</kbd> + scroll to zoom';
+        }
+    }
+
+    let overlayTimeout;
+
+    // Show overlay on hover (desktop only)
+    if (!isMobile) {
+        mapContainer.addEventListener('mouseenter', () => {
+            clearTimeout(overlayTimeout);
+            overlay.classList.add('show');
+        });
+
+        mapContainer.addEventListener('mouseleave', () => {
+            overlayTimeout = setTimeout(() => {
+                overlay.classList.remove('show');
+            }, 300);
+        });
+
+        // Handle scroll zoom with modifier key
+        mapContainer.addEventListener('wheel', (e) => {
+            if (e.metaKey || e.ctrlKey) {
+                // Zoom enabled - prevent page scroll and zoom the map
+                e.preventDefault();
+
+                const mapDiv = document.getElementById('chart-us-map');
+                if (mapDiv && mapDiv.layout && mapDiv.layout.geo) {
+                    const currentScale = mapDiv.layout.geo.projection.scale || 1.5;
+                    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                    const newScale = Math.max(0.5, Math.min(5, currentScale + delta));
+
+                    Plotly.relayout('chart-us-map', {
+                        'geo.projection.scale': newScale
+                    });
+                }
+            } else {
+                // No modifier - show hint
+                clearTimeout(overlayTimeout);
+                overlay.classList.add('show');
+                overlayTimeout = setTimeout(() => {
+                    overlay.classList.remove('show');
+                }, 2000);
+            }
+        }, { passive: false });
+    }
+})();
 
 // ===== UPDATE BUBBLE PLOT =====
 // Define demographic categories and their colors
@@ -1640,28 +1951,58 @@ const heatmapZ = [
 const heatmapZClean = heatmapZ.map(row => row.map(v => v !== null ? v : 0));
 const heatmapText = heatmapZ.map(row => row.map(v => v !== null ? v.toFixed(1) : '—'));
 
-Plotly.newPlot('chart-heatmap', [{
-    z: heatmapZClean,
-    x: heatmapTopics,
-    y: heatmapSubgroups,
-    type: 'heatmap',
-    colorscale: [[0, '#2ecc71'], [0.5, '#f39c12'], [1, '#e63946']],  // Green (low) → Orange → Red (high)
-    text: heatmapText,
-    texttemplate: '%{text}',
-    textfont: { size: 11, color: '#1a1a1a' },
-    hovertemplate: '%{y}<br>%{x}: %{text}<extra></extra>',
-    zmin: 0,
-    zmax: 30,
-    showscale: true,
-    colorbar: { title: { text: 'Rate (%)', side: 'right' } }
-}], {
-    ...plotlyLayout,
-    title: { text: 'Access Barrier Rates by Subgroup (2024)', font: { size: 18 } },
-    height: 540,
-    margin: { t: 60, b: 80, l: 200, r: 100 },
-    xaxis: { ...plotlyLayout.xaxis, side: 'bottom' },
-    yaxis: { ...plotlyLayout.yaxis, autorange: 'reversed' }
-}, plotlyConfig);
+// Responsive heatmap function
+function createHeatmap() {
+    const isMobile = window.innerWidth < 768;
+    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+
+    // Adjust settings based on screen size
+    const textSize = isMobile ? 8 : (isTablet ? 9 : 11);
+    const height = isMobile ? 700 : (isTablet ? 600 : 540);
+    const leftMargin = isMobile ? 150 : (isTablet ? 170 : 200);
+    const rightMargin = isMobile ? 60 : (isTablet ? 80 : 100);
+    const bottomMargin = isMobile ? 100 : 80;
+    const showColorbar = !isMobile;  // Hide colorbar on mobile to save space
+
+    Plotly.newPlot('chart-heatmap', [{
+        z: heatmapZClean,
+        x: heatmapTopics,
+        y: heatmapSubgroups,
+        type: 'heatmap',
+        colorscale: [[0, '#2ecc71'], [0.5, '#f39c12'], [1, '#e63946']],  // Green (low) → Orange → Red (high)
+        text: heatmapText,
+        texttemplate: '%{text}',
+        textfont: { size: textSize, color: '#1a1a1a' },
+        hovertemplate: '%{y}<br>%{x}: %{text}<extra></extra>',
+        zmin: 0,
+        zmax: 30,
+        showscale: showColorbar,
+        colorbar: { title: { text: 'Rate (%)', side: 'right' } }
+    }], {
+        ...plotlyLayout,
+        title: { text: 'Access Barrier Rates by Subgroup (2024)', font: { size: isMobile ? 16 : 18 } },
+        height: height,
+        margin: { t: 60, b: bottomMargin, l: leftMargin, r: rightMargin },
+        xaxis: {
+            ...plotlyLayout.xaxis,
+            side: 'bottom',
+            tickfont: { size: isMobile ? 10 : 12 }
+        },
+        yaxis: {
+            ...plotlyLayout.yaxis,
+            autorange: 'reversed',
+            tickfont: { size: isMobile ? 9 : 12 }
+        }
+    }, plotlyConfig);
+}
+
+// Initial heatmap render
+createHeatmap();
+
+// Re-render on window resize
+window.addEventListener('resize', () => {
+    createHeatmap();
+});
 
 // ===== AREA PLOT: Delayed Care Disparities =====
 let currentAreaDemographic = 'insurance';
