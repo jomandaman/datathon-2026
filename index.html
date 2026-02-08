@@ -465,6 +465,127 @@
             text-decoration: none;
         }
 
+        /* ===== STACKED ARTICLES SECTION ===== */
+        .article-stack-section {
+            position: relative;
+            min-height: 200vh;
+            padding: 8rem 0;
+        }
+
+        .article-stack-wrapper {
+            position: sticky;
+            top: 15vh;
+            height: 70vh;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .article-stack-container {
+            position: relative;
+            height: 100%;
+        }
+
+        .article-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            will-change: opacity;
+        }
+
+        .article-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.6));
+        }
+
+        .article-card[data-article="1"] {
+            top: 0;
+            z-index: 1;
+            transform: rotate(-2deg) translateX(-0.8rem);
+        }
+
+        .article-card[data-article="2"] {
+            top: 12rem;
+            z-index: 2;
+            transform: rotate(1deg) translateX(0.5rem);
+        }
+
+        .article-card[data-article="3"] {
+            top: 24rem;
+            z-index: 3;
+            transform: rotate(-1deg) translateX(-0.3rem);
+        }
+
+        .article-card.visible {
+            opacity: 1;
+        }
+
+        .article-stats-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 6.5rem;
+            height: 100%;
+        }
+
+        .stat-item {
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .stat-item.active {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--accent-teal);
+            text-shadow: 0 2px 20px rgba(42, 157, 143, 0.4);
+            font-family: var(--font-mono);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number.color-red {
+            color: var(--accent-red);
+            text-shadow: 0 2px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .stat-number.color-gold {
+            color: var(--accent-gold);
+            text-shadow: 0 2px 20px rgba(233, 196, 106, 0.4);
+        }
+
+        .stat-number.color-teal {
+            color: var(--accent-teal);
+            text-shadow: 0 2px 20px rgba(42, 157, 143, 0.4);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
         /* ===== ANIMATIONS ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -482,6 +603,37 @@
             .content, .content-wide { padding: 0 1.5rem; }
             .stat-row { grid-template-columns: 1fr 1fr; }
             .hero-meta { flex-direction: column; gap: 0.5rem; }
+
+            .article-stack-section {
+                padding: 4rem 0;
+                min-height: 150vh;
+            }
+
+            .article-stack-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                top: 10vh;
+            }
+
+            .article-stack-container {
+                height: 50vh;
+            }
+
+            .article-stats-column {
+                gap: 4rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+
+            .article-card[data-article="2"] {
+                top: 4rem;
+            }
+
+            .article-card[data-article="3"] {
+                top: 8rem;
+            }
         }
     </style>
 </head>
@@ -520,39 +672,65 @@
     <div class="scroll-indicator">Scroll to explore</div>
 </section>
 
-<!-- ===== SECTION 1: THE PROBLEM ===== -->
+<!-- ===== SECTION 1: THE PROBLEM (INTRO) ===== -->
 <section class="section">
     <div class="content">
         <span class="section-label">01 — The Problem</span>
         <h2>Not everyone gets the care they need.</h2>
         <p>
-            Every year, millions of American adults skip medical care, delay treatment, or go without 
-            mental health support — not because they don't need it, but because they <strong>can't afford it</strong>. 
-            The CDC's National Health Interview Survey tracks these barriers across demographics, 
+            Every year, millions of American adults skip medical care, delay treatment, or go without
+            mental health support — not because they don't need it, but because they <strong>can't afford it</strong>.
+            The CDC's National Health Interview Survey tracks these barriers across demographics,
             giving us a window into who the healthcare system serves and who it leaves behind.
         </p>
-        <p>
-            We analyzed 23,609 data points spanning 54 health conditions and access metrics across 
-            six years (2019–2024), broken down by race, income, education, insurance status, and more. 
-            What we found is a story of <strong>progress, fragility, and persistent structural gaps</strong>.
-        </p>
     </div>
+</section>
 
-    <div class="content-wide">
-        <div class="stat-row">
-            <div class="stat-card">
-                <div class="number red">11.1%</div>
-                <div class="label">of the poorest adults skipped medical care due to cost in 2024</div>
+<!-- ===== ARTICLE STACK: HEALTHCARE HEADLINES ===== -->
+<section class="article-stack-section">
+    <div class="article-stack-wrapper">
+        <!-- Left: Stacked Articles -->
+        <div class="article-stack-container">
+            <div class="article-card" data-article="1">
+                <img src="images/article1.png" alt="Inability to Pay for Healthcare Reaches Record High">
             </div>
-            <div class="stat-card">
-                <div class="number teal">6.1%</div>
-                <div class="label">of the wealthiest adults skipped care — half the rate</div>
+            <div class="article-card" data-article="2">
+                <img src="images/article3.png" alt="Health Care Affordability Problems by Income">
             </div>
-            <div class="stat-card">
-                <div class="number gold">27.7%</div>
-                <div class="label">of Hispanic adults are uninsured — 4× the rate of non-Hispanic white adults</div>
+            <div class="article-card" data-article="3">
+                <img src="images/article2.png" alt="Hispanic/Latino Adults Lack Adequate Health Insurance">
             </div>
         </div>
+
+        <!-- Right: Statistics -->
+        <div class="article-stats-column">
+            <div class="stat-item" data-stat="1">
+                <div class="stat-number color-gold">11.1%</div>
+                <div class="stat-label">Poorest Adults</div>
+                <div class="stat-description">can't afford needed medical care</div>
+            </div>
+            <div class="stat-item" data-stat="2">
+                <div class="stat-number color-teal">6.1%</div>
+                <div class="stat-label">Wealthiest Adults</div>
+                <div class="stat-description">face cost barriers to healthcare</div>
+            </div>
+            <div class="stat-item" data-stat="3">
+                <div class="stat-number color-red">27.7%</div>
+                <div class="stat-label">Hispanic Adults</div>
+                <div class="stat-description">delayed care due to affordability</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECTION 1: THE PROBLEM (CONCLUSION) ===== -->
+<section class="section">
+    <div class="content">
+        <p>
+            We analyzed 23,609 data points spanning 54 health conditions and access metrics across
+            six years (2019–2024), broken down by race, income, education, insurance status, and more.
+            What we found is a story of <strong>progress, fragility, and persistent structural gaps</strong>.
+        </p>
     </div>
 </section>
 
@@ -1992,10 +2170,60 @@ timelineChart.on('plotly_relayout', function(eventdata) {
     }
 });
 
+// ===== ARTICLE STACK SCROLL ANIMATION =====
+function handleArticleStackScroll() {
+    const section = document.querySelector('.article-stack-section');
+    if (!section) return;
+
+    const articles = document.querySelectorAll('.article-card');
+    const stats = document.querySelectorAll('.stat-item');
+    const sectionRect = section.getBoundingClientRect();
+    const sectionHeight = section.offsetHeight;
+    const windowHeight = window.innerHeight;
+
+    // Calculate scroll progress through the section (0 to 1)
+    // Trigger in lower third of viewport (at 75% down the screen)
+    const triggerPoint = windowHeight * 0.75;
+    const scrollDistance = windowHeight * 1.5; // Articles appear over 1.5 viewport heights of scrolling
+    const scrollProgress = Math.max(0, Math.min(1,
+        (triggerPoint - sectionRect.top) / scrollDistance
+    ));
+
+    // Determine which article should be active based on scroll progress
+    const articleCount = articles.length;
+    const articleIndex = Math.floor(scrollProgress * (articleCount + 1));
+
+    // Update articles - make all articles up to current position visible (cumulative)
+    articles.forEach((article) => {
+        const articleNum = parseInt(article.dataset.article);
+
+        if (articleNum <= articleIndex) {
+            article.classList.add('visible');
+        } else {
+            article.classList.remove('visible');
+        }
+    });
+
+    // Update stats - make all stats up to current position visible (cumulative)
+    stats.forEach((stat) => {
+        const statNum = parseInt(stat.dataset.stat);
+        if (statNum <= articleIndex) {
+            stat.classList.add('active');
+        } else {
+            stat.classList.remove('active');
+        }
+    });
+}
+
+// Add scroll listener for article stack
+window.addEventListener('scroll', handleArticleStackScroll);
+window.addEventListener('resize', handleArticleStackScroll);
+
 // Initial render
 setTimeout(() => {
     updateTimeSeriesChart(2019);
     handleSceneScroll();
+    handleArticleStackScroll();
 }, 100);
 </script>
 
