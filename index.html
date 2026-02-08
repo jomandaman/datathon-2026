@@ -81,6 +81,16 @@
             animation: fadeUp 0.8s ease forwards 0.2s;
         }
 
+        .hero-eyebrow a {
+            color: var(--accent-teal);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .hero-eyebrow a:hover {
+            opacity: 0.7;
+        }
+
         .hero h1 {
             font-family: var(--font-display);
             font-size: clamp(3rem, 7vw, 5.5rem);
@@ -586,31 +596,14 @@
             line-height: 1.4;
         }
 
-        /* Nestled paragraphs within article stack */
-        .article-nestled-text {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+        /* Transition text between chart scenes */
+        .chart-transition-text {
+            padding: 3rem 0;
             max-width: 700px;
-            padding: 2rem;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            z-index: 10;
+            margin: 0 auto;
         }
 
-        .article-nestled-text.visible {
-            opacity: 1;
-        }
-
-        .article-nestled-text[data-text="1"] {
-            top: 60vh;
-        }
-
-        .article-nestled-text[data-text="2"] {
-            top: 120vh;
-        }
-
-        .article-nestled-text p {
+        .chart-transition-text p {
             font-size: 1rem;
             line-height: 1.7;
             color: var(--text-secondary);
@@ -673,7 +666,7 @@
 <!-- ===== HERO ===== -->
 <section class="hero">
     <div class="content">
-        <div class="hero-eyebrow">DubsTech Datathon 2026 · Healthcare Track</div>
+        <div class="hero-eyebrow"><a href="https://datathon-2026.webflow.io/" target="_blank">DubsTech Datathon 2026</a> · <a href="https://www.notion.so/dubstech-datathon/Prompts-2fb46885930c803588f4d0ed92b73f0f?p=2fc46885930c804eb4a0d68b84c3d9ac&pm=c" target="_blank">Healthcare Track</a></div>
         <h1>Who Falls Through <em>the Cracks?</em></h1>
         <p class="hero-subtitle">
             An analysis of healthcare access barriers across race, income, and education — 
@@ -752,24 +745,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Nestled text that appears between article reveals -->
-    <div class="article-nestled-text" data-text="1">
-        <p>
-            Looking at trends over time reveals a striking pattern: <strong>all four barrier types dropped sharply
-            in 2020-2021</strong> as pandemic-era policies took effect, then began rising again as those protections expired.
-            By 2024, we're approaching pre-pandemic levels — and in some cases, exceeding them.
-        </p>
-    </div>
-
-    <div class="article-nestled-text" data-text="2">
-        <p>
-            The heatmap reveals a stark pattern: <strong>uninsured adults face barriers 3-5× higher than
-            those with private insurance</strong> across all four access metrics. Bisexual adults report
-            the highest mental health care barriers at 28.5%, while those with disabilities consistently
-            face elevated barriers across all categories.
-        </p>
-    </div>
 </section>
 
 <!-- ===== SECTION 1: THE PROBLEM (CONCLUSION) ===== -->
@@ -823,12 +798,31 @@
                         </div>
                     </div>
 
+                    <!-- Transition text between timeline and heatmap -->
+                    <div class="chart-transition-text">
+                        <p>
+                            Looking at trends over time reveals a striking pattern: <strong>all four barrier types dropped sharply
+                            in 2020-2021</strong> as pandemic-era policies took effect, then began rising again as those protections expired.
+                            By 2024, we're approaching pre-pandemic levels — and in some cases, exceeding them.
+                        </p>
+                    </div>
+
                     <!-- Scene 2: Heatmap -->
                     <div class="chart-scene" data-year-start="2024" data-year-end="2024">
                         <div class="chart-container">
                             <div id="chart-heatmap"></div>
                             <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2024. Estimates represent crude percentages of the adult population.</div>
                         </div>
+                    </div>
+
+                    <!-- Transition text between heatmap and area plot -->
+                    <div class="chart-transition-text">
+                        <p>
+                            The heatmap reveals a stark pattern: <strong>uninsured adults face barriers 3-5× higher than
+                            those with private insurance</strong> across all four access metrics. Bisexual adults report
+                            the highest mental health care barriers at 28.5%, while those with disabilities consistently
+                            face elevated barriers across all categories.
+                        </p>
                     </div>
 
                     <!-- Scene 3: Area Plot -->
@@ -2300,7 +2294,6 @@ function handleArticleStackScroll() {
 
     const articles = document.querySelectorAll('.article-card');
     const stats = document.querySelectorAll('.stat-item');
-    const nestedTexts = document.querySelectorAll('.article-nestled-text');
     const sectionRect = section.getBoundingClientRect();
     const sectionHeight = section.offsetHeight;
     const windowHeight = window.innerHeight;
@@ -2335,18 +2328,6 @@ function handleArticleStackScroll() {
             stat.classList.add('active');
         } else {
             stat.classList.remove('active');
-        }
-    });
-
-    // Update nestled text paragraphs - they appear between article reveals
-    nestedTexts.forEach((text) => {
-        const textNum = parseInt(text.dataset.text);
-        // Text 1 appears after article 1 (index >= 1)
-        // Text 2 appears after article 2 (index >= 2)
-        if (articleIndex >= textNum) {
-            text.classList.add('visible');
-        } else {
-            text.classList.remove('visible');
         }
     });
 }
