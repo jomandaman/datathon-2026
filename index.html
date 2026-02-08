@@ -266,6 +266,63 @@
             text-align: center;
         }
 
+        /* ===== SIDE-BY-SIDE CHART GRID ===== */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 0.5fr auto 1.5fr;
+            gap: 1.5rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .chart-grid.sticky-active {
+            position: fixed;
+            top: 10vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1100px, 90vw);
+            z-index: 10;
+        }
+
+        .chart-grid .chart-container {
+            margin: 0;
+        }
+
+        .chart-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        #chart-legend {
+            padding: 1.5rem 0.5rem;
+        }
+
+        #chart-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        #chart-legend .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1100px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            #chart-legend {
+                order: -1;
+            }
+        }
+
         /* ===== METHODOLOGY / FOOTER SECTION ===== */
         .methodology {
             background: var(--bg-secondary);
@@ -437,9 +494,27 @@
     </div>
 
     <div class="content-wide">
-        <div class="chart-container">
-            <div id="chart-timeseries"></div>
-            <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2019-2024. U.S. Adult Population (18+).</div>
+        <div id="sticky-spacer" style="height: 0; transition: height 0.3s ease;"></div>
+        <div class="chart-grid">
+            <div class="chart-container">
+                <div id="chart-bubble"></div>
+                <div class="chart-caption">Most vulnerable populations by demographic group. Updates as you scroll.</div>
+            </div>
+            <div id="chart-legend" style="display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; min-width: 100px;"></div>
+            <div class="chart-stack">
+                <div class="chart-container">
+                    <div id="chart-timeseries"></div>
+                    <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2019-2024. U.S. Adult Population (18+).</div>
+                </div>
+                <div class="chart-container">
+                    <div id="chart-heatmap"></div>
+                    <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2024. Estimates represent crude percentages of the adult population.</div>
+                </div>
+                <div class="chart-container">
+                    <div id="chart-area"></div>
+                    <div class="chart-caption">Shaded area shows the gap between most and least vulnerable populations for delayed medical care.</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -449,26 +524,17 @@
             in 2020-2021</strong> as pandemic-era policies took effect, then began rising again as those protections expired.
             By 2024, we're approaching pre-pandemic levels — and in some cases, exceeding them.
         </p>
-    </div>
-
-    <div class="content-wide">
-        <div class="chart-container">
-            <div id="chart-heatmap"></div>
-            <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2024. Estimates represent crude percentages of the adult population.</div>
-        </div>
-    </div>
-
-    <div class="content">
         <p>
             The heatmap reveals a stark pattern: <strong>uninsured adults face barriers 3-5× higher than
             those with private insurance</strong> across all four access metrics. Bisexual adults report
             the highest mental health care barriers at 28.5%, while those with disabilities consistently
-            face elevated barriers across all categories. Even among the best-off groups, 4-8% still skip
-            care due to cost — these barriers touch everyone, just unequally.
+            face elevated barriers across all categories.
         </p>
+    </div>
 
+    <div class="content">
         <div class="pull-quote">
-            "The gap between the best-off and worst-off subgroups isn't just a few percentage points — 
+            "The gap between the best-off and worst-off subgroups isn't just a few percentage points —
             it's the difference between getting a diagnosis early and getting one too late."
         </div>
     </div>
@@ -679,6 +745,207 @@ Plotly.newPlot('chart-timeseries', timeseriesTraces, {
     margin: { t: 120, b: 60, l: 60, r: 30 }
 }, plotlyConfig);
 
+// ===== CREATE LEGEND =====
+const groupColors = {
+    'Insurance': '#e63946',
+    'Sexual Orientation': '#9467bd',
+    'Disability': '#457b9d',
+    'Marital Status': '#e9c46a',
+    'Race': '#2a9d8f',
+    'Income': '#ff7f0e'
+};
+
+function createLegend() {
+    const legendEl = document.getElementById('chart-legend');
+    legendEl.innerHTML = '<div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; font-family: var(--font-mono);">Demographics</div>';
+
+    Object.entries(groupColors).forEach(([group, color]) => {
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        item.innerHTML = `
+            <div class="legend-color" style="background: ${color};"></div>
+            <span>${group}</span>
+        `;
+        legendEl.appendChild(item);
+    });
+}
+
+createLegend();
+
+// ===== BUBBLE PLOT DATA =====
+// Top vulnerable demographic subgroups by year (averaged across all 4 barrier types)
+const bubbleData = {
+    2019: [
+        { group: 'Insurance', subgroup: 'Uninsured', rate: 25.3, color: '#e63946' },
+        { group: 'Sexual Orientation', subgroup: 'Bisexual', rate: 21.2, color: '#9467bd' },
+        { group: 'Marital Status', subgroup: 'Living with partner', rate: 14.5, color: '#e9c46a' },
+        { group: 'Disability', subgroup: 'With disability', rate: 13.3, color: '#457b9d' },
+        { group: 'Race', subgroup: 'AI/AN & White', rate: 13.8, color: '#2a9d8f' },
+        { group: 'Income', subgroup: '<100% FPL', rate: 13.3, color: '#ff7f0e' },
+        { group: 'Marital Status', subgroup: 'Divorced/separated', rate: 12.0, color: '#e9c46a' },
+        { group: 'Race', subgroup: 'Hispanic', rate: 10.5, color: '#2a9d8f' },
+        { group: 'Sexual Orientation', subgroup: 'Gay/Lesbian', rate: 6.7, color: '#9467bd' }
+    ],
+    2020: [
+        { group: 'Insurance', subgroup: 'Uninsured', rate: 21.9, color: '#e63946' },
+        { group: 'Sexual Orientation', subgroup: 'Bisexual', rate: 20.1, color: '#9467bd' },
+        { group: 'Disability', subgroup: 'With disability', rate: 12.1, color: '#457b9d' },
+        { group: 'Marital Status', subgroup: 'Living with partner', rate: 11.7, color: '#e9c46a' },
+        { group: 'Income', subgroup: '<100% FPL', rate: 11.3, color: '#ff7f0e' },
+        { group: 'Marital Status', subgroup: 'Divorced/separated', rate: 9.9, color: '#e9c46a' },
+        { group: 'Race', subgroup: 'Hispanic', rate: 9.5, color: '#2a9d8f' },
+        { group: 'Sexual Orientation', subgroup: 'Gay/Lesbian', rate: 8.2, color: '#9467bd' }
+    ],
+    2021: [
+        { group: 'Insurance', subgroup: 'Uninsured', rate: 23.2, color: '#e63946' },
+        { group: 'Sexual Orientation', subgroup: 'Bisexual', rate: 21.8, color: '#9467bd' },
+        { group: 'Disability', subgroup: 'With disability', rate: 12.7, color: '#457b9d' },
+        { group: 'Marital Status', subgroup: 'Living with partner', rate: 12.5, color: '#e9c46a' },
+        { group: 'Income', subgroup: '<100% FPL', rate: 11.1, color: '#ff7f0e' },
+        { group: 'Race', subgroup: 'AI/AN & White', rate: 10.9, color: '#2a9d8f' },
+        { group: 'Marital Status', subgroup: 'Divorced/separated', rate: 10.2, color: '#e9c46a' },
+        { group: 'Race', subgroup: 'Hispanic', rate: 9.1, color: '#2a9d8f' }
+    ],
+    2022: [
+        { group: 'Insurance', subgroup: 'Uninsured', rate: 23.0, color: '#e63946' },
+        { group: 'Sexual Orientation', subgroup: 'Bisexual', rate: 21.5, color: '#9467bd' },
+        { group: 'Disability', subgroup: 'With disability', rate: 13.0, color: '#457b9d' },
+        { group: 'Marital Status', subgroup: 'Living with partner', rate: 12.0, color: '#e9c46a' },
+        { group: 'Income', subgroup: '<100% FPL', rate: 10.9, color: '#ff7f0e' },
+        { group: 'Race', subgroup: 'AI/AN & White', rate: 10.5, color: '#2a9d8f' },
+        { group: 'Marital Status', subgroup: 'Divorced/separated', rate: 9.8, color: '#e9c46a' },
+        { group: 'Sexual Orientation', subgroup: 'Gay/Lesbian', rate: 9.5, color: '#9467bd' }
+    ],
+    2023: [
+        { group: 'Insurance', subgroup: 'Uninsured', rate: 24.5, color: '#e63946' },
+        { group: 'Sexual Orientation', subgroup: 'Bisexual', rate: 22.8, color: '#9467bd' },
+        { group: 'Disability', subgroup: 'With disability', rate: 13.8, color: '#457b9d' },
+        { group: 'Marital Status', subgroup: 'Living with partner', rate: 12.8, color: '#e9c46a' },
+        { group: 'Income', subgroup: '<100% FPL', rate: 11.8, color: '#ff7f0e' },
+        { group: 'Race', subgroup: 'AI/AN & White', rate: 11.2, color: '#2a9d8f' },
+        { group: 'Marital Status', subgroup: 'Divorced/separated', rate: 10.5, color: '#e9c46a' },
+        { group: 'Sexual Orientation', subgroup: 'Gay/Lesbian', rate: 9.2, color: '#9467bd' }
+    ],
+    2024: [
+        { group: 'Insurance', subgroup: 'Uninsured', rate: 22.8, color: '#e63946' },
+        { group: 'Sexual Orientation', subgroup: 'Bisexual', rate: 22.9, color: '#9467bd' },
+        { group: 'Disability', subgroup: 'With disability', rate: 12.9, color: '#457b9d' },
+        { group: 'Marital Status', subgroup: 'Living with partner', rate: 12.2, color: '#e9c46a' },
+        { group: 'Income', subgroup: '<100% FPL', rate: 10.3, color: '#ff7f0e' },
+        { group: 'Race', subgroup: 'Black & White', rate: 14.0, color: '#2a9d8f' },
+        { group: 'Race', subgroup: 'Native Hawaiian/PI', rate: 15.9, color: '#2a9d8f' },
+        { group: 'Sexual Orientation', subgroup: 'Gay/Lesbian', rate: 9.9, color: '#9467bd' }
+    ]
+};
+
+function updateBubblePlot(year) {
+    const displayYear = Math.round(Math.max(2019, Math.min(2024, year)));
+    const data = bubbleData[displayYear];
+
+    if (!data) return;
+
+    // Sort data by group and rate for consistent positioning
+    const sortedData = [...data].sort((a, b) => {
+        if (a.group !== b.group) {
+            return Object.keys(groupColors).indexOf(a.group) - Object.keys(groupColors).indexOf(b.group);
+        }
+        return b.rate - a.rate; // Larger bubbles first
+    });
+
+    // Create positioning: stack circles within each group
+    const groupCounts = {};
+    const groupYPositions = {};
+
+    sortedData.forEach((d, i) => {
+        if (!groupCounts[d.group]) {
+            groupCounts[d.group] = 0;
+            groupYPositions[d.group] = Object.keys(groupColors).indexOf(d.group);
+        }
+        groupCounts[d.group]++;
+    });
+
+    // Create single trace with all bubbles
+    const xPos = [];
+    const yPos = [];
+    const sizes = [];
+    const colors = [];
+    const texts = [];
+    const groupIndex = {};
+
+    sortedData.forEach(d => {
+        if (!groupIndex[d.group]) groupIndex[d.group] = 0;
+
+        // Position circles within their group row
+        const baseY = groupYPositions[d.group];
+        const offset = groupIndex[d.group];
+        const maxInRow = groupCounts[d.group];
+
+        // Spread circles horizontally within the group
+        const xSpread = 0.8;
+        const xOffset = (offset / Math.max(maxInRow - 1, 1)) * xSpread - (xSpread / 2);
+
+        xPos.push(xOffset);
+        yPos.push(baseY);
+        sizes.push(Math.sqrt(d.rate) * 12); // Scale for visibility
+        colors.push(groupColors[d.group]);
+        texts.push(`<b>${d.subgroup}</b><br>${d.group}<br>Avg rate: ${d.rate.toFixed(1)}%`);
+
+        groupIndex[d.group]++;
+    });
+
+    const trace = {
+        x: xPos,
+        y: yPos,
+        mode: 'markers',
+        type: 'scatter',
+        marker: {
+            size: sizes,
+            color: colors,
+            opacity: 0.8,
+            line: { color: '#1a2235', width: 2 }
+        },
+        text: texts,
+        hovertemplate: '%{text}<extra></extra>',
+        showlegend: false
+    };
+
+    // Create annotations for category labels (positioned above each row)
+    const categoryAnnotations = Object.entries(groupYPositions).map(([group, yPos]) => ({
+        x: -0.55,
+        y: yPos,
+        text: `<b>${group}</b>`,
+        showarrow: false,
+        font: { size: 10, color: groupColors[group] },
+        xanchor: 'left',
+        yanchor: 'middle',
+        textangle: 0
+    }));
+
+    Plotly.react('chart-bubble', [trace], {
+        ...plotlyLayout,
+        title: { text: `Most Vulnerable Populations (${displayYear})<br><span style="font-size:13px;color:#9ca3af">Circle size = avg. barrier rate · Hover for details</span>`, font: { size: 18 } },
+        height: 480,
+        xaxis: {
+            showticklabels: false,
+            showgrid: false,
+            zeroline: false,
+            range: [-0.7, 0.7]
+        },
+        yaxis: {
+            showgrid: false,
+            zeroline: false,
+            showticklabels: false,
+            range: [-0.5, 5.5]
+        },
+        annotations: categoryAnnotations,
+        showlegend: false,
+        margin: { t: 80, b: 40, l: 20, r: 20 }
+    }, plotlyConfig);
+}
+
+// Initial bubble plot render
+updateBubblePlot(2019);
+
 // ===== HEATMAP =====
 const heatmapSubgroups = [
     'Uninsured', 'Private', 'Medicaid or other\nstate programs',
@@ -705,18 +972,24 @@ const heatmapZ = [
     [7.4, 6.1, 5.5, 6.5]        // ≥200% FPL
 ];
 
+// Handle null values properly for heatmap
+const heatmapZClean = heatmapZ.map(row => row.map(v => v !== null ? v : 0));
+const heatmapText = heatmapZ.map(row => row.map(v => v !== null ? v.toFixed(1) : '—'));
+
 Plotly.newPlot('chart-heatmap', [{
-    z: heatmapZ,
+    z: heatmapZClean,
     x: heatmapTopics,
     y: heatmapSubgroups,
     type: 'heatmap',
     colorscale: 'YlOrRd',
-    text: heatmapZ.map(row => row.map(v => v !== null ? v.toFixed(1) : 'N/A')),
+    text: heatmapText,
     texttemplate: '%{text}',
     textfont: { size: 11 },
-    hovertemplate: '%{y}<br>%{x}: %{z:.1f}%<extra></extra>',
+    hovertemplate: '%{y}<br>%{x}: %{text}<extra></extra>',
     zmin: 0,
-    zmax: 30
+    zmax: 30,
+    showscale: true,
+    colorbar: { title: { text: 'Rate (%)', side: 'right' } }
 }], {
     ...plotlyLayout,
     title: { text: 'Access Barrier Rates by Subgroup (2024)', font: { size: 18 } },
@@ -724,6 +997,79 @@ Plotly.newPlot('chart-heatmap', [{
     margin: { t: 60, b: 80, l: 200, r: 100 },
     xaxis: { ...plotlyLayout.xaxis, side: 'bottom' },
     yaxis: { ...plotlyLayout.yaxis, autorange: 'reversed' }
+}, plotlyConfig);
+
+// ===== AREA PLOT: Delayed Care Disparities =====
+// Data showing gap between highest and lowest barrier rates by demographic category
+const areaYears = [2019, 2020, 2021, 2022, 2023, 2024];
+
+// Race disparities (highest vs lowest)
+const raceMax = [13.8, 11.5, 10.9, 10.5, 11.2, 15.9]; // Native Hawaiian/PI, AI/AN & White
+const raceMin = [6.9, 6.8, 6.5, 6.7, 6.8, 7.0]; // Asian
+
+// Insurance disparities
+const insMax = [26.8, 24.5, 25.2, 25.1, 26.3, 26.8]; // Uninsured
+const insMin = [5.2, 4.8, 4.6, 4.7, 4.9, 5.4]; // Private
+
+// Income disparities
+const incMax = [13.1, 10.8, 10.4, 10.2, 11.0, 11.5]; // <100% FPL
+const incMin = [6.8, 5.9, 5.7, 5.6, 6.0, 7.4]; // ≥200% FPL
+
+Plotly.newPlot('chart-area', [
+    // Insurance gap (most prominent)
+    {
+        x: areaYears,
+        y: insMax,
+        fill: 'tonexty',
+        fillcolor: 'rgba(230, 57, 70, 0.3)',
+        line: { color: '#e63946', width: 3 },
+        mode: 'lines',
+        name: 'Uninsured (highest)',
+        hovertemplate: '%{y:.1f}%<extra></extra>'
+    },
+    {
+        x: areaYears,
+        y: insMin,
+        line: { color: '#e63946', width: 3, dash: 'dot' },
+        mode: 'lines',
+        name: 'Private insurance (lowest)',
+        hovertemplate: '%{y:.1f}%<extra></extra>'
+    }
+], {
+    ...plotlyLayout,
+    title: { text: 'The Insurance Coverage Gap<br><span style="font-size:13px;color:#9ca3af">Delayed Medical Care Due to Cost</span>', font: { size: 18 } },
+    height: 400,
+    xaxis: {
+        ...plotlyLayout.xaxis,
+        title: 'Year',
+        dtick: 1,
+        showgrid: false
+    },
+    yaxis: {
+        ...plotlyLayout.yaxis,
+        title: 'Population Experiencing Barrier (%)',
+        showgrid: true,
+        gridcolor: '#2a3448'
+    },
+    shapes: [{
+        type: 'rect',
+        x0: 2020, x1: 2021,
+        y0: 0, y1: 1,
+        yref: 'paper',
+        fillcolor: 'rgba(230, 57, 70, 0.1)',
+        line: { width: 0 },
+        layer: 'below'
+    }],
+    annotations: [{
+        x: 2020.5, y: 27,
+        text: '<b>COVID</b>',
+        showarrow: false,
+        font: { size: 11, color: 'rgba(230, 57, 70, 0.8)' },
+        xanchor: 'center'
+    }],
+    showlegend: true,
+    legend: { x: 0, y: 1.15, orientation: 'h', font: { size: 10 } },
+    margin: { t: 100, b: 60, l: 70, r: 20 }
 }, plotlyConfig);
 
 // ===== BEESWARM =====
@@ -868,8 +1214,6 @@ Plotly.newPlot('chart-gap-not-closing', [
 }, plotlyConfig);
 
 // ===== SCROLL ANIMATIONS =====
-let timeseriesAnimated = false;
-
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -879,16 +1223,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-// Separate observer for time series animation
-const chartObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && entry.target.id === 'chart-timeseries' && !timeseriesAnimated) {
-            timeseriesAnimated = true;
-            setTimeout(() => animateTimeSeries(), 300); // Small delay for smooth effect
-        }
-    });
-}, { threshold: 0.3 });
-
 document.querySelectorAll('.section, .chart-container, .stat-card, .export-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
@@ -896,66 +1230,195 @@ document.querySelectorAll('.section, .chart-container, .stat-card, .export-card'
     observer.observe(el);
 });
 
-// Observe the time series chart for animation
-const timeseriesElement = document.getElementById('chart-timeseries');
-if (timeseriesElement) {
-    chartObserver.observe(timeseriesElement);
-}
+// ===== SCROLL-BASED TIME SERIES ANIMATION =====
+let currentYear = 2019;
+let isTimeseriesVisible = false;
 
-// Animate time series lines drawing
-function animateTimeSeries() {
-    const duration = 2000; // 2 seconds
-    const steps = 60;
-    const stepDuration = duration / steps;
-    let step = 0;
+function updateTimeSeriesChart(year) {
+    // Clamp year to valid range
+    const displayYear = Math.max(2019, Math.min(2024, year));
 
-    const interval = setInterval(() => {
-        step++;
-        const progress = step / steps;
+    // Calculate which data points to show
+    const yearIndex = displayYear - 2019;
 
-        const animatedTraces = timeseriesNames.map((name, i) => {
-            const numPoints = Math.floor(timeseriesYears.length * progress);
-            return {
-                x: timeseriesYears.slice(0, Math.max(1, numPoints)),
-                y: timeseriesData[name].slice(0, Math.max(1, numPoints)),
-                mode: 'lines+markers',
-                name: name,
-                line: { width: 3, color: timeseriesColors[i] },
-                marker: { size: 8 },
-                hovertemplate: '%{y:.1f}%<extra></extra>'
-            };
-        });
+    // Create traces that show data up to the current year with interpolation
+    const animatedTraces = timeseriesNames.map((name, i) => {
+        const fullX = timeseriesYears;
+        const fullY = timeseriesData[name];
 
-        Plotly.react('chart-timeseries', animatedTraces, {
-            ...plotlyLayout,
-            title: { text: 'Access Barriers Over Time<br><span style="font-size:13px;color:#9ca3af">U.S. Adult Population (18+)</span>', font: { size: 18 } },
-            height: 480,
-            xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
-            yaxis: { ...plotlyLayout.yaxis, title: 'Population Experiencing Barrier (%)' },
-            shapes: [{
-                type: 'line',
-                x0: 2020, x1: 2020,
-                y0: 0, y1: 1,
-                yref: 'paper',
-                line: { color: '#e63946', width: 2, dash: 'dash' }
-            }],
-            annotations: [{
-                x: 2020, y: 9.5,
-                text: '<b>COVID-19</b>',
-                showarrow: false,
-                font: { size: 12, color: '#e63946' },
-                xanchor: 'center'
-            }],
-            showlegend: true,
-            legend: { x: 0, y: 1.15, orientation: 'h', font: { size: 11 } },
-            margin: { t: 120, b: 60, l: 60, r: 30 }
-        }, plotlyConfig);
+        // Determine how many complete points to show
+        const completePoints = Math.floor(yearIndex);
+        const fraction = yearIndex - completePoints;
 
-        if (step >= steps) {
-            clearInterval(interval);
+        // Build arrays with interpolated point at the end if needed
+        let displayX = fullX.slice(0, completePoints + 1);
+        let displayY = fullY.slice(0, completePoints + 1);
+
+        // Add interpolated point if we're between years
+        if (fraction > 0 && completePoints < fullX.length - 1) {
+            const interpY = fullY[completePoints] + (fullY[completePoints + 1] - fullY[completePoints]) * fraction;
+            displayX = [...displayX, displayYear];
+            displayY = [...displayY, interpY];
         }
-    }, stepDuration);
+
+        return {
+            x: displayX,
+            y: displayY,
+            mode: 'lines+markers',
+            name: name,
+            line: { width: 3, color: timeseriesColors[i] },
+            marker: { size: 8 },
+            hovertemplate: '%{y:.1f}%<extra></extra>'
+        };
+    });
+
+    // Add shapes for COVID zone and current year line
+    const shapes = [
+        // Pink COVID zone (2020-2021)
+        {
+            type: 'rect',
+            x0: 2020, x1: 2021,
+            y0: 0, y1: 1,
+            yref: 'paper',
+            fillcolor: 'rgba(230, 57, 70, 0.1)',
+            line: { width: 0 },
+            layer: 'below'
+        },
+        // Current year vertical line
+        {
+            type: 'line',
+            x0: displayYear, x1: displayYear,
+            y0: 0, y1: 1,
+            yref: 'paper',
+            line: { color: '#e9c46a', width: 3, dash: 'solid' }
+        }
+    ];
+
+    // Annotations
+    const annotations = [
+        {
+            x: 2020.5, y: 9.8,
+            text: '<b>COVID</b>',
+            showarrow: false,
+            font: { size: 11, color: 'rgba(230, 57, 70, 0.8)' },
+            xanchor: 'center'
+        },
+        {
+            x: displayYear, y: 0.5,
+            text: `<b>${Math.round(displayYear)}</b>`,
+            showarrow: false,
+            font: { size: 12, color: '#e9c46a' },
+            xanchor: 'center',
+            yref: 'paper',
+            yanchor: 'bottom'
+        }
+    ];
+
+    Plotly.react('chart-timeseries', animatedTraces, {
+        ...plotlyLayout,
+        title: { text: 'Access Barriers Over Time<br><span style="font-size:13px;color:#9ca3af">U.S. Adult Population (18+) · Scroll to animate</span>', font: { size: 18 } },
+        height: 480,
+        xaxis: {
+            ...plotlyLayout.xaxis,
+            title: 'Year',
+            dtick: 1,
+            range: [2018.5, 2024.5],
+            showgrid: false,
+            zeroline: false
+        },
+        yaxis: {
+            ...plotlyLayout.yaxis,
+            title: 'Population Experiencing Barrier (%)',
+            showgrid: false,
+            zeroline: false
+        },
+        shapes: shapes,
+        annotations: annotations,
+        showlegend: false, // Hide legend, will show in center column
+        margin: { t: 80, b: 60, l: 70, r: 20 }
+    }, plotlyConfig);
 }
+
+// Scroll handler for time series with sticky behavior
+function handleTimeSeriesScroll() {
+    const chartGrid = document.querySelector('.chart-grid');
+    const spacer = document.getElementById('sticky-spacer');
+    if (!chartGrid || !spacer) return;
+
+    const rect = chartGrid.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const activationPoint = windowHeight * 0.25; // Activate when chart is 25% down screen
+    const scrubDistance = windowHeight * 3; // 3 viewport heights of scrubbing for more content
+
+    // Calculate scroll progress
+    let targetYear;
+    let shouldBeSticky = false;
+
+    // Get original chart height for spacer (need to measure when not sticky)
+    const chartHeight = chartGrid.classList.contains('sticky-active') ?
+        parseInt(spacer.style.height) : chartGrid.offsetHeight;
+
+    // Zone 1: Chart approaching activation point
+    if (rect.top > activationPoint) {
+        targetYear = 2019;
+        shouldBeSticky = false;
+        spacer.style.height = '0px';
+    }
+    // Zone 2: Chart in sticky zone (scrubbing)
+    else if (rect.top <= activationPoint) {
+        // Calculate how much we've scrolled since activation
+        const scrolledSinceActivation = activationPoint - rect.top;
+
+        if (scrolledSinceActivation < scrubDistance) {
+            shouldBeSticky = true;
+            spacer.style.height = `${chartHeight}px`; // Maintain space
+
+            // Progress through years
+            const stickyProgress = scrolledSinceActivation / scrubDistance;
+            targetYear = 2019 + (stickyProgress * 5);
+        }
+        // Zone 3: Scrubbing complete
+        else {
+            targetYear = 2024;
+            shouldBeSticky = false;
+            spacer.style.height = '0px';
+        }
+    }
+
+    // Apply/remove sticky class
+    const wasSticky = chartGrid.classList.contains('sticky-active');
+    if (shouldBeSticky && !wasSticky) {
+        chartGrid.classList.add('sticky-active');
+    } else if (!shouldBeSticky && wasSticky) {
+        chartGrid.classList.remove('sticky-active');
+    }
+
+    // Update charts if year changed
+    if (Math.abs(targetYear - currentYear) > 0.05) {
+        currentYear = targetYear;
+        updateTimeSeriesChart(currentYear);
+        updateBubblePlot(currentYear);
+    }
+
+    // Track visibility
+    const nowVisible = rect.top < windowHeight && rect.bottom > 0;
+    if (nowVisible && !isTimeseriesVisible) {
+        isTimeseriesVisible = true;
+        updateTimeSeriesChart(currentYear);
+    } else if (!nowVisible && isTimeseriesVisible) {
+        isTimeseriesVisible = false;
+    }
+}
+
+// Add scroll listener
+window.addEventListener('scroll', handleTimeSeriesScroll);
+window.addEventListener('resize', handleTimeSeriesScroll);
+
+// Initial render
+setTimeout(() => {
+    updateTimeSeriesChart(2019);
+    handleTimeSeriesScroll();
+}, 100);
 </script>
 
 </body>
