@@ -568,6 +568,7 @@
         .stat-item {
             opacity: 0;
             transition: opacity 0.6s ease;
+            text-align: center;
         }
 
         .stat-item.active {
@@ -659,6 +660,42 @@
             .stat-row { grid-template-columns: 1fr 1fr; }
             .hero-meta { flex-direction: column; gap: 0.5rem; }
 
+            /* Sticky chart section - split screen approach */
+            .chart-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .chart-left-column {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 50vh;
+                z-index: 10;
+                background: var(--bg-primary);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+                overflow: hidden;
+            }
+
+            .chart-right-column {
+                margin-top: 50vh;
+            }
+
+            .chart-scene {
+                min-height: 50vh;
+                padding: 1rem;
+            }
+
+            .chart-controls {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Article stack adjustments */
             .article-stack-section {
                 padding: 4rem 0;
                 min-height: 150vh;
@@ -668,14 +705,17 @@
                 grid-template-columns: 1fr;
                 gap: 2rem;
                 top: 10vh;
+                height: auto;
             }
 
             .article-stack-container {
                 height: 50vh;
+                order: 1;
             }
 
             .article-stats-column {
                 gap: 4rem;
+                order: 2;
             }
 
             .stat-number {
@@ -1752,7 +1792,7 @@ Plotly.newPlot('chart-gap-closing', [
     }
 ], {
     ...plotlyLayout,
-    title: { text: 'The Gap Is Closing — But For How Long?<br><span style="font-size:13px;color:#9ca3af">Missed medical care due to cost, by poverty level</span>', font: { size: 18 } },
+    title: { text: 'The Gap Is Closing — <i>or is it?</i><br><span style="font-size:13px;color:#9ca3af">Missed medical care due to cost, by poverty level</span>', font: { size: 18 } },
     height: 480,
     xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
     yaxis: { ...plotlyLayout.yaxis, title: '% of Population' },
@@ -1801,7 +1841,7 @@ Plotly.newPlot('chart-gap-not-closing', [
     }
 ], {
     ...plotlyLayout,
-    title: { text: 'This Gap Isn\'t Closing<br><span style="font-size:13px;color:#9ca3af">Uninsured rate by race & ethnicity</span>', font: { size: 18 } },
+    title: { text: 'This Gap Isn\'t Actually Closing Like it Seems<br><span style="font-size:13px;color:#9ca3af">Uninsured rate by race & ethnicity</span>', font: { size: 18 } },
     height: 480,
     xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
     yaxis: { ...plotlyLayout.yaxis, title: '% of Population' },
