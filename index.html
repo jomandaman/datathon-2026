@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Falls Through the Cracks? | DubsTech Datathon 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2235;
+            --text-primary: #e8e6e1;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-red: #e63946;
+            --accent-teal: #2a9d8f;
+            --accent-gold: #e9c46a;
+            --accent-blue: #457b9d;
+            --border: #2a3448;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(230,57,70,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(42,157,143,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-teal);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            max-width: 900px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent-red);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+        }
+
+        .hero-meta span { display: flex; align-items: center; gap: 0.5rem; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 1s;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            animation: pulse 2s ease infinite;
+        }
+
+        /* ===== CONTENT WRAPPER ===== */
+        .content {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .content-wide {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ===== SECTION DIVIDERS ===== */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            display: inline-block;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 3rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        p strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* ===== PULL QUOTES ===== */
+        .pull-quote {
+            border-left: 3px solid var(--accent-red);
+            padding: 1.5rem 0 1.5rem 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        /* ===== STAT CALLOUTS ===== */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number.red { color: var(--accent-red); }
+        .stat-card .number.teal { color: var(--accent-teal); }
+        .stat-card .number.gold { color: var(--accent-gold); }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* ===== CHART CONTAINERS ===== */
+        .chart-container {
+            margin: 3rem 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .chart-container .chart-caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-family: var(--font-mono);
+            text-align: center;
+        }
+
+        /* ===== METHODOLOGY / FOOTER SECTION ===== */
+        .methodology {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 4rem 0;
+        }
+
+        .methodology h2 {
+            font-size: 1.5rem;
+        }
+
+        .methodology p {
+            font-size: 0.95rem;
+        }
+
+        /* ===== EXPORT CARDS ===== */
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .export-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: border-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .export-card:hover {
+            border-color: var(--accent-teal);
+            transform: translateY(-2px);
+        }
+
+        .export-card .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .export-card h4 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .export-card p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .export-card a {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-teal);
+            text-decoration: none;
+            border: 1px solid var(--accent-teal);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .export-card a:hover {
+            background: var(--accent-teal);
+            color: var(--bg-primary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--accent-teal);
+            text-decoration: none;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero { padding: 3rem 1.5rem; }
+            .content, .content-wide { padding: 0 1.5rem; }
+            .stat-row { grid-template-columns: 1fr 1fr; }
+            .hero-meta { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="content">
+        <div class="hero-eyebrow">DubsTech Datathon 2026 · Healthcare Track</div>
+        <h1>Who Falls Through <em>the Cracks?</em></h1>
+        <p class="hero-subtitle">
+            An analysis of healthcare access barriers across race, income, and education — 
+            and how the pandemic temporarily narrowed gaps that are now at risk of widening again.
+        </p>
+        <div class="hero-meta">
+            <span>📊 NHIS Adult Summary Health Statistics, 2019–2024</span>
+            <span>👥 Team [Your Team Name]</span>
+        </div>
+    </div>
+    <div class="scroll-indicator">Scroll to explore</div>
+</section>
+
+<!-- ===== SECTION 1: THE PROBLEM ===== -->
+<section class="section">
+    <div class="content">
+        <span class="section-label">01 — The Problem</span>
+        <h2>Not everyone gets the care they need.</h2>
+        <p>
+            Every year, millions of American adults skip medical care, delay treatment, or go without 
+            mental health support — not because they don't need it, but because they <strong>can't afford it</strong>. 
+            The CDC's National Health Interview Survey tracks these barriers across demographics, 
+            giving us a window into who the healthcare system serves and who it leaves behind.
+        </p>
+        <p>
+            We analyzed 23,609 data points spanning 54 health conditions and access metrics across 
+            six years (2019–2024), broken down by race, income, education, insurance status, and more. 
+            What we found is a story of <strong>progress, fragility, and persistent structural gaps</strong>.
+        </p>
+    </div>
+
+    <div class="content-wide">
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="number red">11.1%</div>
+                <div class="label">of the poorest adults skipped medical care due to cost in 2024</div>
+            </div>
+            <div class="stat-card">
+                <div class="number teal">6.1%</div>
+                <div class="label">of the wealthiest adults skipped care — half the rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="number gold">27.7%</div>
+                <div class="label">of Hispanic adults are uninsured — 4× the rate of non-Hispanic white adults</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECTION 2: DISPARITIES SNAPSHOT ===== -->
+<section class="section">
+    <div class="content">
+        <span class="section-label">02 — Disparities Snapshot</span>
+        <h2>The landscape of inequality in 2024</h2>
+        <p>
+            Who faces the steepest barriers to healthcare? The answer depends on which lens you use — 
+            race, income, or education all reveal different dimensions of the same problem.
+        </p>
+    </div>
+
+    <div class="content-wide">
+        <div class="chart-container">
+            <div id="chart-heatmap"></div>
+            <div class="chart-caption">Source: NHIS Adult Summary Health Statistics, 2024. Estimates represent crude percentages of the adult population.</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <p>
+            The heatmap reveals a stark pattern: <strong>Hispanic populations face the highest barriers 
+            across nearly every access metric</strong>, with uninsured rates exceeding 25%. 
+            Meanwhile, non-Hispanic white adults consistently report the lowest barriers — 
+            but even among them, 7-9% skip care due to cost.
+        </p>
+
+        <div class="pull-quote">
+            "The gap between the best-off and worst-off subgroups isn't just a few percentage points — 
+            it's the difference between getting a diagnosis early and getting one too late."
+        </div>
+    </div>
+
+    <div class="content-wide">
+        <div class="chart-container">
+            <div id="chart-beeswarm"></div>
+            <div class="chart-caption">Each dot represents a demographic subgroup. Wider spread = greater inequality within that demographic category.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECTION 3: COVID IMPACT ===== -->
+<section class="section">
+    <div class="content">
+        <span class="section-label">03 — COVID Impact & Recovery</span>
+        <h2>The pandemic changed everything. <em>Temporarily.</em></h2>
+        <p>
+            Here's the counterintuitive finding: <strong>COVID-era policies actually narrowed healthcare 
+            access gaps</strong>. Expanded Medicaid, stimulus payments, enhanced unemployment benefits, 
+            and ACA marketplace subsidies gave low-income Americans a financial cushion that made 
+            skipping medical care less necessary.
+        </p>
+        <p>
+            But many of those provisions have expired. The Medicaid continuous enrollment requirement 
+            ended in 2023. Enhanced subsidies have been scaled back. The question isn't whether the 
+            gap closed — it's whether it stays closed.
+        </p>
+    </div>
+
+    <div class="content-wide">
+        <div class="chart-container">
+            <div id="chart-gap-closing"></div>
+            <div class="chart-caption">Gap measured between adults below 100% FPL and those at or above 200% FPL. Shaded area represents the size of the disparity.</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <p>
+            The poverty gap in missed medical care shrank from <strong>10.3 percentage points in 2019 
+            to just 5.0 in 2024</strong> — a halving of the disparity. But the trajectory isn't smooth: 
+            the gap bounced back in 2022–2023 as pandemic protections expired, before dropping again.
+        </p>
+
+        <h3>But not all gaps are closing.</h3>
+        <p>
+            While cost barriers improved, <strong>insurance coverage disparities barely budged</strong>. 
+            The racial gap in uninsured rates has hovered between 20–25 percentage points for six years straight. 
+            Emergency policies helped people afford care within the system — but they didn't bring 
+            new people into the system.
+        </p>
+    </div>
+
+    <div class="content-wide">
+        <div class="chart-container">
+            <div id="chart-gap-not-closing"></div>
+            <div class="chart-caption">Gap measured between the most and least uninsured racial/ethnic subgroups. The structural disparity in coverage remains entrenched.</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="pull-quote">
+            "Pandemic-era interventions proved that policy can close access gaps. 
+            But those gains are fragile — and the deepest structural inequities remain untouched."
+        </div>
+    </div>
+</section>
+
+<!-- ===== SECTION 4: EXTEND ===== -->
+<section class="section">
+    <div class="content">
+        <span class="section-label">04 — Extend This Analysis</span>
+        <h2>Built to be extended.</h2>
+        <p>
+            This analysis is open. Download the cleaned data, explore the full methodology in our 
+            Colab notebook, fork the code, or plug the dataset into Tableau or Power BI.
+        </p>
+    </div>
+
+    <div class="content-wide">
+        <div class="export-grid">
+            <div class="export-card">
+                <div class="icon">📊</div>
+                <h4>Tableau / Power BI</h4>
+                <p>Download our cleaned, analysis-ready dataset to visualize in your tool of choice.</p>
+                <a href="data/cleaned_data.csv" download>Download CSV</a>
+            </div>
+            <div class="export-card">
+                <div class="icon">📓</div>
+                <h4>Google Colab</h4>
+                <p>View the full analysis notebook with all code, methodology, and commentary.</p>
+                <a href="https://colab.research.google.com/drive/YOUR_NOTEBOOK_ID" target="_blank">Open Notebook</a>
+            </div>
+            <div class="export-card">
+                <div class="icon">🐙</div>
+                <h4>GitHub</h4>
+                <p>Clone the repo to extend our pipeline, add new models, or integrate new data sources.</p>
+                <a href="https://github.com/YOUR_USERNAME/datathon-2026" target="_blank">View Repo</a>
+            </div>
+            <div class="export-card">
+                <div class="icon">🚀</div>
+                <h4>Interactive App</h4>
+                <p>Explore the data interactively with filters, dropdowns, and live charts.</p>
+                <a href="https://your-app.streamlit.app" target="_blank">Open Streamlit App</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== METHODOLOGY ===== -->
+<section class="methodology">
+    <div class="content">
+        <span class="section-label">Methodology</span>
+        <h2>How we got here</h2>
+        <p>
+            <strong>Data source:</strong> CDC National Health Interview Survey (NHIS) Adult Summary Health Statistics, 
+            2019–2024. 26,208 records spanning 54 health topics across demographic, geographic, and 
+            socioeconomic classifications.
+        </p>
+        <p>
+            <strong>Cleaning:</strong> Removed 2,599 rows flagged as statistically unreliable (*, **, ***, ****, ---, -). 
+            Final dataset: 23,609 rows, 17 columns. No imputation was performed on missing estimates.
+        </p>
+        <p>
+            <strong>Derived metrics:</strong> Year-over-year change calculated per topic/subgroup combination. 
+            Confidence interval width used as a reliability indicator. Disparity gap computed as the 
+            difference between the highest and lowest estimate within each demographic group per year.
+        </p>
+        <p>
+            <strong>Supplemental data:</strong> CDC PLACES county-level estimates used for geographic visualizations. 
+            Linked via health measure categories.
+        </p>
+        <p>
+            <strong>Tools:</strong> Python (Pandas, Plotly, NumPy), Google Colab, Streamlit, GitHub Pages.
+        </p>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <p>
+        Built for <a href="https://datathon-2026.webflow.io/" target="_blank">DubsTech Datathon 2026</a> 
+        at the University of Washington · February 7–8, 2026
+    </p>
+    <p style="margin-top: 0.5rem;">Team [Your Team Name] · Josiah, [Teammate 2], [Teammate 3]</p>
+</footer>
+
+<!-- ===== CHART SCRIPTS ===== -->
+<script>
+const plotlyConfig = { responsive: true, displayModeBar: false };
+const plotlyLayout = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Source Sans 3, sans-serif', color: '#e8e6e1' },
+    xaxis: { gridcolor: '#2a3448', zerolinecolor: '#2a3448' },
+    yaxis: { gridcolor: '#2a3448', zerolinecolor: '#2a3448' },
+    margin: { t: 60, b: 60, l: 60, r: 30 }
+};
+
+// ===== HEATMAP =====
+// PLACEHOLDER: Replace this data with your actual values from the Colab notebook
+const heatmapTopics = [
+    'Delayed getting medical care due to cost',
+    'Did not get needed medical care due to cost',
+    'Did not get needed mental health care',
+    'Did not take medication to save money',
+    'Fair or poor health status',
+    'Has a usual place of care',
+    'Uninsured at time of interview',
+    'Uninsured part of past year'
+];
+const heatmapSubgroups = [
+    'All races,\nHispanic', 'All races,\nHispanic Mexican', 'All races,\nnon-Hispanic',
+    'Black only,\nnon-Hispanic', 'Other races,\nnon-Hispanic', 'White only,\nnon-Hispanic'
+];
+const heatmapZ = [
+    [10.0, 9.3, 8.3, 8.7, 6.1, 8.5],
+    [9.4, 9.1, 6.9, 8.2, 5.9, 6.9],
+    [6.0, 5.1, 5.8, 5.7, 4.5, 6.1],
+    [8.5, 9.1, 7.7, 10.0, 6.8, 7.4],
+    [16.5, 16.9, 14.5, 20.1, 14.2, 13.4],
+    [81.9, 81.5, 90.0, 87.0, 87.8, 90.9],
+    [25.3, 27.7, 8.1, 10.5, 7.4, 7.8],
+    [31.1, 33.4, 12.7, 16.7, 11.5, 12.0]
+];
+
+Plotly.newPlot('chart-heatmap', [{
+    z: heatmapZ,
+    x: heatmapSubgroups,
+    y: heatmapTopics,
+    type: 'heatmap',
+    colorscale: 'YlOrRd',
+    text: heatmapZ.map(row => row.map(v => v.toFixed(1))),
+    texttemplate: '%{text}',
+    textfont: { size: 12 },
+    hovertemplate: '%{y}<br>%{x}: %{z:.1f}%<extra></extra>'
+}], {
+    ...plotlyLayout,
+    title: { text: 'Healthcare Access by Race & Ethnicity (2024)', font: { size: 18 } },
+    height: 480,
+    margin: { t: 60, b: 120, l: 280, r: 30 },
+    xaxis: { ...plotlyLayout.xaxis, tickangle: -45 },
+    yaxis: { ...plotlyLayout.yaxis, autorange: 'reversed' }
+}, plotlyConfig);
+
+// ===== BEESWARM =====
+// PLACEHOLDER: Replace with actual data from Colab
+const beeswarmGroups = ['Race and Hispanic origin', 'Education', 'Poverty level', 'Health insurance coverage'];
+const beeswarmEstimates = [
+    [9.4, 9.1, 6.9, 8.2, 5.9, 6.9],
+    [10.8, 9.2, 8.1, 5.7],
+    [11.1, 10.6, 6.1],
+    [8.2, 5.5, 12.3]
+];
+const beeswarmLabels = [
+    ['Hispanic', 'Hispanic Mexican', 'Non-Hispanic', 'Black NH', 'Other NH', 'White NH'],
+    ['No HS diploma', 'Some college', 'HS diploma/GED', 'College+'],
+    ['<100% FPL', '100-200% FPL', '≥200% FPL'],
+    ['Private', 'Medicaid', 'Uninsured']
+];
+
+const beeswarmTraces = [];
+beeswarmGroups.forEach((group, i) => {
+    beeswarmTraces.push({
+        x: beeswarmEstimates[i],
+        y: Array(beeswarmEstimates[i].length).fill(group),
+        mode: 'markers',
+        type: 'scatter',
+        marker: {
+            size: 14,
+            opacity: 0.8,
+            color: ['#e63946', '#457b9d', '#2a9d8f', '#e9c46a'][i],
+        },
+        text: beeswarmLabels[i],
+        hovertemplate: '%{text}: %{x:.1f}%<extra></extra>',
+        showlegend: false
+    });
+});
+
+Plotly.newPlot('chart-beeswarm', beeswarmTraces, {
+    ...plotlyLayout,
+    title: { text: 'Where Do the Gaps Live? (2024)<br><span style="font-size:13px;color:#9ca3af">Each dot = a subgroup. Spread = disparity within that category.</span>', font: { size: 18 } },
+    height: 350,
+    xaxis: { ...plotlyLayout.xaxis, title: '% who did not get needed medical care due to cost' },
+    margin: { t: 80, b: 60, l: 220, r: 30 }
+}, plotlyConfig);
+
+// ===== GAP CLOSING =====
+const years = [2019, 2020, 2021, 2022, 2023, 2024];
+const worstClosing = [15.8, 12.3, 11.2, 10.7, 12.0, 11.1];
+const bestClosing = [5.5, 4.7, 4.8, 4.7, 4.5, 6.1];
+
+Plotly.newPlot('chart-gap-closing', [
+    {
+        x: years.concat([...years].reverse()),
+        y: worstClosing.concat([...bestClosing].reverse()),
+        fill: 'toself',
+        fillcolor: 'rgba(230, 57, 70, 0.25)',
+        line: { color: 'rgba(0,0,0,0)' },
+        name: 'Disparity Gap',
+        hoverinfo: 'skip'
+    },
+    {
+        x: years, y: worstClosing,
+        mode: 'lines+markers+text',
+        line: { width: 3, color: '#e63946' },
+        marker: { size: 10 },
+        text: worstClosing.map(v => v + '%'),
+        textposition: 'top center',
+        textfont: { size: 12, color: '#e63946' },
+        name: 'Most affected (<100% FPL)'
+    },
+    {
+        x: years, y: bestClosing,
+        mode: 'lines+markers+text',
+        line: { width: 3, color: '#2a9d8f' },
+        marker: { size: 10 },
+        text: bestClosing.map(v => v + '%'),
+        textposition: 'bottom center',
+        textfont: { size: 12, color: '#2a9d8f' },
+        name: 'Least affected (≥200% FPL)'
+    }
+], {
+    ...plotlyLayout,
+    title: { text: 'The Gap Is Closing — But For How Long?<br><span style="font-size:13px;color:#9ca3af">Missed medical care due to cost, by poverty level</span>', font: { size: 18 } },
+    height: 480,
+    xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
+    yaxis: { ...plotlyLayout.yaxis, title: '% of Population' },
+    annotations: [
+        { x: 2019, y: 10.6, text: '<b>10.3pp gap</b>', showarrow: false, font: { size: 14, color: '#e63946' } },
+        { x: 2021, y: 8.0, text: '<b>6.4pp gap</b>', showarrow: false, font: { size: 14, color: '#e63946' } },
+        { x: 2024, y: 8.6, text: '<b>5.0pp gap</b>', showarrow: false, font: { size: 14, color: '#e63946' } }
+    ],
+    showlegend: true,
+    legend: { x: 0.5, y: -0.15, orientation: 'h', xanchor: 'center' }
+}, plotlyConfig);
+
+// ===== GAP NOT CLOSING =====
+const worstNotClosing = [32.7, 33.2, 33.3, 31.3, 27.4, 27.7];
+const bestNotClosing = [10.2, 9.1, 7.8, 7.5, 6.8, 7.4];
+
+Plotly.newPlot('chart-gap-not-closing', [
+    {
+        x: years.concat([...years].reverse()),
+        y: worstNotClosing.concat([...bestNotClosing].reverse()),
+        fill: 'toself',
+        fillcolor: 'rgba(230, 57, 70, 0.25)',
+        line: { color: 'rgba(0,0,0,0)' },
+        name: 'Disparity Gap',
+        hoverinfo: 'skip'
+    },
+    {
+        x: years, y: worstNotClosing,
+        mode: 'lines+markers+text',
+        line: { width: 3, color: '#e63946' },
+        marker: { size: 10 },
+        text: worstNotClosing.map(v => v + '%'),
+        textposition: 'top center',
+        textfont: { size: 12, color: '#e63946' },
+        name: 'Most affected (Hispanic)'
+    },
+    {
+        x: years, y: bestNotClosing,
+        mode: 'lines+markers+text',
+        line: { width: 3, color: '#2a9d8f' },
+        marker: { size: 10 },
+        text: bestNotClosing.map(v => v + '%'),
+        textposition: 'bottom center',
+        textfont: { size: 12, color: '#2a9d8f' },
+        name: 'Least affected'
+    }
+], {
+    ...plotlyLayout,
+    title: { text: 'This Gap Isn\'t Closing<br><span style="font-size:13px;color:#9ca3af">Uninsured rate by race & ethnicity</span>', font: { size: 18 } },
+    height: 480,
+    xaxis: { ...plotlyLayout.xaxis, title: 'Year', dtick: 1 },
+    yaxis: { ...plotlyLayout.yaxis, title: '% of Population' },
+    annotations: [
+        { x: 2019, y: 21.5, text: '<b>22.5pp gap</b>', showarrow: false, font: { size: 14, color: '#e63946' } },
+        { x: 2021, y: 20.5, text: '<b>25.5pp gap</b>', showarrow: false, font: { size: 14, color: '#e63946' } },
+        { x: 2024, y: 17.5, text: '<b>20.3pp gap</b>', showarrow: false, font: { size: 14, color: '#e63946' } }
+    ],
+    showlegend: true,
+    legend: { x: 0.5, y: -0.15, orientation: 'h', xanchor: 'center' }
+}, plotlyConfig);
+
+// ===== SCROLL ANIMATIONS =====
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section, .chart-container, .stat-card, .export-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+});
+</script>
+
+</body>
+</html>
