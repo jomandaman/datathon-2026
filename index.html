@@ -640,6 +640,18 @@
             50% { opacity: 1; }
         }
 
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(42, 157, 143, 0.4),
+                            0 0 10px rgba(42, 157, 143, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(42, 157, 143, 0.8),
+                            0 0 30px rgba(42, 157, 143, 0.4),
+                            0 0 40px rgba(42, 157, 143, 0.2);
+            }
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero { padding: 3rem 1.5rem; }
@@ -975,7 +987,7 @@
                 </div>
             </div>
 
-            <button id="run-model-btn" style="background: var(--accent-teal); color: var(--bg-primary); border: none; padding: 0.75rem 2rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 1.5rem;">
+            <button id="run-model-btn" style="background: var(--accent-teal); color: var(--bg-primary); border: none; padding: 0.75rem 2rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 1.5rem; animation: pulseGlow 3s ease-in-out infinite;">
                 Run Forecast →
             </button>
 
