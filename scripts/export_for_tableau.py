@@ -141,23 +141,23 @@ forecast_2025 = [
 # 2026 predictions (AJ's model)
 forecast_2026 = [
     # Demographic
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Demographic', 'Subgroup': 'Bisexual adults', 'Actual_2024': 23.1, 'Predicted': 25.8, 'Change': 2.7},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Demographic', 'Subgroup': 'American Indian/Alaska Native', 'Actual_2024': 13.8, 'Predicted': 15.9, 'Change': 2.1},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Demographic', 'Subgroup': 'Native Hawaiian/Pacific Islander', 'Actual_2024': 14.6, 'Predicted': 16.4, 'Change': 1.8},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Demographic', 'Subgroup': 'Hispanic adults', 'Actual_2024': 10.5, 'Predicted': 11.9, 'Change': 1.4},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Demographic', 'Subgroup': 'Gay or Lesbian adults', 'Actual_2024': 10.4, 'Predicted': 11.6, 'Change': 1.2},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Demographic', 'Subgroup': 'Bisexual adults', 'Actual_2024': 23.1, 'Predicted': 25.8, 'Change': 2.7},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Demographic', 'Subgroup': 'American Indian/Alaska Native', 'Actual_2024': 13.8, 'Predicted': 15.9, 'Change': 2.1},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Demographic', 'Subgroup': 'Native Hawaiian/Pacific Islander', 'Actual_2024': 14.6, 'Predicted': 16.4, 'Change': 1.8},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Demographic', 'Subgroup': 'Hispanic adults', 'Actual_2024': 10.5, 'Predicted': 11.9, 'Change': 1.4},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Demographic', 'Subgroup': 'Gay or Lesbian adults', 'Actual_2024': 10.4, 'Predicted': 11.6, 'Change': 1.2},
     # Socioeconomic
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Socioeconomic', 'Subgroup': 'Below 100% FPL', 'Actual_2024': 13.1, 'Predicted': 15.2, 'Change': 2.1},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Socioeconomic', 'Subgroup': 'No high school diploma', 'Actual_2024': 12.4, 'Predicted': 14.1, 'Change': 1.7},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Socioeconomic', 'Subgroup': '100-200% FPL', 'Actual_2024': 11.8, 'Predicted': 13.2, 'Change': 1.4},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Socioeconomic', 'Subgroup': 'Some college, no degree', 'Actual_2024': 9.8, 'Predicted': 11.0, 'Change': 1.2},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Socioeconomic', 'Subgroup': 'Unemployed', 'Actual_2024': 11.5, 'Predicted': 12.6, 'Change': 1.1},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Socioeconomic', 'Subgroup': 'Below 100% FPL', 'Actual_2024': 13.1, 'Predicted': 15.2, 'Change': 2.1},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Socioeconomic', 'Subgroup': 'No high school diploma', 'Actual_2024': 12.4, 'Predicted': 14.1, 'Change': 1.7},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Socioeconomic', 'Subgroup': '100-200% FPL', 'Actual_2024': 11.8, 'Predicted': 13.2, 'Change': 1.4},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Socioeconomic', 'Subgroup': 'Some college, no degree', 'Actual_2024': 9.8, 'Predicted': 11.0, 'Change': 1.2},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Socioeconomic', 'Subgroup': 'Unemployed', 'Actual_2024': 11.5, 'Predicted': 12.6, 'Change': 1.1},
     # Geographic
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Geographic', 'Subgroup': 'South region', 'Actual_2024': 9.8, 'Predicted': 11.3, 'Change': 1.5},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Geographic', 'Subgroup': 'West region', 'Actual_2024': 8.9, 'Predicted': 10.2, 'Change': 1.3},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Geographic', 'Subgroup': 'Midwest region', 'Actual_2024': 8.2, 'Predicted': 9.3, 'Change': 1.1},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Geographic', 'Subgroup': 'Northeast region', 'Actual_2024': 7.5, 'Predicted': 8.4, 'Change': 0.9},
-    {'Year': 2026, 'Model': 'RF + XGBoost Ensemble', 'Classification': 'Geographic', 'Subgroup': 'Rural areas', 'Actual_2024': 9.1, 'Predicted': 10.0, 'Change': 0.9},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Geographic', 'Subgroup': 'South region', 'Actual_2024': 9.8, 'Predicted': 11.3, 'Change': 1.5},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Geographic', 'Subgroup': 'West region', 'Actual_2024': 8.9, 'Predicted': 10.2, 'Change': 1.3},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Geographic', 'Subgroup': 'Midwest region', 'Actual_2024': 8.2, 'Predicted': 9.3, 'Change': 1.1},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Geographic', 'Subgroup': 'Northeast region', 'Actual_2024': 7.5, 'Predicted': 8.4, 'Change': 0.9},
+    {'Year': 2026, 'Model': 'XGBoost', 'Classification': 'Geographic', 'Subgroup': 'Rural areas', 'Actual_2024': 9.1, 'Predicted': 10.0, 'Change': 0.9},
 ]
 
 df_forecasts = pd.DataFrame(forecast_2025 + forecast_2026)

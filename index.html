@@ -714,7 +714,7 @@
         <ul style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.8;">
             <li><strong>2025 Short-term Forecast</strong> (Gradient Boosting) — Predicts next year's trends using
                 engineered features (lag values, rolling averages, year-over-year changes)</li>
-            <li><strong>2026 Long-term Forecast</strong> (Random Forest + XGBoost Ensemble) — Projects two years ahead
+            <li><strong>2026 Long-term Forecast</strong> (XGBoost) — Projects two years ahead
                 using historical 2-year jump patterns (2019→2021, 2020→2022, etc.)</li>
         </ul>
     </div>
@@ -1430,7 +1430,7 @@ const forecastData = {
     2026: {
         demographic: {
             name: 'Demographic Characteristics',
-            model: 'Random Forest + XGBoost Ensemble',
+            model: 'XGBoost',
             r2: 0.87,
             predictions: [
                 { group: 'Bisexual adults', actual2024: 23.1, pred: 25.8, change: 2.7 },
@@ -1442,7 +1442,7 @@ const forecastData = {
         },
         socioeconomic: {
             name: 'Socioeconomic Characteristics',
-            model: 'Random Forest + XGBoost Ensemble',
+            model: 'XGBoost',
             r2: 0.87,
             predictions: [
                 { group: 'Below 100% FPL', actual2024: 13.1, pred: 15.2, change: 2.1 },
@@ -1454,7 +1454,7 @@ const forecastData = {
         },
         geographic: {
             name: 'Geographic Characteristics',
-            model: 'Random Forest + XGBoost Ensemble',
+            model: 'XGBoost',
             r2: 0.87,
             predictions: [
                 { group: 'South region', actual2024: 9.8, pred: 11.3, change: 1.5 },
@@ -1480,7 +1480,7 @@ function runForecastModel() {
     statusEl.style.display = 'block';
     resultsEl.style.display = 'none';
 
-    const modelDesc = year === '2025' ? 'Gradient Boosting' : 'ensemble model (Random Forest + XGBoost)';
+    const modelDesc = year === '2025' ? 'Gradient Boosting' : 'XGBoost model';
     statusText.innerHTML = `⏳ Loading historical data (2019-2024)...<br>⏳ Training ${modelDesc}...<br>⏳ Generating ${year} predictions...`;
 
     // Simulate model running time
@@ -1822,15 +1822,26 @@ function getYearFromMouseEvent(e) {
     const rect = chartDiv.getBoundingClientRect();
     const fullLayout = chartDiv._fullLayout;
 
+    if (!fullLayout) return 2019; // Fallback if layout not ready
+
+    const xaxis = fullLayout.xaxis;
+    if (!xaxis) return 2019; // Fallback if xaxis not ready
+
     // Get mouse position relative to chart
     const mouseX = e.clientX - rect.left;
 
-    // Use Plotly's actual xaxis domain to get the true plot area
-    // xaxis.domain gives us [start, end] as fractions of the full width
-    const xDomain = fullLayout.xaxis.domain || [0, 1];
-    const plotLeft = rect.width * xDomain[0];
-    const plotRight = rect.width * xDomain[1];
-    const plotWidth = plotRight - plotLeft;
+    let plotLeft, plotWidth;
+
+    // Try to use Plotly's internal axis positioning (most accurate)
+    if (xaxis._offset !== undefined && xaxis._length !== undefined) {
+        plotLeft = xaxis._offset;
+        plotWidth = xaxis._length;
+    } else {
+        // Fallback: use domain-based calculation
+        const xDomain = xaxis.domain || [0, 1];
+        plotLeft = rect.width * xDomain[0];
+        plotWidth = rect.width * (xDomain[1] - xDomain[0]);
+    }
 
     // Convert mouse position to data coordinates
     const relativeX = (mouseX - plotLeft) / plotWidth;

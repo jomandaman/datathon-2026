@@ -11,9 +11,9 @@
 
 | Member | Role | GitHub |
 |--------|------|--------|
-| **AJ Plumlee** | ML Lead (2026 Forecasts) | [@ajplumlee](https://github.com/ajplumlee) |
-| **Alanna Koser** | ML Lead (2025 Forecasts) | [@alannakoser](https://github.com/alannakoser) |
-| **Josiah Zacharias** | Visualization Lead | [@josiahzacharias](https://github.com/josiahzacharias) |
+| **AJ Plumlee** | ML Lead (2026 Forecasts) | [@ajplumlee33](https://github.com/ajplumlee33) |
+| **Alanna Koser** | ML Lead (2025 Forecasts) | [@0-1deathtouch](https://github.com/0-1deathtouch) |
+| **Josiah Zacharias** | Visualization Lead | [@jomandaman](https://github.com/jomandaman) |
 
 ---
 
@@ -91,11 +91,10 @@ datathon-2026/
 - **Training:** 2019-2024 data with engineered temporal features
 - **Output:** 1-year predictions for all demographic subgroups
 
-**Model 2: Long-term (2026 Forecast)** — *AJ's Random Forest + XGBoost Ensemble*
+**Model 2: Long-term (2026 Forecast)** — *AJ's XGBoost Model*
 - **R² Score:** 0.87
 - **Training Strategy:** 2-year jump patterns (2019→2021, 2020→2022, etc.)
-- **Ensemble:** Averages predictions from RF and XGBoost for robustness
-- **Output:** 2-year projections identifying most at-risk populations
+- **Output:** 2-year projections identifying most at-risk populations with interpretability analysis
 
 ---
 
@@ -242,9 +241,9 @@ DubsTech Datathon 2026, University of Washington.
 
 Questions or want to collaborate?
 
-- **AJ Plumlee** — [GitHub](https://github.com/ajplumlee)
-- **Alanna Koser** — [GitHub](https://github.com/alannakoser)
-- **Josiah Zacharias** — [GitHub](https://github.com/josiahzacharias)
+- **AJ Plumlee** — [GitHub](https://github.com/ajplumlee33)
+- **Alanna Koser** — [GitHub](https://github.com/0-1deathtouch)
+- **Josiah Zacharias** — [GitHub](https://github.com/jomandaman)
 
 ---
 
