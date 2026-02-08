@@ -209,7 +209,7 @@
 
         /* ===== SECTION DIVIDERS ===== */
         .section {
-            padding: 6rem 0;
+            padding: 4rem 0;
         }
 
         .section-label {
@@ -882,6 +882,14 @@
             translates to real health outcomes</strong>: earlier diagnoses, preventive care, chronic disease
             management, and ultimately, life expectancy differences.
         </p>
+
+        <div class="pull-quote">
+            "The rising trajectory in the inability to pay for healthcare is a disturbing trend that is likely to continue and even accelerate."
+            <div class="quote-citation">
+                — Tim Lash, President, West Health Policy Center
+                (<a href="https://westhealth.org/news/inability-to-pay-for-healthcare-reaches-record-high-in-u-s/" target="_blank">West Health, April 2025</a>)
+            </div>
+        </div>
     </div>
 </section>
 
@@ -902,14 +910,6 @@
             circumstance — gaps in <em>reported</em> access barriers can narrow even as actual healthcare
             utilization plummets.
         </p>
-
-        <div class="pull-quote">
-            "The rising trajectory in the inability to pay for healthcare is a disturbing trend that is likely to continue and even accelerate."
-            <div class="quote-citation">
-                — Tim Lash, President, West Health Policy Center
-                (<a href="https://westhealth.org/news/inability-to-pay-for-healthcare-reaches-record-high-in-u-s/" target="_blank">West Health, April 2025</a>)
-            </div>
-        </div>
     </div>
 
     <div class="content-wide">
@@ -1147,8 +1147,6 @@ const plotlyLayout = {
 // ===== DEMOGRAPHIC DATA STRUCTURE =====
 const timeYears = [2019, 2020, 2021, 2022, 2023, 2024];
 
-// Data organized by demographic dimension
-// Values are for "Delayed getting medical care due to cost" (we're focusing on one barrier for clarity)
 const demographicData = {
     insurance: {
         title: 'Insurance Status Disparities',
@@ -1276,7 +1274,6 @@ function updateBubblePlot(year, activeDemographic) {
     const displayYear = Math.round(Math.max(2019, Math.min(2024, year)));
     const yearIndex = displayYear - 2019;
 
-    // Collect all subgroups with their data
     const allBubbles = [];
 
     Object.entries(demographicCategories).forEach(([catName, { color, key }]) => {
@@ -1286,7 +1283,6 @@ function updateBubblePlot(year, activeDemographic) {
         Object.entries(data.subgroups).forEach(([subgroupName, subgroupData]) => {
             const rate = subgroupData.data[yearIndex];
 
-            // Only show meaningful subgroups (rate > 5% or active category)
             if (rate > 5 || isActive) {
                 allBubbles.push({
                     name: subgroupName,
@@ -1300,7 +1296,6 @@ function updateBubblePlot(year, activeDemographic) {
         });
     });
 
-    // Sort by rate (highest first) and take top subgroups per category
     const categoryBubbles = {};
     Object.keys(demographicCategories).forEach(cat => {
         categoryBubbles[cat] = [];
@@ -1310,7 +1305,6 @@ function updateBubblePlot(year, activeDemographic) {
         categoryBubbles[bubble.category].push(bubble);
     });
 
-    // Take top 3-4 from each category to reduce overcrowding
     const selectedBubbles = [];
     Object.entries(categoryBubbles).forEach(([cat, bubbles]) => {
         bubbles.sort((a, b) => b.rate - a.rate);
@@ -1318,7 +1312,6 @@ function updateBubblePlot(year, activeDemographic) {
         selectedBubbles.push(...bubbles.slice(0, limit));
     });
 
-    // Position bubbles in clusters by category
     const categoryPositions = {
         'Insurance': { cx: -0.75, cy: -0.7 },
         'Race': { cx: 0.75, cy: -0.7 },
@@ -1344,7 +1337,6 @@ function updateBubblePlot(year, activeDemographic) {
         const indexInCategory = bubblesInCategory.findIndex(b => b.name === bubble.name);
         const totalInCategory = bubblesInCategory.length;
 
-        // Calculate bubble spacing within cluster
         const angle = (indexInCategory / totalInCategory) * 2 * Math.PI;
         const spread = 0.55;
         const jitterX = spread * Math.cos(angle);
@@ -1353,16 +1345,13 @@ function updateBubblePlot(year, activeDemographic) {
         xPos.push(catPos.cx + jitterX);
         yPos.push(catPos.cy + jitterY);
 
-        // Size based on barrier rate
         sizes.push(Math.sqrt(bubble.rate) * 10);
         colors.push(bubble.color);
         opacities.push(1);
 
-        // Truncate long names for display
         const shortName = bubble.name.length > 20 ? bubble.name.substring(0, 17) + '...' : bubble.name;
         texts.push(`<b>${shortName}</b><br>${bubble.rate.toFixed(1)}% barrier rate<br><i>${bubble.category}</i>`);
 
-        // Bubble styling
         lineColors.push(bubble.color);
         lineWidths.push(0);
     });
@@ -1386,7 +1375,6 @@ function updateBubblePlot(year, activeDemographic) {
         showlegend: false
     };
 
-    // Add category labels as annotations
     const annotations = Object.entries(categoryPositions).map(([catName, pos]) => {
         const catInfo = demographicCategories[catName];
         const isActive = catInfo && catInfo.key === activeDemographic;
@@ -1446,7 +1434,6 @@ updateBubblePlot(2019, currentDemographic);
 
 // ===== BUBBLE PLOT: Top Vulnerable Populations (for heatmap section) =====
 function showTopVulnerablePopulations() {
-    // Calculate average barrier rate across all 4 barrier types for each subgroup
     const populationRates = heatmapSubgroups.map((subgroup, i) => {
         const rates = heatmapZ[i].filter(v => v !== null);
         const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
@@ -2054,7 +2041,7 @@ function updateTimeSeriesChart(year) {
         let displayX = timeYears.slice(0, completePoints + 1);
         let displayY = values.slice(0, completePoints + 1);
 
-        // Add interpolated point if we're between years
+        // Add interpolated point between years
         if (fraction > 0 && completePoints < timeYears.length - 1) {
             const interpY = values[completePoints] + (values[completePoints + 1] - values[completePoints]) * fraction;
             displayX = [...displayX, displayYear];
