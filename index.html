@@ -109,7 +109,8 @@
 
         .hero-meta {
             display: flex;
-            gap: 2rem;
+            flex-direction: column;
+            gap: 1rem;
             font-size: 0.85rem;
             color: var(--text-muted);
             font-family: var(--font-mono);
@@ -117,7 +118,45 @@
             animation: fadeUp 0.8s ease forwards 0.8s;
         }
 
-        .hero-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .hero-meta .data-source {
+            color: var(--text-muted);
+        }
+
+        .team-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .team-member img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-teal);
+        }
+
+        .team-member a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .team-member a:hover {
+            color: var(--accent-teal);
+        }
 
         .scroll-indicator {
             position: absolute;
@@ -473,8 +512,24 @@
             and how the pandemic temporarily narrowed gaps that are now at risk of widening again.
         </p>
         <div class="hero-meta">
-            <span>NHIS Adult Summary Health Statistics, 2019–2024</span>
-            <span>Accessible Infinity Tunnel</span>
+            <div class="data-source">NHIS Adult Summary Health Statistics, 2019–2024</div>
+            <div>
+                <div class="team-name">Accessible Infinity Tunnel</div>
+                <div class="team-members">
+                    <div class="team-member">
+                        <img src="https://avatars.githubusercontent.com/u/13376052?v=4" alt="AJ Plumlee">
+                        <a href="https://github.com/ajplumlee33" target="_blank">AJ Plumlee</a>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://avatars.githubusercontent.com/u/166340991?v=4" alt="Alanna Koser">
+                        <a href="https://github.com/0-1deathtouch" target="_blank">Alanna Koser</a>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://avatars.githubusercontent.com/u/51419063?v=4" alt="Josiah Zacharias">
+                        <a href="https://github.com/jomandaman" target="_blank">Josiah Zacharias</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="scroll-indicator">Scroll to explore</div>
@@ -740,21 +795,15 @@
         <div class="export-grid">
             <div class="export-card">
                 <div class="icon">📊</div>
-                <h4>Tableau Public Dashboard</h4>
-                <p>Explore interactive dashboards recreating our key visualizations in Tableau Public.</p>
-                <a href="https://public.tableau.com/app/profile/YOUR_PROFILE/viz/YOUR_WORKBOOK" target="_blank">View on Tableau</a>
-            </div>
-            <div class="export-card">
-                <div class="icon">💾</div>
-                <h4>Download Data</h4>
-                <p>Get our Tableau-ready CSV exports: time series, disparities, forecasts, and summary stats.</p>
-                <a href="data/tableau_exports/healthcare_access_barriers_full.csv" download>Download Datasets</a>
+                <h4>Tableau / Power BI Data</h4>
+                <p>Download our Tableau-ready CSV exports: full dataset, time series, disparities, and ML forecasts.</p>
+                <a href="data/tableau_exports/healthcare_access_barriers_full.csv" download>Download for Tableau</a>
             </div>
             <div class="export-card">
                 <div class="icon">📓</div>
-                <h4>Google Colab</h4>
+                <h4>Analysis Notebooks</h4>
                 <p>View the full analysis notebooks with all code, ML models, methodology, and commentary.</p>
-                <a href="https://colab.research.google.com/drive/YOUR_NOTEBOOK_ID" target="_blank">Open Notebooks</a>
+                <a href="https://colab.research.google.com/drive/YOUR_NOTEBOOK_ID" target="_blank">Open Colab</a>
             </div>
             <div class="export-card">
                 <div class="icon">🐙</div>

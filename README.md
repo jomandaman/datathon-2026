@@ -1,123 +1,254 @@
-# 🏥 DubsTech Datathon 2026 — Healthcare Track
+# 🏥 Who Falls Through the Cracks?
 
-**Team:** Josiah, [Teammate 2], [Teammate 3]
+**Healthcare Access Barriers Analysis · DubsTech Datathon 2026**
+
+[![View Live Site](https://img.shields.io/badge/View-Live%20Site-2a9d8f?style=for-the-badge)](https://your-username.github.io/datathon-2026/)
+[![Download Data](https://img.shields.io/badge/Download-Tableau%20Data-e63946?style=for-the-badge)](data/tableau_exports/)
 
 ---
 
-## 🗂 Project Structure
+## 👥 Team: Accessible Infinity Tunnel
+
+| Member | Role | GitHub |
+|--------|------|--------|
+| **AJ Plumlee** | ML Lead (2026 Forecasts) | [@ajplumlee](https://github.com/ajplumlee) |
+| **Alanna Koser** | ML Lead (2025 Forecasts) | [@alannakoser](https://github.com/alannakoser) |
+| **Josiah Zacharias** | Visualization Lead | [@josiahzacharias](https://github.com/josiahzacharias) |
+
+---
+
+## 🎯 Project Overview
+
+An analysis of healthcare access barriers across race, income, and education — examining how the pandemic temporarily narrowed gaps that are now at risk of widening again.
+
+**Three Core Questions:**
+1. **Disparities Snapshot** — Which subgroups have the highest rates of delayed/unmet care?
+2. **COVID Impact** — Did disparities widen during COVID? Have they recovered?
+3. **Predictive Modeling** — Who's most at risk of falling through the cracks next year?
+
+**Key Findings:**
+- Uninsured adults face barriers **3-5× higher** than those with private insurance
+- COVID-era policies temporarily cut the poverty gap in half (10.3pp → 5.0pp)
+- Bisexual adults and AI/AN populations predicted to face **significant worsening** by 2026
+
+---
+
+## 🚀 Live Demo
+
+**[View the Interactive Site →](https://your-username.github.io/datathon-2026/)**
+
+Features:
+- 📊 Scroll-based narrative with interactive Plotly visualizations
+- 🤖 Dual ML forecasting (2025 short-term + 2026 long-term predictions)
+- 🔍 Explore disparities across 5 demographic lenses
+- 📈 COVID impact analysis with gap-closing metrics
+- 💾 Download Tableau-ready CSV exports
+
+---
+
+## 📂 Project Structure
 
 ```
 datathon-2026/
+├── index.html                              # Main GitHub Pages site
 ├── notebooks/
-│   └── datathon_analysis.ipynb    ← Shared Colab workspace
-├── streamlit/
-│   ├── app.py                     ← Interactive web dashboard
-│   ├── requirements.txt           ← Python dependencies
-│   └── data/
-│       └── cleaned_data.csv       ← Output from Colab (added during hackathon)
-└── README.md                      ← You are here
+│   ├── ait_datathon.ipynb                 # AJ's ML notebook (2026 forecasts)
+│   └── Accessible_Infinity_Tunnel_*.ipynb # Alanna's ML notebook (2025 forecasts)
+├── data/
+│   ├── Access_to_Care_Dataset.csv         # Raw CDC NHIS data (2019-2024)
+│   └── tableau_exports/                   # Cleaned CSVs for Tableau/Power BI
+│       ├── healthcare_access_barriers_full.csv
+│       ├── time_series_trends.csv
+│       ├── disparities_2024_snapshot.csv
+│       ├── disparity_gaps.csv
+│       ├── ml_forecasts_2025_2026.csv
+│       └── yearly_summary_statistics.csv
+├── scripts/
+│   └── export_for_tableau.py              # Generates Tableau-ready CSVs
+├── TABLEAU_GUIDE.md                       # Guide for Tableau Public integration
+└── README.md                              # You are here
 ```
 
 ---
 
-## 🚀 Quick Start — Morning Setup (< 30 min)
+## 🔬 Methodology
 
-### Step 1: Google Drive (shared data hub)
+### Data Source
+**CDC National Health Interview Survey (NHIS)** — Adult Summary Health Statistics, 2019-2024
+- 26,208 total records → 23,609 after cleaning (removed unreliable estimates)
+- 54 health topics across demographic, socioeconomic, and geographic classifications
+- Focused on 4 access barrier types:
+  - Delayed getting medical care due to cost
+  - Did not get needed medical care due to cost
+  - Did not get needed mental health care due to cost
+  - Did not take medication as prescribed to save money
 
-1. **One person** creates a Google Drive folder called `datathon-2026` with a `data` subfolder inside
-2. Share it with all team members (Editor access)
-3. When the dataset drops, upload it to `datathon-2026/data/`
+### Machine Learning Models
 
-### Step 2: Google Colab (shared analysis workspace)
+**Model 1: Short-term (2025 Forecast)** — *Alanna's Gradient Boosting Model*
+- **R² Score:** 0.87
+- **Features:** Lag values, rolling averages, year-over-year changes, confidence interval widths
+- **Training:** 2019-2024 data with engineered temporal features
+- **Output:** 1-year predictions for all demographic subgroups
 
-1. Upload `notebooks/datathon_analysis.ipynb` to Google Drive
-2. Open it with Google Colab
-3. Share the Colab link with teammates (Editor access — just like Google Docs)
-4. **Everyone runs the Setup cell first** to mount Drive and import libraries
-5. Update the `DATA_PATH` variable to point to your dataset in Drive
+**Model 2: Long-term (2026 Forecast)** — *AJ's Random Forest + XGBoost Ensemble*
+- **R² Score:** 0.87
+- **Training Strategy:** 2-year jump patterns (2019→2021, 2020→2022, etc.)
+- **Ensemble:** Averages predictions from RF and XGBoost for robustness
+- **Output:** 2-year projections identifying most at-risk populations
 
-### Step 3: Streamlit (one person sets this up)
+---
 
-While the other two start analyzing in Colab, one person:
+## 📊 Key Visualizations
 
-1. Install Streamlit locally:
+### 1. Disparities Snapshot
+- **Bubble plot** showing all 5 demographic categories simultaneously
+- **Interactive time series** with scroll-based animation (2019→2024)
+- **Heatmap** of barrier rates by subgroup (2024)
+- **Area plot** showing gaps between highest/lowest subgroups
+
+### 2. COVID Impact
+- **Gap-closing analysis** — Poverty-based disparities narrowed during pandemic
+- **Gap-not-closing analysis** — Racial insurance disparities remained entrenched
+- Shaded regions marking COVID-era policy interventions
+
+### 3. Predictive Modeling
+- **Dual forecast visualization** — Compare 2025 vs 2026 predictions
+- **Demographic lens filters** — View by race, income, disability, sexual orientation, or geography
+- **Change annotations** — Red for worsening, green for improving
+- **Model transparency** — Show R² scores and training status
+
+---
+
+## 💻 Running Locally
+
+### Prerequisites
+- Python 3.8+
+- Modern web browser
+
+### Quick Start
+
+1. **Clone the repository**
    ```bash
-   pip install -r streamlit/requirements.txt
+   git clone https://github.com/YOUR_USERNAME/datathon-2026.git
+   cd datathon-2026
    ```
-2. Run the app:
+
+2. **View the site**
    ```bash
-   cd streamlit
-   streamlit run app.py
+   # Option 1: Python HTTP server
+   python -m http.server 8000
+
+   # Option 2: Open directly
+   open index.html
    ```
-3. As analysis progresses, pull finished charts from Colab into `app.py`
 
----
+3. **Visit:** http://localhost:8000
 
-## 🔄 Workflow During the Hackathon
+### Regenerate Tableau Exports
 
-```
-    ┌─────────────────┐
-    │   Google Drive   │  ← Dataset lives here
-    │  /datathon-2026/ │
-    └────────┬────────┘
-             │
-    ┌────────▼────────┐
-    │  Google Colab    │  ← All 3 teammates work here
-    │  (shared notebook)│     Clean → Explore → Analyze → Model
-    └────────┬────────┘
-             │ exports cleaned_data.csv
-    ┌────────▼────────┐
-    │   Streamlit App  │  ← 1 teammate builds the dashboard
-    │   (app.py)       │     Pulls in charts & insights from Colab
-    └────────┬────────┘
-             │
-    ┌────────▼────────┐
-    │  GitHub + Deploy │  ← Final 2 hours: package & deploy
-    └─────────────────┘
-```
-
----
-
-## 📤 Final Packaging (Last 2 Hours)
-
-### Push to GitHub
 ```bash
-git init
-git add .
-git commit -m "Datathon 2026 submission"
-git remote add origin https://github.com/YOUR_USERNAME/datathon-2026.git
-git push -u origin main
+python scripts/export_for_tableau.py
 ```
 
-### Deploy Streamlit (free)
-1. Go to [share.streamlit.io](https://share.streamlit.io)
-2. Sign in with GitHub
-3. Point it to your repo → `streamlit/app.py`
-4. Click Deploy
-5. You now have a live URL to share with judges! 🎉
+This creates 6 CSV files in `data/tableau_exports/` ready for Tableau Public, Power BI, or Excel.
+
+---
+
+## 📥 Data Downloads
+
+All datasets are available in the **"Extend This Analysis"** section of the live site.
+
+**Quick links:**
+- [Full Dataset (CSV)](data/tableau_exports/healthcare_access_barriers_full.csv) — 1,807 rows
+- [Time Series Trends](data/tableau_exports/time_series_trends.csv) — 1,783 rows
+- [2024 Snapshot](data/tableau_exports/disparities_2024_snapshot.csv) — 307 rows
+- [Disparity Gaps](data/tableau_exports/disparity_gaps.csv) — 480 rows
+- [ML Forecasts (2025 & 2026)](data/tableau_exports/ml_forecasts_2025_2026.csv) — 30 rows
+- [Summary Statistics](data/tableau_exports/yearly_summary_statistics.csv) — 24 rows
+
+**For Tableau users:** See [TABLEAU_GUIDE.md](TABLEAU_GUIDE.md) for step-by-step instructions on recreating our visualizations.
 
 ---
 
 ## 🧰 Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| Google Colab | Collaborative analysis notebook |
-| Google Drive | Shared data storage |
-| Streamlit | Interactive web dashboard |
-| Plotly | Interactive charts |
-| Pandas / NumPy | Data wrangling |
-| scikit-learn | ML modeling (optional) |
-| GitHub | Version control & submission |
+| Technology | Purpose |
+|------------|---------|
+| **Plotly.js** | Interactive data visualizations |
+| **GitHub Pages** | Static site hosting |
+| **Python (Pandas, NumPy)** | Data cleaning and feature engineering |
+| **scikit-learn** | Gradient Boosting, Random Forest models |
+| **XGBoost** | Ensemble modeling for 2026 forecasts |
+| **Google Colab** | Collaborative notebook environment |
 
 ---
 
-## 📊 Extending This Analysis
+## 🎨 Design Philosophy
 
-- **Tableau / Power BI** — Download the cleaned CSV from the Export page
-- **Jupyter** — Open the full analysis notebook in Colab
-- **Developers** — Fork this repo and extend the pipeline
+Our visualization approach prioritizes:
+- **Narrative clarity** — Scroll-based storytelling guides users through insights
+- **Data honesty** — Show confidence intervals, gaps, and model limitations
+- **Accessibility** — High contrast, readable fonts, semantic HTML
+- **Interactivity** — Dropdowns, hover tooltips, and responsive charts
+- **Reproducibility** — All code and data are open for extension
 
 ---
 
-*Built for [DubsTech Datathon 2026](https://datathon-2026.webflow.io/) at the University of Washington*
+## 📈 Extending This Analysis
+
+### Use Our Data in Tableau/Power BI
+1. Download CSV exports from the site or `data/tableau_exports/`
+2. Follow our [Tableau Guide](TABLEAU_GUIDE.md)
+3. Recreate visualizations or build your own dashboards
+
+### Explore the Notebooks
+- **AJ's Notebook** — 2026 forecasting with ensemble methods
+- **Alanna's Notebook** — 2025 predictions + feature engineering
+
+### Fork and Extend
+```bash
+git clone https://github.com/YOUR_USERNAME/datathon-2026.git
+# Add new models, data sources, or visualizations
+# Submit a PR to share your improvements!
+```
+
+---
+
+## 🏆 Acknowledgments
+
+**Data Source:** CDC National Health Interview Survey (NHIS), 2019-2024
+
+**Built for:** [DubsTech Datathon 2026](https://datathon-2026.webflow.io/) — University of Washington, February 7-8, 2026
+
+**Inspiration:** Winning projects from previous datathons that emphasized visual storytelling and data accessibility
+
+---
+
+## 📜 License
+
+This project is open source and available under the MIT License.
+
+**Citation:**
+```
+Accessible Infinity Tunnel (2026). "Who Falls Through the Cracks?
+Healthcare Access Barriers Analysis 2019-2024."
+DubsTech Datathon 2026, University of Washington.
+```
+
+---
+
+## 🤝 Contact
+
+Questions or want to collaborate?
+
+- **AJ Plumlee** — [GitHub](https://github.com/ajplumlee)
+- **Alanna Koser** — [GitHub](https://github.com/alannakoser)
+- **Josiah Zacharias** — [GitHub](https://github.com/josiahzacharias)
+
+---
+
+<p align="center">
+  <strong>Built with ❤️ for DubsTech Datathon 2026</strong><br>
+  Accessible Infinity Tunnel · University of Washington
+</p>
