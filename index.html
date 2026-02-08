@@ -1152,6 +1152,65 @@ function updateBubblePlot(year, activeDemographic) {
 // Initial bubble plot render
 updateBubblePlot(2019, currentDemographic);
 
+// ===== BUBBLE PLOT: Top Vulnerable Populations (for heatmap section) =====
+function showTopVulnerablePopulations() {
+    // Calculate average barrier rate across all 4 barrier types for each subgroup
+    const populationRates = heatmapSubgroups.map((subgroup, i) => {
+        const rates = heatmapZ[i].filter(v => v !== null);
+        const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+        return { subgroup, avgRate };
+    });
+
+    // Sort by average rate (highest first) and take top 10
+    const top10 = populationRates.sort((a, b) => b.avgRate - a.avgRate).slice(0, 10);
+
+    // Create horizontal bar chart data
+    const yValues = top10.map(p => p.subgroup.replace(/\n/g, ' '));
+    const xValues = top10.map(p => p.avgRate);
+    const colors = xValues.map(rate => {
+        if (rate > 20) return '#e63946'; // Red for high
+        if (rate > 10) return '#f39c12'; // Orange for medium
+        return '#2a9d8f'; // Teal for lower
+    });
+
+    Plotly.react('chart-bubble', [{
+        y: yValues,
+        x: xValues,
+        type: 'bar',
+        orientation: 'h',
+        marker: { color: colors },
+        text: xValues.map(v => v.toFixed(1) + '%'),
+        textposition: 'outside',
+        hovertemplate: '%{y}<br>Avg barrier rate: %{x:.1f}%<extra></extra>'
+    }], {
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
+        font: { family: 'Source Sans 3, sans-serif', color: '#e8e6e1' },
+        title: {
+            text: `Top 10 Most Vulnerable<br>Populations<br><span style="font-size:11px;color:#9ca3af;font-weight:normal">Average across all barrier types</span>`,
+            font: { size: 14, family: 'Source Sans 3, sans-serif' },
+            y: 0.96,
+            yanchor: 'top'
+        },
+        height: 750,
+        dragmode: false,
+        xaxis: {
+            title: 'Average Barrier Rate (%)',
+            showgrid: true,
+            gridcolor: '#2a3448',
+            fixedrange: true,
+            range: [0, Math.max(...xValues) * 1.15]
+        },
+        yaxis: {
+            autorange: 'reversed',
+            fixedrange: true,
+            showgrid: false
+        },
+        margin: { t: 70, b: 60, l: 200, r: 40 },
+        hovermode: 'closest'
+    }, plotlyConfig);
+}
+
 // ===== HEATMAP =====
 const heatmapSubgroups = [
     'Uninsured', 'Private', 'Medicaid or other\nstate programs',
@@ -1187,10 +1246,10 @@ Plotly.newPlot('chart-heatmap', [{
     x: heatmapTopics,
     y: heatmapSubgroups,
     type: 'heatmap',
-    colorscale: 'YlOrRd',
+    colorscale: [[0, '#2ecc71'], [0.5, '#f39c12'], [1, '#e63946']],  // Green (low) → Orange → Red (high)
     text: heatmapText,
     texttemplate: '%{text}',
-    textfont: { size: 11 },
+    textfont: { size: 11, color: '#1a1a1a' },
     hovertemplate: '%{y}<br>%{x}: %{text}<extra></extra>',
     zmin: 0,
     zmax: 30,
@@ -1749,6 +1808,9 @@ function handleSceneScroll() {
     const rect = activeScene.getBoundingClientRect();
     const sceneTop = rect.top;
 
+    // Check if this is the heatmap scene
+    const isHeatmapScene = activeScene.querySelector('#chart-heatmap') !== null;
+
     // For time series scene, handle timeline animation
     if (activeScene.querySelector('#chart-timeseries')) {
         // Calculate how close the scene CENTER is to the viewport center
@@ -1780,6 +1842,10 @@ function handleSceneScroll() {
             timelineReachedCenter = false;
             isDraggingTimeline = false;
         }
+    } else if (isHeatmapScene) {
+        // Show top vulnerable populations when heatmap is visible
+        showTopVulnerablePopulations();
+        return; // Early return to skip normal bubble plot update
     } else {
         // For other scenes, use normal scroll progress
         const sceneHeight = rect.height;
